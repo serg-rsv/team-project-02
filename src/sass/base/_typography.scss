@@ -1,0 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: $color-main;
+  text-align: center;
+
+  font-family: $font-main;
+  font-size: $font-size-major;
+  font-weight: $font-weight-major;
+  line-height: $font-lheight-major;
+}
