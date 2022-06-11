@@ -64,7 +64,7 @@ export default class TmdbApiService {
   }
   /**
    *
-   * @returns Повертає масив об'єктів популярних фільмів за день.
+   * @returns повертає *проміс* в якому масив об'єктів популярних фільмів за день.
    */
   static fetchTrendingMovies() {
     const endPointUrl =
@@ -95,9 +95,8 @@ export default class TmdbApiService {
 
   /**
    *
-   * @param {string} query
-   * Рядок - назва фільму для пошуку.
-   * @returns Повертає масив фільмів в назві яких зустрічається query.
+   * @param {string} query назва фільму для пошуку.
+   * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
   static fetchSearchMovie(query) {
     const endPointUrl = BASE_URL + this.#endPoints.searchMovie;
@@ -128,8 +127,8 @@ export default class TmdbApiService {
 
   /**
    *
-   * @param {number} movieId Ідентифікатор фільма в базі данних TMBD
-   * @returns Повертає об'єкт з детальним описом всіх характеристик фільму.
+   * @param {number} movieId ідентифікатор фільма в базі данних TMBD
+   * @returns повертає *проміс* в якому об'єкт з детальним описом всіх характеристик фільму.
    */
   static fetchMovieDetails(movieId) {
     const endPointUrl = BASE_URL + this.#endPoints.movieDetails + movieId;
