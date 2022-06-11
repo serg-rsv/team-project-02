@@ -1,0 +1,160 @@
+.container {
+    width: 992px;
+    margin-left: auto;
+    margin-right: auto;
+@media screen and (min-width: 320px) and(max-width:767px) {
+        width: 320px;
+
+    }
+    @media screen and (min-width: 768px) and(max-width:990px) {
+        width: 768px;
+
+    }
+}
+
+// .products__cards-item {
+//             margin-left: 8px;
+//             margin-right: 8px;
+//         }
+
+// .films_list {
+//     display: flex;
+//         flex-wrap: wrap;
+
+//         padding: 0px
+// display: grid;
+//   grid: repeat(2, 1fr) / repeat(2, 1fr);
+//   grid-gap: 30px;
+//   grid-template-column
+
+// }
+//     @media screen and (min-width: 768px) and(max-width:1199px){
+//         .films_list{
+//             display: flex;
+//                 flex-wrap: wrap;
+//                 flex-direction: row;
+//                 padding: 0px;
+//                 // width: calc((100% - 2 * 32px) / 3);
+//         }
+
+// }
+
+
+// @media screen and (min-width: 768px) and(max-width:1199px) {
+//     width: calc((100% - 2 * 24px) / 3);
+//     text-align: start;
+//     // margin: 15px;
+// }
+.film_title{
+    color:black;
+    font-family: $font-main;
+        
+        font-weight:$font-weight-major;
+        font-size: $font-size-major;
+        line-height:$font-lheight-major;
+        text-transform: uppercase;
+        margin-top: 8px;
+}
+.film_genre{
+    color:$color-accent;
+    font-weight: $font-weight-major;
+        font-size: $font-size-major;
+        line-height: $font-lheight-major;
+
+        
+}
+.img {
+    @media screen and (min-width: 768px) and(max-width:990px) {
+        width: 336px;
+        padding: 0px;
+    }
+
+    @media screen and (min-width:992px) {
+        width: 309px;
+    }
+}
+
+//   .films_list {
+//       flex-wrap: wrap;
+//       margin-right: 0px;
+//       margin-bottom: 0px;
+//       padding: 0px;
+
+
+
+
+//       @media screen and (min-width: 768px) and(max-width:990px) {
+//           // width: calc((100% - 2 * 32px) / 2);
+//           text-align: start;
+//           margin-right: 16px;
+//           margin-left: 16px;
+//           flex-direction: row;
+//           display: flex;
+//           padding: 0px;
+
+//       }
+//           @media screen and (min-width: 991px){
+//             // width: calc((100% - 6 * 8px) / 3);
+//             margin-right: 8px;
+//                 margin-left: 8px;
+//                 flex-direction: row;
+//                 display: flex;
+//                 padding: 0px;
+//                 margin: 0px;
+//           }
+//   }
+.films_list {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: start;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+
+    @media screen and(max-width:767px) {
+        margin: auto;
+        padding: auto;
+        justify-content: center;
+
+    }
+
+    @media screen and(min-width:768px) {
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 0;
+        display: flex;
+        flex-basis: content;
+        justify-content: center;
+    }
+
+    @media screen and (min-width:992px) {
+        margin-left: 8px;
+        margin-right: 8px;
+        justify-content: start;
+    }
+}
+
+.products__cards-item {
+    flex-wrap: wrap;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 32px;
+
+
+
+
+    @media screen and (min-width: 768px) and(max-width:991px) {
+        width: calc((100% - 2 * 32px) / 2);
+        text-align: start;
+        margin-right: 16px;
+        margin-left: 16px;
+        flex-basis: content;
+    }
+
+    @media screen and (min-width:992px) {
+        width: calc((100% - 2 * 24px) / 3);
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+}
