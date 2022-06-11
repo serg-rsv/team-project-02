@@ -5,8 +5,5 @@ import './sass/main.scss';
 // TmdbApiService.fetchSearchMovie('batman').then(JSON.stringify).then(console.log);
 // TmdbApiService.fetchMovieDetails(414906).then(JSON.stringify).then(console.log);
 
-import loader from './js/loader/loader';
 
-loader.hide();
-loader.show(document.body);
 
