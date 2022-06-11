@@ -6,5 +6,9 @@
 // Стилі для файлу
 @import './utils/variables';
 @import './base/reset';
+@import './utils/hidden';
 @import './base/typography';
 @import './base/container';
+
+// Паршал для лоадера поки що тут, потім будемо імпортувати окремо відносно задачі, де він використовується. Для того, чтоб відобразити лоадер прибираємо клас visually-hidden.
+@import './loader/loader'; 
