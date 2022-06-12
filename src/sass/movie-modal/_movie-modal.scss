@@ -95,7 +95,9 @@
     color: #000000;
         &--accent{
             display: inline-block;
-            padding: 1px 10px;
+            text-align: center;
+            padding-top: 1px;
+            // padding: 1px 10px;
             width: 36px;
 
             color: $color-main;
@@ -149,27 +151,27 @@
     }
 }
 
-.btn{
-    height: 44px;
+// .btn{
+//     height: 44px;
     
-    font-family: $font-main;
-    font-weight: $font-weight-major;
-    font-size: $font-size-major;
-    line-height: $font-lheight-major;
+//     font-family: $font-main;
+//     font-weight: $font-weight-major;
+//     font-size: $font-size-major;
+//     line-height: $font-lheight-major;
     
-    border-radius: 5px;
-    &.watched{
-        // padding: 6px 27px;
-        border: none;
+//     border-radius: 5px;
+//     &.watched{
+//         // padding: 6px 27px;
+//         border: none;
 
-        color: $color-main;
-        background-color: $color-accent;
-    }
-    &.queue{
-        // padding: 13px 14px;
-        border: 1px solid #000000;
+//         color: $color-main;
+//         background-color: $color-accent;
+//     }
+//     &.queue{
+//         // padding: 13px 14px;
+//         border: 1px solid #000000;
 
-        color: #000000;
-    }
-}
+//         color: #000000;
+//     }
+// }
 
