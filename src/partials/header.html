@@ -1,16 +1,15 @@
 <!-- Tanya -->
-<header>
+<!-- <header>
   <div class="container">
     <div class="header-box">
       <a href="index.html" class="logo-link">
-        <!-- <img class="logo-img" src="images/svg/film.svg" alt="My Happy SVG" /> -->
-        <span class="logo-img"></span>
+        <img class="logo-img" src="images/svg/film.svg" alt="Filmoteka logo" />
         <p>Filmoteka</p>
       </a>
 
       <ul class="header-list">
-        <li><button type="button" class="header-button current">Home</button></li>
-        <li><button type="button" class="header-button">my library</button></li>
+        <li><button type="button" class="header-button current" data-load="home">Home</button></li>
+        <li><button type="button" class="header-button" data-load="library">my library</button></li>
       </ul>
     </div>
 
@@ -23,5 +22,36 @@
         autocomplete="off"
       />
     </div>
+  </div>
+</header> -->
+
+<header class="header-lib">
+  <div class="container container-lib">
+    <div class="header-box header-box-lib">
+      <a href="index.html" class="logo-link">
+        <img class="logo-img" src="images/svg/film.svg" alt="Filmoteka logo" />
+        <p>Filmoteka</p>
+      </a>
+
+      <ul class="header-list">
+        <li><button type="button" class="header-button" data-load="home">Home</button></li>
+        <li>
+          <button type="button" class="header-button current" data-load="library">
+            my library
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="input-box input-box-lib">
+      <li>
+        <button type="button" class="button-action current-button" data-action="watched">
+          Watched
+        </button>
+      </li>
+      <li>
+        <button type="button" class="button-action" data-action="queue">queue</button>
+      </li>
+    </ul>
   </div>
 </header>
