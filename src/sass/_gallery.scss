@@ -3,7 +3,7 @@
   font-family: $font-main;
   font-weight: $font-weight-major;
   font-size: $font-size-major;
-  line-height: $font-lheight-major;
+  line-height: $font-height-major;
   text-transform: uppercase;
   margin-top: 8px;
 }
@@ -11,7 +11,7 @@
   color: $color-accent;
   font-weight: $font-weight-major;
   font-size: $font-size-major;
-  line-height: $font-lheight-major;
+  line-height: $font-height-major;
 }
 .img {
   @media screen and (min-width: $tablet) and(max-width:991px) {
