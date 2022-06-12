@@ -1,10 +1,10 @@
-import TmdbApiService from '../services/tmdb-api';
+// import TmdbApiService from '../services/tmdb-api';
 
-const films = TmdbApiService.fetchTrendingMovies();
+// const films = TmdbApiService.fetchTrendingMovies();
 
 const filmsList = document.querySelector('.films_list');
 
-async function renderMainPage(movies) {
+export async function renderMainPage(movies) {
   await movies.then(movie => {
     const descriptionMarkup = movie
       .map(({ id, title, genre_ids, posterUrl }) => {
@@ -20,4 +20,4 @@ async function renderMainPage(movies) {
     filmsList.innerHTML = descriptionMarkup;
   });
 }
-renderMainPage(films);
+// renderMainPage(films);
