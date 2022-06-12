@@ -57,9 +57,14 @@ header {
   }
 }
 
-.logo-link {
+.logo-button {
   display: flex;
   align-items: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
   & p {
     display: none;
     @media screen and (min-width: $tablet) {
@@ -71,6 +76,17 @@ header {
       padding-left: 8px;
     }
   }
+  // &:before{
+  //   content: '⋆';
+  //   top: 1px;
+  //   right: 25px;
+  //   display: block;
+  //   position: absolute;
+  //   color: $color-accent;
+  // }
+  // &:hover::before {
+  //     animation: spin 1s infinite linear;
+  //   }
 }
 .logo-img {
   display: inline-block;
