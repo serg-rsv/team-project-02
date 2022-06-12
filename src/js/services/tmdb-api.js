@@ -8,7 +8,7 @@ const API_KEY = '5ce599886a4c0703a030654068991e03';
 
 export default class TmdbApiService {
   // GET
-  static #endPoints = {
+  static endPoints = {
     // trending/{media_type}/{time_window}
     // https://api.themoviedb.org/3/trending/all/week?api_key={API_KEY}
     trending: 'trending/',
@@ -22,45 +22,45 @@ export default class TmdbApiService {
     genresMovie: 'genre/movie/list',
   };
 
-  static #languages = {
+  static languages = {
     ENGLISH: 'en',
     UKRAINIAN: 'uk',
   };
 
-  static #trending = {
+  static trending = {
     page: 0,
     totalPages: 1,
     mediaType: 'movie/',
     timeWindow: 'day',
   };
 
-  static #searchMovie = {
+  static searchMovie = {
     page: 0,
     totalPages: 1,
   };
 
   static getTrandingPage() {
-    return TmdbApiService.#trending.page;
+    return this.trending.page;
   }
 
   static getTrandingTotalPage() {
-    return TmdbApiService.#trending.totalPages;
+    return this.trending.totalPages;
   }
 
   static getSearchMoviePage() {
-    return TmdbApiService.#searchMovie.page;
+    return this.searchMovie.page;
   }
 
   static getSearchMovieTotalPage() {
-    return TmdbApiService.#searchMovie.totalPages;
+    return this.searchMovie.totalPages;
   }
 
   static resetTrendingPage() {
-    TmdbApiService.#trending.page = 0;
+    this.trending.page = 0;
   }
 
   static resetSearchMoivePage() {
-    TmdbApiService.#searchMovie.page = 0;
+    this.searchMovie.page = 0;
   }
   /**
    *
@@ -68,20 +68,17 @@ export default class TmdbApiService {
    */
   static fetchTrendingMovies() {
     const endPointUrl =
-      BASE_URL +
-      TmdbApiService.#endPoints.trending +
-      TmdbApiService.#trending.mediaType +
-      TmdbApiService.#trending.timeWindow;
+      BASE_URL + this.endPoints.trending + this.trending.mediaType + this.trending.timeWindow;
     const requestParams = {
       api_key: API_KEY,
-      page: TmdbApiService.#trending.page + 1,
-      language: TmdbApiService.#languages.ENGLISH,
+      page: this.trending.page + 1,
+      language: this.languages.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      TmdbApiService.#trending.page = page;
-      TmdbApiService.#trending.totalPages = total_pages;
+      this.trending.page = page;
+      this.trending.totalPages = total_pages;
       return results.map(result => {
         const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
         return {
@@ -102,18 +99,18 @@ export default class TmdbApiService {
    * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
   static fetchSearchMovie(query) {
-    const endPointUrl = BASE_URL + TmdbApiService.#endPoints.searchMovie;
+    const endPointUrl = BASE_URL + this.endPoints.searchMovie;
     const requestParams = {
       api_key: API_KEY,
-      page: TmdbApiService.#trending.page + 1,
-      language: TmdbApiService.#languages.ENGLISH,
+      page: this.trending.page + 1,
+      language: this.languages.ENGLISH,
       query,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      TmdbApiService.#trending.page = page;
-      TmdbApiService.#trending.totalPages = total_pages;
+      this.trending.page = page;
+      this.trending.totalPages = total_pages;
       return results.map(result => {
         const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
         return {
@@ -134,10 +131,10 @@ export default class TmdbApiService {
    * @returns повертає *проміс* в якому об'єкт з детальним описом всіх характеристик фільму.
    */
   static fetchMovieDetails(movieId) {
-    const endPointUrl = BASE_URL + TmdbApiService.#endPoints.movieDetails + movieId;
+    const endPointUrl = BASE_URL + this.endPoints.movieDetails + movieId;
     const requestParams = {
       api_key: API_KEY,
-      language: TmdbApiService.#languages.ENGLISH,
+      language: this.languages.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
