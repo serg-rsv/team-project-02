@@ -14,7 +14,7 @@
   line-height: $font-height-major;
 }
 .img {
-  @media screen and (min-width: $tablet) and(max-width:991px) {
+  @media screen and (min-width: $tablet) {
     width: $mobile;
     padding: 0px;
   }
