@@ -1,17 +1,11 @@
 /*
- * Головний файл стилів.
- * Всі паршали підключаємо сюди.
+ * Главный файл стилей.
+ * Все паршалы подключаются сюда.
  */
 
-// Стилі для файлу
+// Стили для файла с примером HTML-фрагмента
 @import './utils/variables';
 @import './base/reset';
-@import './utils/hidden';
 @import './base/typography';
 @import './base/container';
-<<<<<<< HEAD
-@import'./utils/main-site';
-=======
-@import './header';
-@import './loader/loader';
->>>>>>> main
+@import './utils/site';

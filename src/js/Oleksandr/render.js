@@ -1,4 +1,4 @@
-import TmdbApiService from '../tmdb-api';
+import TmdbApiService from '../services/tmdb-api';
 
 const films = TmdbApiService.fetchTrendingMovies();
 
