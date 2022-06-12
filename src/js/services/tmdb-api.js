@@ -40,27 +40,27 @@ export default class TmdbApiService {
   };
 
   static getTrandingPage() {
-    return this.#trending.page;
+    return TmdbApiService.#trending.page;
   }
 
   static getTrandingTotalPage() {
-    return this.#trending.totalPages;
+    return TmdbApiService.#trending.totalPages;
   }
 
   static getSearchMoviePage() {
-    return this.#searchMovie.page;
+    return TmdbApiService.#searchMovie.page;
   }
 
   static getSearchMovieTotalPage() {
-    return this.#searchMovie.totalPages;
+    return TmdbApiService.#searchMovie.totalPages;
   }
 
   static resetTrendingPage() {
-    this.#trending.page = 0;
+    TmdbApiService.#trending.page = 0;
   }
 
   static resetSearchMoivePage() {
-    this.#searchMovie.page = 0;
+    TmdbApiService.#searchMovie.page = 0;
   }
   /**
    *
@@ -68,17 +68,20 @@ export default class TmdbApiService {
    */
   static fetchTrendingMovies() {
     const endPointUrl =
-      BASE_URL + this.#endPoints.trending + this.#trending.mediaType + this.#trending.timeWindow;
+      BASE_URL +
+      TmdbApiService.#endPoints.trending +
+      TmdbApiService.#trending.mediaType +
+      TmdbApiService.#trending.timeWindow;
     const requestParams = {
       api_key: API_KEY,
-      page: this.#trending.page + 1,
-      language: this.#languages.ENGLISH,
+      page: TmdbApiService.#trending.page + 1,
+      language: TmdbApiService.#languages.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      this.#trending.page = page;
-      this.#trending.totalPages = total_pages;
+      TmdbApiService.#trending.page = page;
+      TmdbApiService.#trending.totalPages = total_pages;
       return results.map(result => {
         const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
         return {
@@ -99,18 +102,18 @@ export default class TmdbApiService {
    * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
   static fetchSearchMovie(query) {
-    const endPointUrl = BASE_URL + this.#endPoints.searchMovie;
+    const endPointUrl = BASE_URL + TmdbApiService.#endPoints.searchMovie;
     const requestParams = {
       api_key: API_KEY,
-      page: this.#trending.page + 1,
-      language: this.#languages.ENGLISH,
+      page: TmdbApiService.#trending.page + 1,
+      language: TmdbApiService.#languages.ENGLISH,
       query,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      this.#trending.page = page;
-      this.#trending.totalPages = total_pages;
+      TmdbApiService.#trending.page = page;
+      TmdbApiService.#trending.totalPages = total_pages;
       return results.map(result => {
         const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
         return {
@@ -131,10 +134,10 @@ export default class TmdbApiService {
    * @returns повертає *проміс* в якому об'єкт з детальним описом всіх характеристик фільму.
    */
   static fetchMovieDetails(movieId) {
-    const endPointUrl = BASE_URL + this.#endPoints.movieDetails + movieId;
+    const endPointUrl = BASE_URL + TmdbApiService.#endPoints.movieDetails + movieId;
     const requestParams = {
       api_key: API_KEY,
-      language: this.#languages.ENGLISH,
+      language: TmdbApiService.#languages.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
