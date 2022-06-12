@@ -7,7 +7,7 @@ const filmsList = document.querySelector('.films_list');
 async function renderMainPage(movies) {
   await movies.then(movie => {
     const descriptionMarkup = movie
-      .map(({ title, genre_ids, posterUrl }) => {
+      .map(({ id, title, genre_ids, posterUrl }) => {
         return `<li class="products__cards-item" data-movie-id="${id}">
             <div>
                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
