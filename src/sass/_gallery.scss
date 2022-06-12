@@ -1,0 +1,76 @@
+.film_title {
+  color: black;
+  font-family: $font-main;
+  font-weight: $font-weight-major;
+  font-size: $font-size-major;
+  line-height: $font-height-major;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.film_genre {
+  color: $color-accent;
+  font-weight: $font-weight-major;
+  font-size: $font-size-major;
+  line-height: $font-height-major;
+}
+.img {
+  @media screen and (min-width: $tablet) and(max-width:991px) {
+    width: $mobile;
+    padding: 0px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 309px;
+  }
+}
+
+.films_list {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and(max-width:767px) {
+    margin: auto;
+    padding: auto;
+    justify-content: center;
+  }
+
+  @media screen and(min-width:$tablet) {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 0;
+    display: flex;
+    flex-basis: content;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: $desktop) {
+    margin-left: 8px;
+    margin-right: 8px;
+    justify-content: start;
+  }
+}
+
+.products__cards-item {
+  flex-wrap: wrap;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 32px;
+
+  @media screen and (min-width: $tablet) and(max-width:991px) {
+    width: calc((100% - 2 * 32px) / 2);
+    text-align: start;
+    margin-right: 16px;
+    margin-left: 16px;
+    flex-basis: content;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: calc((100% - 2 * 24px) / 3);
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
