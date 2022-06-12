@@ -1,0 +1,177 @@
+.modal{
+    max-width: 280px;
+    height: auto;
+    background-color: aquamarine;
+    margin: auto;
+    padding: 48px 20px;
+    @media screen and (min-width: $tablet){
+       max-width: 704px; 
+       padding: 40px 36px;
+       display: grid;
+       grid-template-columns: 1fr 1fr;
+    }
+    @media screen and (min-width: $desktop){
+        max-width: 814px;
+        height: 558px;
+        padding: 40px 16px;
+        grid-gap:0 16px;
+    }
+}
+
+.film-poster{
+    width: 240px;
+    height: 357px;
+
+    border-radius: 5px;
+    overflow: hidden;
+
+    @media screen and (min-width: $tablet){
+    width: 264px;
+    height: 373px;
+    }
+
+    @media screen and (min-width: $desktop){
+    width: 375px;
+    height: 478px;
+    }
+}
+
+// .film-details{
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+// }
+
+.film__title {
+    margin-top: 20px;
+    text-align: start;
+
+    font-family: $font-main;
+    font-weight: $font-weight-major;
+    font-size: 20px;
+    line-height: 1.15;
+
+    color: #000000;
+    text-transform: uppercase;
+    @media screen and (min-width: $tablet){
+        margin-top: 0;
+    }
+}
+
+// стилизация блока profile фильма
+
+.film-profile{
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-gap:0 39px;
+    &__list{
+        text-align: start;
+        display: grid;
+        grid-template: 20% 20% 20% 20%/1fr;
+        grid-gap: 8px;
+    }
+    @media screen and (min-width:$tablet){
+    grid-gap: 0 32px;
+    }
+    @media screen and (min-width:$desktop){
+    grid-gap: 0 83px;
+    }
+}
+
+.film-charac{
+   font-family: $font-main; 
+   font-weight: $font-weight-major;
+   font-size: $font-size-major;
+   line-height: $font-lheight-major;
+
+   color: #8C8C8C;
+   &-value{
+    font-family: inherit;
+    font-weight: $font-weight-major;
+    font-size: $font-size-major;
+    line-height: $font-lheight-major;
+
+    color: #000000;
+        &--accent{
+            display: inline-block;
+            text-align: center;
+            padding-top: 1px;
+            // padding: 1px 10px;
+            width: 36px;
+
+            color: $color-main;
+            background-color:$color-accent;
+            border-radius: 5px;
+        }
+         &.accent{
+            text-transform: uppercase;
+        }
+   }
+}
+
+// стилизация блока описание фильма
+.film-description{
+    margin-top: 20px;
+    text-align: start;
+
+    font-family: $font-main;
+    font-weight: $font-weight-major;
+    font-size: $font-size-major;
+    line-height: $font-lheight-major;
+
+    color: #000000;
+    text-transform: uppercase;
+    &__text{
+        margin-top: 8px;
+        text-align: start;
+
+        font-family: $font-main;
+        font-weight: $font-weight-major;
+        font-size: $font-size-major;
+        line-height: 1.66;
+
+        color: #000000;
+    }
+}
+
+// стилизация блока кнопок
+
+.btn-block{
+    display: grid;
+    grid-template-columns: 110px 110px ;
+    grid-gap:0 20px;
+    margin-top: 20px;
+    @media screen and (min-width: $tablet){
+    grid-template-columns: 125px 125px;
+    grid-gap:0 15px
+    }
+    @media screen and (min-width:$desktop){
+    grid-template-columns: 136px 136px;
+    }
+}
+
+// .btn{
+//     height: 44px;
+    
+//     font-family: $font-main;
+//     font-weight: $font-weight-major;
+//     font-size: $font-size-major;
+//     line-height: $font-lheight-major;
+    
+//     border-radius: 5px;
+//     &.watched{
+//         // padding: 6px 27px;
+//         border: none;
+
+//         color: $color-main;
+//         background-color: $color-accent;
+//     }
+//     &.queue{
+//         // padding: 13px 14px;
+//         border: 1px solid #000000;
+
+//         color: #000000;
+//     }
+// }
+
