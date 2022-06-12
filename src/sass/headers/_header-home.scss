@@ -1,24 +1,27 @@
+@import "logo-spin";
 header {
-  background-color: $color-additional;
+  background-color: #010204;
   & .container {
-    padding-top: 40px;
-    padding-bottom: 92px;
+    width: 320px;
+    padding: 40px 20px 92px 20px;
     max-width: 100%;
     text-align: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url('../images/mobile/header320@1x.jpg');
-
+  
     @media screen and (min-width: $tablet) {
       background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
         url('../images/tablet/header768@1x.jpg');
+      width: 768px;
       padding-bottom: 80px;
     }
-
+  
     @media screen and (min-width: $desktop) {
       background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
         url('../images/desktop/header1024@1x.jpg');
+      width: 1024px;
     }
   }
 }
@@ -48,7 +51,6 @@ header {
 }
 
 .header-list {
-  padding-left: 112px;
   display: flex;
   align-items: center;
   & li:last-child {
@@ -73,6 +75,22 @@ header {
 }
 .logo-img {
   display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  animation-name: logo-spin;
+  animation-duration: 1000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-fill-mode: forwards;
+  background-repeat: no-repeat;
+  animation-play-state: paused;
+
+  .logo-link:hover & {
+    animation-play-state: running;
+  }
 }
 
 .header-button {
@@ -82,26 +100,61 @@ header {
   border: 0;
   line-height: 1.17;
   padding: 0;
+  cursor: pointer;
+  
+  &.current{
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: $color-accent;
+    }
+  }
+};
+
+.input-box {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+
+  @media screen and (min-width: $tablet) {  
+    width: 336px;
+  }
 }
+
 
 .header-input {
   background-color: transparent;
+  background-image: url('~images/svg/search.svg');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  width: 60%;
   border: 0;
   border-bottom: 1px $color-main solid;
   color: $font-color-main;
   font-weight: $font-weight-minor;
   font-size: 14px;
   line-height: 1.17;
+  transition: width $animationDuration $animationTimeFunction;
+  
+  &:focus,
+  &:hover {
+    outline: none;
+    width: 100%;
+    transition: width $animationDuration $animationTimeFunction;
+  }
+  &:focus {
+    background-position: 110%;
+    transition: all $animationDuration $animationTimeFunction;
+  }
   &::placeholder {
     color: $font-color-main;
     opacity: 0.7;
-  }
+  }  
 }
 
-//    @media screen and (min-width: $tablet) {
-
-// }
-
-// @media screen and (min-width: $desktop) {
-
-// }
