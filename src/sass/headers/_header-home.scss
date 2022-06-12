@@ -1,4 +1,3 @@
-@import "logo-spin";
 header {
   background-color: #010204;
   & .container {
@@ -58,9 +57,14 @@ header {
   }
 }
 
-.logo-link {
+.logo-button {
   display: flex;
   align-items: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
   & p {
     display: none;
     @media screen and (min-width: $tablet) {
@@ -72,6 +76,17 @@ header {
       padding-left: 8px;
     }
   }
+  // &:before{
+  //   content: '⋆';
+  //   top: 1px;
+  //   right: 25px;
+  //   display: block;
+  //   position: absolute;
+  //   color: $color-accent;
+  // }
+  // &:hover::before {
+  //     animation: spin 1s infinite linear;
+  //   }
 }
 .logo-img {
   display: inline-block;
@@ -79,18 +94,6 @@ header {
   height: 24px;
   margin: 0;
   padding: 0;
-  animation-name: logo-spin;
-  animation-duration: 1000ms;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: running;
-  animation-fill-mode: forwards;
-  background-repeat: no-repeat;
-  animation-play-state: paused;
-
-  .logo-link:hover & {
-    animation-play-state: running;
-  }
 }
 
 .header-button {
