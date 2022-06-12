@@ -23,14 +23,14 @@
                 </ul>
                 
                 <ul class="film-profile__list">
-                    <li class="film-inform__item">
+                    <li class="film-profile__item">
                         <p class="film-charac-value"><span class="film-charac-value--accent">{{vote_average}}</span> / {{vote_count}}</p>
                     </li>
                     <li class="film-profile__item">
                         <p class="film-charac-value">{{popularity}}</p>
                     </li>
                     <li class="film-profile__item">
-                        <p class="film-charac-value">{{original_title}}</p>
+                        <p class="film-charac-value accent">{{original_title}}</p>
                     </li>
                     <li class="film-profile__item">
                         <p class="film-charac-value"> {{#each genres}} {{this.name}} {{/each}}</p>
@@ -41,8 +41,8 @@
         <p class="film-description__text">{{overview}}</p>
         
         <div class="btn-block">
-            <button>ADD TO WATCHED</button>
-            <button>ADD TO QUEUE</button>
+            <button class="btn watched">ADD TO WATCHED</button>
+            <button class="btn queue">ADD TO QUEUE</button>
         </div>
     </div>
 
