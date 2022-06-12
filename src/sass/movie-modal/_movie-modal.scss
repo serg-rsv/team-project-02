@@ -63,13 +63,19 @@
     margin-top: 20px;
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 70px 1fr;
     grid-gap:0 39px;
     &__list{
         text-align: start;
+        display: grid;
+        grid-template: 20% 20% 20% 20%/1fr;
+        grid-gap: 8px;
     }
-    &__item+&__item{
-        margin-top: 8px;
+    @media screen and (min-width:$tablet){
+    grid-gap: 0 32px;
+    }
+    @media screen and (min-width:$desktop){
+    grid-gap: 0 83px;
     }
 }
 
@@ -84,7 +90,7 @@
     font-family: inherit;
     font-weight: $font-weight-major;
     font-size: $font-size-major;
-    line-height: 1.16;
+    line-height: $font-lheight-major;
 
     color: #000000;
         &--accent{
@@ -127,11 +133,20 @@
     }
 }
 
+// стилизация блока кнопок
+
 .btn-block{
     display: grid;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 110px 110px ;
     grid-gap:0 20px;
     margin-top: 20px;
+    @media screen and (min-width: $tablet){
+    grid-template-columns: 125px 125px;
+    grid-gap:0 15px
+    }
+    @media screen and (min-width:$desktop){
+    grid-template-columns: 136px 136px;
+    }
 }
 
 .btn{

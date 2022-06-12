@@ -1,11 +1,14 @@
 import TmdbApiService from '../services/tmdb-api';
 import filmDetails from '~/templates/modal.hbs'
 
-const body = document.querySelector('body');
+// const body = document.querySelector('body');
 
-const detailsOfFilm = TmdbApiService.fetchMovieDetails(414906);
+export default function onOpenModal(movieId) {
+    const detailsOfFilm = TmdbApiService.fetchMovieDetails(movieId);
 detailsOfFilm.then(film => {
     const markup = filmDetails(film);
-    body.insertAdjacentHTML('beforeend', markup)
+    // body.insertAdjacentHTML('beforeend', markup);
 });
+};
+
 
