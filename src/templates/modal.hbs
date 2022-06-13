@@ -5,38 +5,16 @@
 
     <div class="film-details">
         <h2 class="film__title">{{title}}</h2>
-
-        <div class="film-profile">
-                <ul class="film-profile__list">
-                    <li class="film-profile__item">
-                        <p class="film-charac">Vote / Votes</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac">Popularity</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac">Original Title</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac">Genre</p>
-                    </li>
-                </ul>
-                
-                <ul class="film-profile__list">
-                    <li class="film-profile__item">
-                        <p class="film-charac-value"><span class="film-charac-value--accent">{{vote_average}}</span> / {{vote_count}}</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac-value">{{popularity}}</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac-value accent">{{original_title}}</p>
-                    </li>
-                    <li class="film-profile__item">
-                        <p class="film-charac-value"> {{#each genres}} {{this.name}} {{/each}}</p>
-                    </li>
-                </ul>
-        </div>
+        <dl class="film-profile">
+                <dt class="film-profile__name">Vote / Votes</dt>
+                <dd class="film-profile__value"><span class="film-profile__value--accent">{{vote_average}}</span> / {{vote_count}}</dd>
+                <dt class="film-profile__name">Popularity</dt>
+                <dd class="film-profile__value">{{popularity}}</dd>
+                <dt class="film-profile__name">Original Title</dt>
+                <dd class="film-profile__value accent">{{original_title}}</dd>
+                <dt class="film-profile__name">Genre</dt>
+                <dd class="film-profile__value">{{#each genres}} {{this.name}} {{/each}}</dd>
+        </dl>
         <h3 class="film-description">About</h3>
         <p class="film-description__text">{{overview}}</p>
         

@@ -1,7 +1,7 @@
 .modal {
   max-width: 280px;
   height: auto;
-  background-color: aquamarine;
+  // background-color: aquamarine;
   margin: auto;
   padding: 48px 20px;
   @media screen and (min-width: $tablet) {
@@ -36,11 +36,6 @@
   }
 }
 
-// .film-details{
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-// }
-
 .film__title {
   margin-top: 20px;
   text-align: start;
@@ -64,49 +59,47 @@
 
   display: grid;
   grid-template-columns: 70px 1fr;
-  grid-gap: 0 39px;
-  &__list {
-    text-align: start;
-    display: grid;
-    grid-template: 20% 20% 20% 20%/1fr;
-    grid-gap: 8px;
-  }
+  grid-gap: 8px 39px;
+    &__name{
+      text-align: start;
+      font-family: $font-main;
+      font-weight: $font-weight-major;
+      font-size: $font-size-major;
+      line-height: $font-height-major;
+      
+      color: #8c8c8c;
+    }
+    &__value{
+      text-align: start;
+      font-family: inherit;
+      font-weight: $font-weight-major;
+      font-size: $font-size-major;
+      line-height: $font-height-major;
+        
+      color: #000000;
+        
+        &--accent {
+          display: inline-block;
+          text-align: center;
+          padding-top: 1px;
+          // padding: 1px 10px;
+          width: 36px;
+        
+          color: $color-main;
+          background-color: $color-accent;
+          border-radius: 5px;
+        }
+        
+        &.accent {
+          text-transform: uppercase;
+        }
+    }
+
   @media screen and (min-width: $tablet) {
-    grid-gap: 0 32px;
+    grid-gap: 8px 32px;
   }
   @media screen and (min-width: $desktop) {
-    grid-gap: 0 83px;
-  }
-}
-
-.film-charac {
-  font-family: $font-main;
-  font-weight: $font-weight-major;
-  font-size: $font-size-major;
-  line-height: $font-height-major;
-
-  color: #8c8c8c;
-  &-value {
-    font-family: inherit;
-    font-weight: $font-weight-major;
-    font-size: $font-size-major;
-    line-height: $font-height-major;
-
-    color: #000000;
-    &--accent {
-      display: inline-block;
-      text-align: center;
-      padding-top: 1px;
-      // padding: 1px 10px;
-      width: 36px;
-
-      color: $color-main;
-      background-color: $color-accent;
-      border-radius: 5px;
-    }
-    &.accent {
-      text-transform: uppercase;
-    }
+    grid-gap: 8px 83px;
   }
 }
 
