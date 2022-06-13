@@ -57,68 +57,6 @@ header {
   }
 }
 
-.logo-button {
-  display: flex;
-  align-items: center;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  position: relative;
-  & p {
-    display: none;
-    @media screen and (min-width: $tablet) {
-      display: inline-block;
-      text-decoration: none;
-      color: $font-color-main;
-      font-size: 30px;
-      line-height: 1.17;
-      padding-left: 8px;
-    }
-  }
-  // &:before{
-  //   content: '⋆';
-  //   top: 1px;
-  //   right: 25px;
-  //   display: block;
-  //   position: absolute;
-  //   color: $color-accent;
-  // }
-  // &:hover::before {
-  //     animation: spin 1s infinite linear;
-  //   }
-}
-.logo-img {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-}
-
-.header-button {
-  text-transform: uppercase;
-  background-color: transparent;
-  color: $font-color-main;
-  border: 0;
-  line-height: 1.17;
-  padding: 0;
-  cursor: pointer;
-  
-  &.current{
-    position: relative;
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: $color-accent;
-    }
-  }
-};
-
 .input-box {
   position: relative;
   display: inline-block;
