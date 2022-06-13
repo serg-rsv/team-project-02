@@ -31,12 +31,12 @@
   margin: 0;
   margin-left: auto;
   margin-right: auto;
+  justify-content: center;
 
-  @media screen and(max-width:767px) {
-    margin: auto;
-    padding: auto;
-    justify-content: center;
-  }
+  // @media screen and(max-width:767px) {
+  //   margin: auto;
+  //   padding: auto;
+  // }
 
   @media screen and(min-width:$tablet) {
     margin-left: -16px;
