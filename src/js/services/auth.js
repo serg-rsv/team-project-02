@@ -50,19 +50,20 @@ export const authApi = {
     trackUserLoginState: async (callbackIfUserSignedIn = dummy, callbackOnIfUserSignedOut = dummy) => {
 
         // функція самого Firebase. Аргумент user потряпляє у фунцкію автоматично. Ми його поки ніяк не обробляємо.
-        onAuthStateChanged(auth, (user) => {
+        return onAuthStateChanged(auth, (user) => {
             if (user) {
-              const uid = user.uid;
+                const uid = user.uid;
 
               // callback з кастомною логікою.
               // Сюди треба передати ID залогіненого користувача у Firedase,
               // щоб його можно було передати для запиту до бази данних у зовнішньому коді
-              callbackIfUserSignedIn(uid);
+                callbackIfUserSignedIn(uid);
             } else {
               // callback з кастомною логікою
-              callbackOnIfUserSignedOut();
+                callbackOnIfUserSignedOut();
+                console.log('out');
             }
-          });
+        });
     },
     // функція яка вилогінює користувача з системи.
     // приймає callback з кастомною логікою, якщо щось потрібно зробити, коли користувач вийшов з системи
