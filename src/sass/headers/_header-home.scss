@@ -2,6 +2,7 @@ header {
   background-color: #010204;
   & .container {
     width: 320px;
+    min-height: 230px;
     padding: 40px 20px 92px 20px;
     max-width: 100%;
     text-align: center;
@@ -14,6 +15,8 @@ header {
       background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
         url('../images/tablet/header768@1x.jpg');
       width: 768px;
+      min-height: 0;
+      max-height: 215px;
       padding-bottom: 80px;
     }
   
@@ -43,10 +46,13 @@ header {
 }
 
 .header-box {
-  margin-bottom: 54px;
+  margin-bottom: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (min-width: $tablet) {
+    margin-bottom: 41px;
+  }
 }
 
 .header-list {
@@ -58,10 +64,8 @@ header {
 }
 
 .input-box {
-  position: relative;
   display: inline-block;
   width: 100%;
-  overflow: hidden;
 
   @media screen and (min-width: $tablet) {  
     width: 336px;
