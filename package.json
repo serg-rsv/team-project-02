@@ -5,7 +5,7 @@
   "main": "index.js",
   "homepage": "https://serg-rsv.github.io/team-project-02",
   "scripts": {
-    "dev": "parcel src/*.html",
+    "dev": "parcel src/*.html --open",
     "build": "parcel build src/*.html --public-url /team-project-02/"
   },
   "repository": {
@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "firebase": "^9.8.3",
+    "lodash": "^4.17.21",
     "notiflix": "^3.2.5"
   }
 }

@@ -5,5 +5,12 @@
 
 // Стили для файла с примером HTML-фрагмента
 @import './utils/variables';
+@import './utils/hidden';
 @import './base/reset';
 @import './base/typography';
+@import './base/container';
+@import './headers/header-home';
+@import './headers/header-library';
+@import './loader/loader';
+@import './gallery';
+@import './movie-modal/movie-modal';

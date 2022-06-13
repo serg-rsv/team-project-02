@@ -1,0 +1,105 @@
+header>.container-lib {
+		padding-bottom: 62px;
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+			url('../images/mobile/lib-header320@1x.jpg');
+
+		@media screen and (min-width: $tablet) {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+				url('../images/tablet/lib-header768@1x.jpg');
+		}
+
+		@media screen and (min-width: $desktop) {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+				url('../images/desktop/lib-header1024@1x.jpg');
+		}
+	}
+
+@media (min-device-pixel-ratio: 2),
+(min-resolution: 192dpi),
+(min-resolution: 2dppx) {
+	header>.container-lib {
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+			url('../images/mobile/lib-header320@2x.jpg');
+
+		@media screen and (min-width: $tablet) {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+				url('../images/tablet/lib-header768@2x.jpg');
+		}
+
+		@media screen and (min-width: $desktop) {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+				url('../images/desktop/lib-header1024@2x.jpg');
+		}
+	}
+}
+
+.header-lib {
+	background-color: #100003;
+	
+}
+
+.header-box-lib {
+	margin-bottom: 60px;
+
+	@media screen and (min-width: $tablet) {
+		margin-bottom: 40px;
+	}	
+}
+
+.input-box-lib {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 20px;
+
+	@media screen and (min-width: $tablet) {
+		display: inline-flex;
+		width: 336px;
+		column-gap: 36px;
+	}
+
+	@media screen and (min-width: $desktop) {
+		width: 311px;
+		column-gap: 16px;
+	}
+
+}
+
+.input-box-lib .button-action {
+	width: 100%;
+	padding-top: 14px;
+	padding-bottom: 14px;
+
+	text-transform: uppercase;
+	font-family: $font-main;
+	font-weight: $font-weight-major;
+	font-size: $font-size-major;
+	line-height: 1.17;
+
+
+	border-radius: 5px;
+	background-color: transparent;
+	border: 1px solid $color-main;
+	color: $font-color-main;
+	position: relative;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: $color-accent;
+		border-color: $color-accent;
+		// box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
+	}
+
+	@media screen and (min-width: $tablet) {
+		min-width: 152px;
+	}
+	@media screen and (min-width: $desktop) {
+		min-width: 148px;		
+	}
+
+	&.current-button {
+		background-color: $color-accent;
+		border-color: $color-accent;
+	}
+}
+
