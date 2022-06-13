@@ -6,4 +6,5 @@ export default function onOpenModal(movieId) {
   detailsOfFilm.then(film => {
     const markup = filmDetailsModal(film);
   });
-}
+};
+
