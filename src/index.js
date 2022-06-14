@@ -5,7 +5,8 @@ import { renderMainPage } from './js/Oleksandr/render';
 
 import './js/irina/modal.js';
 import './js/header/change-header';
-import { authApi } from './js/services/auth';
+// import { authApi } from './js/services/auth';
+import './js/form/form-ui-valid'
 
 renderMainPage(TmdbApiService.fetchTrendingMovies());
 

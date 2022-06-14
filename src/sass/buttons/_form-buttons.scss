@@ -1,0 +1,103 @@
+.controls__btn {
+	cursor: pointer;
+	position: relative;
+	color: $font-color-dark;
+	background-color: $color-main;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	padding: 10px 30px;
+	transition: 0.5s;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+	
+
+
+	&:hover {
+		outline: none;
+		letter-spacing: 0.25em;
+		background: var(--clr);
+		color: var(--clr);
+		box-shadow: 0 0 20px var(--clr);
+
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 2px;
+		background-color: $color-main;
+
+	}
+
+	& span{
+		position: relative;
+		z-index: 1;	
+	}
+
+	& i {
+		position: absolute;
+		inset: 0;
+		display: block;
+
+		&:before {
+			content: '';
+			position: absolute;
+			left: 80%;
+			top: -3.5px;
+			width: 10px;
+			height: 5px;
+			border: 2px solid var(--clr);
+			background: $color-main;
+			transform: translateX(-50%);
+			transition: 0.5s;
+
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			left: 20%;
+			bottom: -3.5px;
+			width: 10px;
+			height: 5px;
+			border: 2px solid var(--clr);
+			background: $color-main;
+			transform: translateX(-50%);
+			transition: 0.5s;
+
+			
+		}	
+
+	}
+}
+
+.controls__btn:hover i:before {
+	width: 20px;
+	left: 20%;
+	transform: translateX(-10px);
+}
+
+.controls__btn:hover i:after {
+	width: 20px;
+	left: 80%;
+	transform: translateX(-10px);
+}
+
+button:disabled {
+	cursor: not-allowed;
+	color: rgba(0, 0, 0, 0.5);
+
+	&:hover {
+			outline: none;
+			letter-spacing: inherit;
+			background: inherit;
+			color: rgba(0, 0, 0, 0.5);
+			box-shadow: none;
+	
+		}
+
+		& i {
+			display: none;
+		}
+}

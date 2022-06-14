@@ -1,0 +1,62 @@
+.auth-form__label {
+	position: relative;
+	display: block;
+}
+
+.auth-form__text-input {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: transparent;
+	border-radius: 5px;
+	outline: none;
+	color: $font-color-dark;
+	font-size: 1em;
+	transition: 0.5s;
+
+	&:focus {
+		border-color: var(--clr);
+	}
+}
+
+.auth-form__input-name {
+	position: absolute;
+	left: 0;
+	padding: 10px;
+	pointer-events: none;
+	font-size: 1em;
+	color: rgba(0, 0, 0, 0.25);
+	text-transform: uppercase;
+
+	transition: 0.5s;
+
+	.auth-form__text-input:valid ~ &,
+	.auth-form__text-input:focus ~ &,
+	.auth-form__text-input--filled ~ & {
+		color: var(--clr);
+		transform: translateX(10px) translateY(-5px);
+		font-size: 0.65em;
+		padding: 0 10px;
+		background: $color-main;
+		border-left: 1px solid var(--clr);
+		border-right: 1px solid var(--clr);
+		letter-spacing: 0.2em;
+	}
+
+	
+
+	.auth-form__label:nth-child(2) .auth-form__text-input:valid~&,
+	.auth-form__label:nth-child(2) .auth-form__text-input:focus~&,
+	.auth-form__label:nth-child(2) .auth-form__text-input--filled~& {
+		background-color: var(--clr);
+		color: $color-main;
+		border-radius: 2px;
+	}
+}
+
+
+.auth-form__label:nth-child(2) {
+	margin-top: 20px;
+}
+
+
