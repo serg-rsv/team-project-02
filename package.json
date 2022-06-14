@@ -30,8 +30,6 @@
     "basiclightbox": "^5.0.4",
     "firebase": "^9.8.3",
     "lodash": "^4.17.21",
-    "notiflix": "^3.2.5",
-    "simplelightbox": "^2.10.3",
-    "src": "^1.1.2"
+    "notiflix": "^3.2.5"
   }
 }
