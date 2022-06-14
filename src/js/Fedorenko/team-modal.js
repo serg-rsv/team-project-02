@@ -1,10 +1,5 @@
-// import data from './team/team-card.json';
-// import * as basicLightbox from 'basiclightbox';
-// const basicLightbox = require('basiclightbox');
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/src/styles/main.scss';
-
-// import 'src/styles/main.scss';
 
 import teamCardTpl from '~/templates/team-card.hbs';
 console.log('Hello');
@@ -31,7 +26,7 @@ const data = [{
         id: '3',
         name: 'Світлана Федоренко',
         description: 'Developer',
-        image: 'https://i.ibb.co/Yd05MF7/P81011-152247.jpg',
+        image: 'https://i.ibb.co/TP00HH0/Sveta.jpg',
         github: 'https://github.com/Svetlana493',
         linkdIn: 'https://www.linkedin.com/in/svetlana-fedorenko-35a479231/',
         mail: 'fedorenkosvitlana726@gmail.com',
@@ -49,7 +44,7 @@ const data = [{
         id: '5',
         name: 'Тетяна Михайленко',
         description: 'Developer',
-        image: 'https://i.ibb.co/WszrtmZ/Tetiana.jpg',
+        image: 'https://i.ibb.co/2y5PKtk/IMG-20210902-144410-1.jpg',
         github: 'https://github.com/Tata-git ',
         linkdIn: '',
         mail: 'fsd.tetiana@gmail.com',
@@ -83,12 +78,12 @@ const data = [{
     },
     {
         id: '9',
-        name: 'Тарас ',
+        name: 'Тарас Бондар',
         description: 'Developer',
-        image: '',
-        github: '',
-        linkdIn: '',
-        mail: '',
+        image: 'https://i.ibb.co/kXScqRg/Taras.jpg',
+        github: 'https://github.com/strelezzzz',
+        linkdIn: 'linkedin.com/in/taras-bondar-468131119',
+        mail: 'strelezzzz@gmai.com',
     },
 ];
 teamLink.addEventListener('click', onTeamModalShow);

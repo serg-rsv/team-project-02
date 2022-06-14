@@ -45,16 +45,9 @@
 .cards-container .card {
     z-index: 2;
     position: relative;
-    // width: 270px;
-    // height: 350px;
-    // background: rgba(255, 255, 255, 0.05);
-    // margin: 20px;
-    // box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    // border-radius: 99px;
     display: flex;
     justify-content: center;
     align-items: center;
-    // backdrop-filter: blur(5px);
 }
 
 .team__title {
@@ -93,15 +86,13 @@
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid rgba(15, 15, 15, 0.705);
-    // on dark theme
-    // border: 5px solid rgba(255, 255, 255, 0.05);
     &__img {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: fill;
+        object-fit: cover;
         transition: fill;
     }
     .card:hover &,
@@ -114,7 +105,6 @@
     &__title {
         color: $color-accent;
         text-shadow: 0.5px 0.5px 0.5px #000;
-        // text-transform: uppercase;
         text-align: center;
         margin: 20px 0 10px;
         line-height: 1.1em;
@@ -133,9 +123,6 @@
     .card__content {
         opacity: 1;
         transition: 0.5s;
-        // on dark theme
-        // opacity: 0.75;
-        // transition: 0.5s;
         .cards-container .card:hover & {
             opacity: 1;
             transform: translateY(-20px);

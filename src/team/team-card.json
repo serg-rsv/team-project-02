@@ -20,7 +20,7 @@
         "id": "3",
         "name": "Світлана Федоренко",
         "description": "Developer",
-        "image": "https://i.ibb.co/Yd05MF7/P81011-152247.jpg",
+        "image": "https://i.ibb.co/TP00HH0/Sveta.jpg",
         "github": "https://github.com/Svetlana493",
         "linkdIn": "https://www.linkedin.com/in/svetlana-fedorenko-35a479231/",
         "mail": "fedorenkosvitlana726@gmail.com"
@@ -38,7 +38,7 @@
         "id": "5",
         "name": "Тетяна Михайленко",
         "description": "Developer",
-        "image": "https://i.ibb.co/WszrtmZ/Tetiana.jpg",
+        "image": "https://i.ibb.co/2y5PKtk/IMG-20210902-144410-1.jpg",
         "github": "https://github.com/Tata-git ",
         "linkdIn": "",
         "mail": "fsd.tetiana@gmail.com"
@@ -72,11 +72,11 @@
     },
     {
         "id": "9",
-        "name": "Тарас ",
+        "name": "Тарас Бондар",
         "description": "Developer",
-        "image": "",
-        "github": "",
-        "linkdIn": "",
-        "mail": ""
+        "image": "https://i.ibb.co/kXScqRg/Taras.jpg",
+        "github": "https://github.com/strelezzzz",
+        "linkdIn": "linkedin.com/in/taras-bondar-468131119",
+        "mail": "strelezzzz@gmai.com"
     }
 ]

@@ -1,27 +1,22 @@
 // Палитра цветов для приложения
 $color-main: #ffffff; // основной бэкграунд
-$color-accent: #FF6B01; // второй главный цвет, цвет акцентов
-$color-additional: #F7F7F7; // футер, оттенки
-
+$color-accent: #ff6b01; // второй главный цвет, цвет акцентов
+$color-additional: #f7f7f7; // футер, оттенки
 // Текст
-$font-color-main:#ffffff; // основной цвет текста
-$font-main: 'Roboto', sans-serif; // Основной (и единственный) текст страницы
+$font-color-main: #ffffff; // основной цвет текста
+$font-main: 'Roboto',
+sans-serif; // Основной (и единственный) текст страницы
 $font-size-major: 12px; // Размер шрифта
 $font-height-major: 1.33; // Высота строчного интервала
 $font-weight-major: 500; // Размер шрифта большой
 $font-weight-minor: 400; // Размер шрифта маленькой
-
-
 // Точки перелома
 $mobile: 320px;
 $tablet: 768px;
 $desktop: 1024px;
-
 // Максимальная ширина планшетной версии
 $underdesktop: 1023px;
-
 // $shadowItem: 0 4px 4px rgba(0, 0, 0, 0.25);
 $animationDuration: 300ms;
 $animationTimeFunction: cubic-bezier(0.6, 0.2, 0.4, 1);
-
 // $function-transition: 250ms ease;
