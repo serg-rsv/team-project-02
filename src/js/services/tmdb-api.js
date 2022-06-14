@@ -39,11 +39,11 @@ export const TmdbApiService = {
     totalPages: 1,
   },
 
-  getTrandingPage: function () {
+  getTrendingPage: function () {
     return this.trending.page;
   },
 
-  getTrandingTotalPage: function () {
+  getTrendingTotalPage: function () {
     return this.trending.totalPages;
   },
 
@@ -59,7 +59,7 @@ export const TmdbApiService = {
     this.trending.page = 0;
   },
 
-  resetSearchMoivePage: function () {
+  resetSearchMoviePage: function () {
     this.searchMovie.page = 0;
   },
   /**
