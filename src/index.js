@@ -4,6 +4,7 @@ import { TmdbApiService } from './js/services/tmdb-api';
 import { renderMainPage } from './js/Oleksandr/render';
 
 import './js/irina/modal.js';
+import './js/Fedorenko/team-modal';
 import './js/header/change-header';
 import { authApi } from './js/services/auth';
 
