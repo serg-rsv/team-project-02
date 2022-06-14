@@ -1,3 +1,7 @@
+// import * as basicLightbox from 'basiclightbox';
+// import 'basiclightbox/src/styles/main.scss';
+// import formTpl from '~/templates/form.hbs';
+
 const refs = {
   header: document.querySelector('header'),
   containerHeader: document.querySelector('header>.container'),
@@ -25,9 +29,14 @@ function homeRender() {
   inputBoxLib.classList.add('visually-hidden');
 }
 
-function libraryRender() {
+function libraryRender(modal) {
   const { header, containerHeader, headerBox, homeBtn, libraryBtn, inputBox, inputBoxLib } = refs;
 
+  // if (modal) {
+  //   autorisationFormCall();
+  //   autorizationFormUiValid();
+  // }
+  
   if (header.classList.contains('header-lib')) return;
 
   header.classList.add('header-lib');
@@ -36,6 +45,7 @@ function libraryRender() {
   homeBtn[1].classList.remove('current');
   libraryBtn.classList.add('current');
   inputBox.classList.add('visually-hidden');
-  inputBoxLib.classList.remove('visually-hidden');
+  inputBoxLib.classList.remove('visually-hidden');  
 }
 export { homeRender, libraryRender };
+ 
