@@ -6,81 +6,94 @@ const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMAGE_URL = 'https://image.tmdb.org/t/p/';
 const API_KEY = '5ce599886a4c0703a030654068991e03';
 
-export const TmdbApiService = {
-  // GET
-  endPoints: {
-    // #trending/{media_type}/{time_window}
-    // https://api.themoviedb.org/3/#trending/all/week?api_key={API_KEY}
-    trending: 'trending/',
-    // search/movie
-    // https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&language=en-US&query=batman&page=1&include_adult=false
-    searchMovie: 'search/movie',
-    // movie/{ movie_id }
-    // https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}&language=en-US
-    movieDetails: 'movie/',
-    // https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US
-    genresMovie: 'genre/movie/list',
-  },
+// GET
+const END_POINTS = {
+  // /genre/movie/list
+  // https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US
+  GENRE_MOVIE: '/genre/movie/list',
+  // #trending/{media_type}/{time_window}
+  // https://api.themoviedb.org/3/#trending/all/week?api_key={API_KEY}
+  TRENDING: 'trending/',
+  // search/movie
+  // https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&language=en-US&query=batman&page=1&include_adult=false
+  SEARCH_MOVIE: 'search/movie',
+  // movie/{ movie_id }
+  // https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}&language=en-US
+  MOVIE_DETAILS: 'movie/',
+};
+const genres = {};
 
-  languages: {
-    ENGLISH: 'en',
-    UKRAINIAN: 'uk',
-  },
+const LANGUAGES = {
+  ENGLISH: 'en-US',
+  UKRAINIAN: 'uk-UA',
+};
 
-  trending: {
-    page: 0,
-    totalPages: 1,
-    mediaType: 'movie/',
-    timeWindow: 'day',
-  },
+const trending = {
+  page: 0,
+  totalPages: 1,
+  MEDIA_TYPE: 'movie/',
+  TIME_WINDOW: 'day',
+};
 
-  searchMovie: {
-    page: 0,
-    totalPages: 1,
-  },
+const searchMovie = {
+  page: 0,
+  totalPages: 1,
+};
 
-  getTrendingPage: function () {
-    return this.trending.page;
+export const tmdbApi = {
+  /**
+   * повертає поточну сторінку з запиту по трендовим фільмам
+   */
+  get trendingPage() {
+    return trending.page;
   },
-
-  getTrendingTotalPage: function () {
-    return this.trending.totalPages;
+  /**
+   * повертає загальну кількість сторінок з запиту по трендовим фільмам
+   */
+  get trendingTotalPage() {
+    return trending.totalPages;
   },
-
-  getSearchMoviePage: function () {
-    return this.searchMovie.page;
+  /**
+   * повертає поточну сторінку з запиту по назві фільму
+   */
+  get searchMoviePage() {
+    return searchMovie.page;
   },
-
-  getSearchMovieTotalPage: function () {
-    return this.searchMovie.totalPages;
+  /**
+   * повертає загалтну кількість сторінок з запиту по назві фільму
+   */
+  get searchMovieTotalPage() {
+    return searchMovie.totalPages;
   },
-
-  resetTrendingPage: function () {
-    this.trending.page = 0;
+  /**
+   * перед новим запитом потрібно скинути значення поточної сторінки трендових фільмів
+   */
+  resetTrendingPage() {
+    trending.page = 0;
   },
-
-  resetSearchMoviePage: function () {
-    this.searchMovie.page = 0;
+  /**
+   * перед новим пошуком потрібно скинути значення поточної сторінки фільмів по назві
+   */
+  resetSearchMoviePage() {
+    searchMovie.page = 0;
   },
   /**
    *
    * @returns повертає *проміс* в якому масив об'єктів популярних фільмів за день.
    */
-  fetchTrendingMovies: function () {
-    const endPointUrl =
-      BASE_URL + this.endPoints.trending + this.trending.mediaType + this.trending.timeWindow;
+  fetchTrendingMovies() {
+    const endPointUrl = BASE_URL + END_POINTS.TRENDING + trending.MEDIA_TYPE + trending.TIME_WINDOW;
     const requestParams = {
       api_key: API_KEY,
-      page: this.trending.page + 1,
-      language: this.languages.ENGLISH,
+      page: trending.page + 1,
+      language: LANGUAGES.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      this.trending.page = page;
-      this.trending.totalPages = total_pages;
-      return results.map(result => {
-        const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
+      trending.page = page;
+      trending.totalPages = total_pages;
+      return results.map(({ id, title, vote_average, release_date, poster_path, genre_ids }) => {
         return {
           id,
           genre_ids,
@@ -98,21 +111,20 @@ export const TmdbApiService = {
    * @param {string} query назва фільму для пошуку.
    * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
-  fetchSearchMovie: function (query) {
-    const endPointUrl = BASE_URL + this.endPoints.searchMovie;
+  fetchSearchMovie(query) {
+    const endPointUrl = BASE_URL + END_POINTS.SEARCH_MOVIE;
     const requestParams = {
       api_key: API_KEY,
-      page: this.trending.page + 1,
-      language: this.languages.ENGLISH,
+      page: trending.page + 1,
+      language: LANGUAGES.ENGLISH,
       query,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      this.trending.page = page;
-      this.trending.totalPages = total_pages;
-      return results.map(result => {
-        const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
+      searchMovie.page = page;
+      searchMovie.totalPages = total_pages;
+      return results.map(({ id, title, vote_average, release_date, poster_path, genre_ids }) => {
         return {
           id,
           genre_ids,
@@ -128,13 +140,13 @@ export const TmdbApiService = {
   /**
    *
    * @param {number} movieId ідентифікатор фільма в базі данних TMBD
-   * @returns повертає *проміс* в якому об'єкт з детальним описом всіх характеристик фільму.
+   * @returns повертає *проміс* в якому об'єкт з детальним описом фільму.
    */
-  fetchMovieDetails: function (movieId) {
-    const endPointUrl = BASE_URL + this.endPoints.movieDetails + movieId;
+  fetchMovieDetails(movieId) {
+    const endPointUrl = BASE_URL + END_POINTS.MOVIE_DETAILS + movieId;
     const requestParams = {
       api_key: API_KEY,
-      language: this.languages.ENGLISH,
+      language: LANGUAGES.ENGLISH,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {

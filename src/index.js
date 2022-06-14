@@ -1,26 +1,36 @@
 import './sass/main.scss';
 
-import { TmdbApiService } from './js/services/tmdb-api';
+import { tmdbApi } from './js/services/tmdb-api';
 import { renderMainPage } from './js/Oleksandr/render';
 
 import './js/irina/modal.js';
 import './js/header/change-header';
 import { authApi } from './js/services/auth';
 
-renderMainPage(TmdbApiService.fetchTrendingMovies());
+tmdbApi
+  .fetchTrendingMovies()
+  .then(renderMainPage)
+  .then(() => {
+    document.querySelector('.films_list').addEventListener('click', onFilmCard);
+  });
+
+function onFilmCard(e) {
+  console.dir(e);
+  console.log(tmdbApi.trendingTotalPage);
+}
 
 // =============== Псевдокод ===============
 
 // authApi.trackUserLoginState() ----> ункція має викликатися найпершою
 // і обовєязково з колбеками, які запишуть до стору стан користувача
 // я перевірив - нічого повренути із ціє функції окрім самої функції неможна.
-// 
+//
 // попроную створити файл та назвати його HandleUserState
 // він буду містити два колбека:
 // const userIsSignedIn = (userId) => {
 //     одразу зберегти id юзера, який у коблек прийду з authApi.trackUserLoginState
 //     store.userId = userId;
-//     
+//
 //     також записати стан до store
 //     store.isSignedIn = true;
 //     тут ще можна вивести нотіфікашку ти "З поверненням, ${пошта юзера}"
@@ -32,7 +42,6 @@ renderMainPage(TmdbApiService.fetchTrendingMovies());
 // і тоді передавати їх наступним чином
 // authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
 //  це важливо
-
 
 // список интерактивных елементов
 // const refs = {
@@ -80,7 +89,7 @@ function onSearchInput(e) {
 function onLibBtn() {
   // todo
   // - отрисовать шапку библиотеки
-  // - проверка на авторизацию 
+  // - проверка на авторизацию
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
@@ -88,7 +97,7 @@ function onLibBtn() {
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
   // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, onGetWatchedMovieRender)
-  // 
+  //
   // onGetWatchedMovieRender ---> колбек-функція, яка після відповіді від FireBase
   // буду рендерети масив доданих фільмів.
   // const onGetWatchedMovieRender = (watchedMovieArray) => renderMainPage(watchedMovieArray);
@@ -123,7 +132,7 @@ function onLibBtn() {
 function onWatchedBtn() {
   // todo
   // - отрисовать список фильмов из очереди
-  // 
+  //
 }
 
 function onQueueBtn() {
@@ -174,7 +183,7 @@ function onDelWatchedBtn(e) {
   // - вывести уведомление об успешности операции (notiflix)
   // - заменить кнопку на добавить
   // - получить ссылку на кнопку и повесить слушатель
-   // ============== Prokoptsov ============
+  // ============== Prokoptsov ============
   // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
   //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
   //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
@@ -187,7 +196,7 @@ function onDelQueueBtn(e) {
   // - вывести уведомление об успешности операции (notiflix)
   // - заменить кнопку на добавить
   // - получить ссылку на кнопку и повесить слушатель
-     // ============== Prokoptsov ============
+  // ============== Prokoptsov ============
   // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
   //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
   //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
