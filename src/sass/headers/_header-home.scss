@@ -1,8 +1,8 @@
-@import "logo-spin";
 header {
   background-color: #010204;
   & .container {
     width: 320px;
+    min-height: 230px;
     padding: 40px 20px 92px 20px;
     max-width: 100%;
     text-align: center;
@@ -15,6 +15,8 @@ header {
       background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
         url('../images/tablet/header768@1x.jpg');
       width: 768px;
+      min-height: 0;
+      max-height: 215px;
       padding-bottom: 80px;
     }
   
@@ -44,10 +46,13 @@ header {
 }
 
 .header-box {
-  margin-bottom: 54px;
+  margin-bottom: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (min-width: $tablet) {
+    margin-bottom: 41px;
+  }
 }
 
 .header-list {
@@ -58,69 +63,9 @@ header {
   }
 }
 
-.logo-link {
-  display: flex;
-  align-items: center;
-  & p {
-    display: none;
-    @media screen and (min-width: $tablet) {
-      display: inline-block;
-      text-decoration: none;
-      color: $font-color-main;
-      font-size: 30px;
-      line-height: 1.17;
-      padding-left: 8px;
-    }
-  }
-}
-.logo-img {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  animation-name: logo-spin;
-  animation-duration: 1000ms;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: running;
-  animation-fill-mode: forwards;
-  background-repeat: no-repeat;
-  animation-play-state: paused;
-
-  .logo-link:hover & {
-    animation-play-state: running;
-  }
-}
-
-.header-button {
-  text-transform: uppercase;
-  background-color: transparent;
-  color: $font-color-main;
-  border: 0;
-  line-height: 1.17;
-  padding: 0;
-  cursor: pointer;
-  
-  &.current{
-    position: relative;
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: $color-accent;
-    }
-  }
-};
-
 .input-box {
-  position: relative;
   display: inline-block;
   width: 100%;
-  overflow: hidden;
 
   @media screen and (min-width: $tablet) {  
     width: 336px;
