@@ -27,28 +27,30 @@
       <span class="auth-form__input-name"> password </span>
     </label>
     <div class="controls">
+      <div class="controls--additional">
+        <button
+          style="--clr: #32a57f"
+          disabled="disabled"
+          class="controls__btn controls__btn--sign-in"
+          name="sign-in-with-email-password"
+          type="submit"
+          value="Sign-in"
+        >
+          <span>Sign-in</span>
+          <i></i>
+        </button>
+        <button
+          style="--clr: #ff6b01"
+          class="controls__btn controls__btn--register"
+          name="sign-up-with-email-password"
+          type="submit"
+          value="Create account"
+        >
+          <span>Create account</span>
+          <i></i>
+        </button>
+      </div>
       <button
-        style="--clr: #32a57f"
-        disabled="disabled"
-        class="controls__btn controls__btn--sign-in"
-        name="sign-in-with-email-password"
-        type="submit"
-        value="Sign-in"
-      >
-        <span>Sign-in</span>
-        <i></i>
-      </button>
-      <a
-        style="--clr: #ff6b01"
-        class="controls__btn controls__btn--register"
-        name="sign-up-with-email-password"
-        type="submit"
-        value="Create account"
-      >
-        <span>Create account</span>
-        <i></i>
-      </a>
-      <a
         style="--clr: #ff6b01"
         class="controls__btn controls__btn--google"
         name="sign-in-with-google-account"
@@ -57,7 +59,7 @@
       >
         <span>Sign-in with google </span>
         <i></i>
-      </a>
+      </button>
     </div>
   </form>
 </div>

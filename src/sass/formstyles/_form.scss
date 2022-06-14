@@ -1,3 +1,19 @@
+.container.auth-form {
+	min-width: 100%;
+	position: relative;
+	padding: 50px 12px 40px;
+	background: linear-gradient(156deg, rgba(255, 255, 255, 0.7) 24%, rgba(148, 187, 233, 0.2) 69%),
+	radial-gradient(circle, rgba(148, 187, 233, 0.2) 18%, rgba(238, 174, 202, 0.2) 93%),
+	linear-gradient(45deg, rgba(255, 255, 255, 0.2) 0%, rgba(252, 252, 252, 0.5) 12%, rgba(252, 252, 252, 0.8) 25%, rgba(252, 252, 252, 0.8) 48%, rgba(252, 252, 252, 0.7) 75%, rgba(252, 252, 252, 0.6) 88%, rgba(255, 255, 255, 0.3) 100%);
+	border-radius: 10px;
+
+	@media screen and (min-width: $tablet) {
+		min-width: none;
+		max-width: 350px;
+		padding: 50px 30px;
+	}
+}
+
 .auth-form__label {
 	position: relative;
 	display: block;
@@ -37,7 +53,7 @@
 		transform: translateX(10px) translateY(-5px);
 		font-size: 0.65em;
 		padding: 0 10px;
-		background: $color-main;
+		background: #f0eef0;
 		border-left: 1px solid var(--clr);
 		border-right: 1px solid var(--clr);
 		letter-spacing: 0.2em;
@@ -59,4 +75,10 @@
 	margin-top: 20px;
 }
 
+.controls {
+	margin-top: 30px;
+}
 
+.controls_buttonbox {
+	margin-bottom: 15px;
+}
