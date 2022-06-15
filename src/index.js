@@ -1,23 +1,51 @@
 import './sass/main.scss';
 
+import _ from 'lodash';
+
 import { tmdbApi } from './js/services/tmdb-api';
-import { renderMainPage } from './js/Oleksandr/render';
+import { renderMainPage } from './js/kaplunenko/render';
+import { autorisationFormCall } from './js/form/autorizaton-modal-call';
+import { autorizationFormUiValid } from './js/form/form-ui-valid';
+import { homeRender, libraryRender } from './js/header/change-header';
+import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
-import './js/header/change-header';
+import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
+import { ref } from 'firebase/database';
+import { Notify } from 'notiflix';
 
-tmdbApi
-  .fetchTrendingMovies()
-  .then(renderMainPage)
-  .then(() => {
-    document.querySelector('.films_list').addEventListener('click', onFilmCard);
-  });
+const refs = {
+  homeBtn: document.querySelectorAll('[data-load="home"]'),
+  libraryBtn: document.querySelector('[data-load="library"]'),
+  filmsList: document.querySelector('.films_list'),
+  searchInput: document.querySelector('#name-input'),
+  watchedBtn: document.querySelector('[data-action="watched"]'),
+  queueBtn: document.querySelector('[data-action="queue"]'),
+};
 
-function onFilmCard(e) {
-  console.dir(e);
-  console.log(tmdbApi.trendingTotalPage);
+const storage = {
+  currentUser: null,
+  isSingIn: false,
+  watchedMovies: [],
+  queueMovies: [],
+  trendingMovies: [],
+  searchMovies: [],
+};
+
+async function launch() {
+  const movies = await TmdbApiService.fetchTrendingMovies();
+  storage.trendingMovies.push(...movies);
+  renderMainPage(movies);
 }
+
+launch();
+
+refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
+refs.libraryBtn.addEventListener('click', onLibBtn);
+refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
+refs.watchedBtn.addEventListener('click', onWatchedBtn);
+refs.queueBtn.addEventListener('click', onQueueBtn);
 
 // =============== Псевдокод ===============
 
@@ -59,7 +87,7 @@ function onFilmCard(e) {
 
 // возможно для уменьшения количества запросов на сервера с БД
 // создать в памяти структуру для хранения информации по фильмам что-то вроде такого
-// const dataModel = {
+// const storage = {
 //   currentUser, // хранит uid пользователя.
 //   watchedList, // массив просмотренных фильмов которые обновляються при добавлении удалении фильмов из ФБ
 //   queueList,
@@ -74,25 +102,45 @@ function onFilmCard(e) {
 function onHomeBtn() {
   // todo
   // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
+  homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
-  // - получить ссылку на 'поле ввода' и повесить слушатель onSearchInput
+  refs.filmsList.innerHTML = '';
+  renderMainPage(storage.trendingMovies);
 }
 
-function onSearchInput(e) {
+async function onSearchInput(e) {
   // todo
   // - проверить что длина значения запроса > 0 или не равно пустой строке
+  if (refs.searchInput.value.trim() === 0) {
+    return;
+  }
+
+  TmdbApiService.resetSearchMoviePage();
+  storage.searchMovies = await TmdbApiService.fetchSearchMovie(refs.searchInput.value.trim());
   // - если ничего не найдено по запросу
   //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  // - отрисовать список фильмов по данным от ТМДБ
+  if (TmdbApiService.getSearchMovieTotalPage === 0) {
+    Notify.info('Search result not successful. Enter the correct movie name and try again.');
+  } else {
+    // - отрисовать список фильмов по данным от ТМДБ
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.searchMovies);
+  }
 }
 
 function onLibBtn() {
   // todo
   // - отрисовать шапку библиотеки
+  libraryRender();
+
   // - проверка на авторизацию
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
+  if (!storage.currentUser) {
+    autorisationFormCall();
+    autorizationFormUiValid();
+  }
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -105,9 +153,8 @@ function onLibBtn() {
   // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, renderMainPage)
   // Бо знову ж таки, функція нічого не повертає, тому треба колбек
   // ==============
-  // - получить ссылки на кнопки 'просмотрено' и 'очередь'
-  // - на кнопку 'просмотрено'повесить слушатель onWatchedBtnClick
-  // - на кнопку 'очередь' повесить слушатель onQueueBtnClick
+  // - на кнопку 'просмотрено'повесить слушатель onWatchedBtn
+  // - на кнопку 'очередь' повесить слушатель onQueueBtn
   // - отрисовать список просмотренных фильмов
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
@@ -132,12 +179,21 @@ function onLibBtn() {
 function onWatchedBtn() {
   // todo
   // - отрисовать список фильмов из очереди
-  //
+  if (storage.watchedMovies) {
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.watchedMovies);
+  }
+  refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
 }
 
 function onQueueBtn() {
   // todo
   // - отрисовать список фильмов из очереди
+  if (storage.queueMovies) {
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.queueMovies);
+  }
+  refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
 }
 
 function onMovieCard(e) {

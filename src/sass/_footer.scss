@@ -1,0 +1,33 @@
+.footer {
+    background-color: #f7f7f7;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 28px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.footer__descr {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    color: hsl(0, 0%, 33%);
+    @media screen and (min-width: 768px) {
+        flex-wrap: nowrap;
+        padding-top: 30px;
+        padding-bottom: 28px;
+    }
+}
+
+.footer__link,
+.footer-text,
+.footer-heart {
+    color: hsl(0, 0%, 33%);
+}
+
+.footer__link {
+    text-decoration: underline;
+}

@@ -8,9 +8,6 @@ const refs = {
   inputBoxLib: document.querySelector('.input-box-lib'),
 };
 
-refs.homeBtn.forEach(btn => btn.addEventListener('click', homeRender));
-refs.libraryBtn.addEventListener('click', libraryRender);
-
 function homeRender() {
   const { header, containerHeader, headerBox, homeBtn, libraryBtn, inputBox, inputBoxLib } = refs;
 

@@ -1,0 +1,65 @@
+<div class="container">
+  <form class="auth-form" data-js="auth-form">
+    <label for="email" class="auth-form__label" style="--clr: #ff6b01">
+      <input
+        class="auth-form__text-input"
+        type="text"
+        name="email"
+        id="email"
+        required="required"
+        pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
+        title="Invalid email address."
+      />
+      <span class="auth-form__input-name"> email </span>
+    </label>
+    <label for="password" class="auth-form__label" style="--clr: #ff6b01">
+      <input
+        class="auth-form__text-input"
+        type="password"
+        name="password"
+        id="password"
+        required="required"
+        minlength="6"
+        maxlength="12"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+        title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
+      />
+      <span class="auth-form__input-name"> password </span>
+    </label>
+    <div class="controls">
+      <div class="controls--additional">
+        <button
+          style="--clr: #32a57f"
+          disabled="disabled"
+          class="controls__btn controls__btn--sign-in"
+          name="sign-in-with-email-password"
+          type="submit"
+          value="Sign-in"
+        >
+          <span>Sign-in</span>
+          <i></i>
+        </button>
+        <button
+          style="--clr: #ff6b01"
+          class="controls__btn controls__btn--register"
+          name="sign-up-with-email-password"
+          type="submit"
+          value="Create account"
+        >
+          <span>Create account</span>
+          <i></i>
+        </button>
+      </div>
+      <button
+        style="--clr: #ff6b01"
+        class="controls__btn controls__btn--google"
+        name="sign-in-with-google-account"
+        type="submit"
+        value="Continue with Google"
+      >
+        <span>Sign-in with google </span>
+        <i></i>
+      </button>
+    </div>
+  </form>
+</div>
