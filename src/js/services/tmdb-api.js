@@ -102,15 +102,18 @@ export const TmdbApiService = {
     const endPointUrl = BASE_URL + this.endPoints.searchMovie;
     const requestParams = {
       api_key: API_KEY,
-      page: this.trending.page + 1,
+      page: this.searchMovie.page + 1,
       language: this.languages.ENGLISH,
       query,
     };
 
     return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
       const { page, results, total_pages } = data;
-      this.trending.page = page;
-      this.trending.totalPages = total_pages;
+      if (total_pages === 0) {
+        throw new Error('Movies not found :(');
+      }
+      this.searchMovie.page = page;
+      this.searchMovie.totalPages = total_pages;
       return results.map(result => {
         const { id, title, vote_average, release_date, poster_path, genre_ids } = result;
         return {

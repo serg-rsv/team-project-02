@@ -1,23 +1,14 @@
-// import TmdbApiService from '../services/tmdb-api';
-
-// const films = TmdbApiService.fetchTrendingMovies();
-
 const filmsList = document.querySelector('.films_list');
 
 export async function renderMainPage(movies) {
-  await movies.then(movie => {
-    const descriptionMarkup = movie
-      .map(({ id, title, genre_ids, posterUrl }) => {
-        return `<li class="products__cards-item" data-movie-id="${id}">
-            <div>
+  const descriptionMarkup = movies
+    .map(({ id, title, genre_ids, posterUrl }) => {
+      return `<li class="products__cards-item" data-movie-id="${id}">
                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
                 <p class="film_title">${title}</p>
                 <p class="film_genre">${genre_ids}</p>
-            </div>
             </li>`;
-      })
-      .join('');
-    filmsList.innerHTML = descriptionMarkup;
-  });
+    })
+    .join('');
+  filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 }
-// renderMainPage(films);
