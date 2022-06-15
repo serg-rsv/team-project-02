@@ -140,7 +140,7 @@ export const tmdbApi = {
             overview,
             vote_average,
             vote_count,
-            posterUrl: poster_path ? `${IMAGE_URL}w500${poster_path}` : './place-holder.jpg',
+            posterUrl: poster_path ? `${IMAGE_URL}w500${poster_path}` : 'place-holder.jpg',
             genres: genre_ids.length === 0 ? ['Other'] : getListOfGenres(genre_ids),
             popularity,
           };
@@ -188,7 +188,7 @@ export const tmdbApi = {
             overview,
             vote_average,
             vote_count,
-            posterUrl: poster_path ? `${IMAGE_URL}w500${poster_path}` : './place-holder.jpg',
+            posterUrl: poster_path ? `${IMAGE_URL}w500${poster_path}` : 'place-holder.jpg',
             genre_ids: genre_ids.length === 0 ? ['Other'] : getListOfGenres(genre_ids),
             popularity,
           };
