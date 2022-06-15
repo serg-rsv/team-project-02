@@ -97,7 +97,7 @@ export const tmdbApi = {
    *
    * @returns ініціалізує масив жанрів для фільмів
    */
-  fetchGanresMovies() {
+  fetchGenresMovies() {
     const endPointUrl = BASE_URL + END_POINTS.GENRE_MOVIE;
     const requestParams = {
       api_key: API_KEY,
@@ -194,7 +194,7 @@ export const tmdbApi = {
             vote_average,
             vote_count,
             posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
-            genre_ids: getListOfGenres(genre_ids),
+            genres: getListOfGenres(genre_ids),
             popularity,
           };
         },

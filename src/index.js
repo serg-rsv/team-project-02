@@ -33,7 +33,7 @@ const storage = {
 };
 
 async function launch() {
-  tmdbApi.fetchGanresMovies();
+  tmdbApi.fetchGenresMovies();
 
   const movies = await tmdbApi.fetchTrendingMovies();
   storage.movies.push(...movies);
