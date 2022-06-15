@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-const filmsList = document.querySelector('.films_list');
-
-export async function renderMainPage(movies) {
-  const descriptionMarkup = movies
-    .map(({ id, title, genre_ids, posterUrl }) => {
-      return `<li class="products__cards-item" data-movie-id="${id}">
-=======
 // import TmdbApiService from '../services/tmdb-api';
 
 import * as basicLightbox from 'basiclightbox';
@@ -21,17 +13,14 @@ export function renderMainPage(movies) {
     .map(({ id, title, genre_ids, posterUrl }) => {
       return `<li class="products__cards-item" data-movie-id="${id}">
             <div>
->>>>>>> Stashed changes
+
                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
                 <p class="film_title">${title}</p>
                 <p class="film_genre">${genre_ids}</p>
             </li>`;
     })
     .join('');
-<<<<<<< Updated upstream
-  filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
-}
-=======
+
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 
   const handleClick = event => {
@@ -59,4 +48,3 @@ export function renderMainPage(movies) {
 }
 
 // renderMainPage(films);
->>>>>>> Stashed changes
