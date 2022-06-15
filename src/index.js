@@ -31,6 +31,7 @@ const storage = {
   queueMovies: [],
   trendingMovies: [],
   searchMovies: [],
+  currentTab: '',
 };
 
 async function launch() {
@@ -44,8 +45,8 @@ launch();
 refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
 refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
-refs.watchedBtn.addEventListener('click', onWatchedBtn);
-refs.queueBtn.addEventListener('click', onQueueBtn);
+refs.watchedBtn.addEventListener('click', onNavigate);
+refs.queueBtn.addEventListener('click', onNavigate);
 
 // =============== Псевдокод ===============
 
@@ -189,6 +190,72 @@ function onWatchedBtn() {
 
   //
 }
+
+const test = [
+  {
+    id: 705861,
+    genre_ids: [18, 35],
+    title: 'Hustle',
+    vote_average: 7.4,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/fVf4YHHkRfo1uuljpWBViEGmaUQ.jpg',
+  },
+  {
+    id: 648579,
+    genre_ids: [28, 35, 80],
+    title: 'The Unbearable Weight of Massive Talent',
+    vote_average: 7.4,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
+  },
+  {
+    id: 507086,
+    genre_ids: [878, 28, 12, 53],
+    title: 'Jurassic World Dominion',
+    vote_average: 6.8,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
+  },
+];
+// ------------------------------
+function onGetWatchedMovieRender(watchedMovieArray) {
+  destroyMovieList();
+  watchedMovieArray = test; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
+  renderMainPage(watchedMovieArray);
+}
+
+// ---------------------
+function destroyMovieList() {
+  refs.filmsList.innerHTML = '';
+}
+// -------------------------------------
+function onNavigate(event) {
+  const currentTab = event.target.dataset.action;
+
+  if (storage.currentTab !== currentTab) {
+    console.log(storage);
+    console.log(storage.currentTab);
+    storage.currentTab = currentTab;
+    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
+    onGetWatchedMovieRender();
+  }
+}
+// ----------------------------------
+// function renderMainPage(movies) {
+//   console.log(movies);
+//   const descriptionMarkup = movies
+//     .map(({ id, title, genre_ids, posterUrl }) => {
+//       return `<li class="products__cards-item" data-movie-id="${id}">
+//             <div>
+//                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
+//                 <p class="film_title">${title}</p>
+//                 <p class="film_genre">${genre_ids}</p>
+//             </div>
+//             </li>`;
+//     })
+//     .join('');
+//   refs.filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
+// }
 
 function onQueueBtn() {
   // todo
