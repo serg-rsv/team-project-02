@@ -3,7 +3,7 @@ import './sass/main.scss';
 import _ from 'lodash';
 
 import { TmdbApiService } from './js/services/tmdb-api';
-import { renderMainPage } from './js/oleksandr/render';
+import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
