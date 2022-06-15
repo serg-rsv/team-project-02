@@ -3,7 +3,7 @@ import './sass/main.scss';
 import _ from 'lodash';
 
 import { TmdbApiService } from './js/services/tmdb-api';
-import { renderMainPage } from './js/Oleksandr/render';
+import { renderMainPage } from './js/oleksandr/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
@@ -45,8 +45,6 @@ refs.libraryBtn.addEventListener('click', onLibBtn);
 refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
 refs.watchedBtn.addEventListener('click', onWatchedBtn);
 refs.queueBtn.addEventListener('click', onQueueBtn);
-
-TmdbApiService.fetchTrendingMovies().then(data => renderMainPage(data));
 
 // =============== Псевдокод ===============
 
@@ -118,7 +116,6 @@ async function onSearchInput(e) {
 
   TmdbApiService.resetSearchMoviePage();
   storage.searchMovies = await TmdbApiService.fetchSearchMovie(refs.searchInput.value.trim());
-  console.log(storage.searchMovies);
   // - если ничего не найдено по запросу
   //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
   if (TmdbApiService.getSearchMovieTotalPage === 0) {
