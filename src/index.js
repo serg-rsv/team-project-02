@@ -3,6 +3,7 @@ import './sass/main.scss';
 import _ from 'lodash';
 
 import { TmdbApiService } from './js/services/tmdb-api';
+import { openDetailsCard } from './js/kaplunenko/render';
 import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
@@ -37,6 +38,7 @@ async function launch() {
   const movies = await TmdbApiService.fetchTrendingMovies();
   storage.trendingMovies.push(...movies);
   renderMainPage(movies);
+  openDetailsCard(movies);
 }
 
 launch();

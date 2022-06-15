@@ -13,6 +13,11 @@
   font-size: $font-size-major;
   line-height: $font-height-major;
 }
+.info-list {
+  display: flex;
+  flex-direction: row;
+  color: $color-accent;
+}
 .img {
   @media screen and (min-width: $tablet) {
     width: $mobile;
