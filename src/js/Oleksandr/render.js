@@ -1,10 +1,6 @@
-// import TmdbApiService from '../services/tmdb-api';
-
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/src/styles/main.scss';
 import cardTpl from '~/templates/modal.hbs';
-// const films = TmdbApiService.fetchTrendingMovies();
-// console.log(films);
 
 const refFilmsList = document.querySelector('.films_list');
 
@@ -22,29 +18,19 @@ export function renderMainPage(movies) {
     .join('');
 
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
-
-  const handleClick = event => {
-    // if (!event.currentTarget.classList.contains('products__cards-item')) {
-    //   return;
-    // }
-    console.log(event.currentTarget.nodeName);
+  refFilmsList.addEventListener('click', handleClick);
+  function handleClick(event) {
     const swatch = event.target;
     const cardFilm = swatch.closest('.products__cards-item');
-    const rrr = cardFilm.dataset.movieId;
+    const getMovieId = cardFilm.dataset.movieId;
+    const movieIdstringToNumber = Number(getMovieId);
+    const filmId = movies.map(item => item.id);
 
-    const film = movies.map(item => item.id);
-    const n = Number(rrr);
-    if (film.includes(n)) {
-      const www = movies.filter(item => item.id === n);
-
-      const markup = cardTpl(...www);
-
-      // console.log(renderCard);
+    if (filmId.includes(movieIdstringToNumber)) {
+      const detailsCard = movies.filter(item => item.id === movieIdstringToNumber);
+      const markup = cardTpl(...detailsCard);
       const modalCard = basicLightbox.create(markup);
       modalCard.show();
     }
-  };
-  refFilmsList.addEventListener('click', handleClick);
+  }
 }
-
-// renderMainPage(films);
