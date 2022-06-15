@@ -119,7 +119,7 @@ async function onSearchInput(e) {
   // - если ничего не найдено по запросу
   //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
   if (TmdbApiService.getSearchMovieTotalPage === 0) {
-    Notify.info('Movie not found.');
+    Notify.info('Search result not successful. Enter the correct movie name and try again.');
   } else {
     // - отрисовать список фильмов по данным от ТМДБ
     refs.filmsList.innerHTML = '';
