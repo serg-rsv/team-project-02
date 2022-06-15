@@ -11,8 +11,8 @@ const END_POINTS = {
   // /genre/movie/list
   // https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US
   GENRE_MOVIE: '/genre/movie/list',
-  // #trending/{media_type}/{time_window}
-  // https://api.themoviedb.org/3/#trending/all/week?api_key={API_KEY}
+  // trending/{media_type}/{time_window}
+  // https://api.themoviedb.org/3/trending/all/week?api_key={API_KEY}
   TRENDING: 'trending/',
   // search/movie
   // https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&language=en-US&query=batman&page=1&include_adult=false
