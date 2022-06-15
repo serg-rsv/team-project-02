@@ -27,11 +27,11 @@ const refs = {
 const storage = {
   currentUser: null,
   isSingIn: false,
-  watchedMovies: [],
-  queueMovies: [],
+  watched: [], // тут будуть зберігатись данні з ФБ ,
+  queue: [], //тут будуть зберігатись данні з ФБ ,
   trendingMovies: [],
   searchMovies: [],
-  currentTab: '',
+  currentTab: '', // для перемикання між кнопками watched & queue
 };
 
 async function launch() {
@@ -219,8 +219,8 @@ const test = [
 ];
 // ------------------------------
 function onGetWatchedMovieRender(watchedMovieArray) {
-  destroyMovieList();
-  watchedMovieArray = test; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
+  destroyMovieList(); // очищаємо розмітку;
+  watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
   renderMainPage(watchedMovieArray);
 }
 
@@ -233,8 +233,8 @@ function onNavigate(event) {
   const currentTab = event.target.dataset.action;
 
   if (storage.currentTab !== currentTab) {
-    console.log(storage);
-    console.log(storage.currentTab);
+    // console.log(storage);
+    // console.log(storage.currentTab);
     storage.currentTab = currentTab;
     // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
     onGetWatchedMovieRender();
@@ -257,15 +257,15 @@ function onNavigate(event) {
 //   refs.filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 // }
 
-function onQueueBtn() {
-  // todo
-  // - отрисовать список фильмов из очереди
-  if (storage.queueMovies) {
-    refs.filmsList.innerHTML = '';
-    renderMainPage(storage.queueMovies);
-  }
-  refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
-}
+// function onQueueBtn() {
+//   // todo
+//   // - отрисовать список фильмов из очереди
+//   if (storage.queueMovies) {
+//     refs.filmsList.innerHTML = '';
+//     renderMainPage(storage.queueMovies);
+//   }
+//   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
+// }
 
 function onMovieCard(e) {
   // todo
