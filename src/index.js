@@ -7,6 +7,7 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
+import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
 import './js/Fedorenko/team-modal';
