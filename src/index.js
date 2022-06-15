@@ -37,6 +37,7 @@ async function launch() {
   renderMainPage(movies);
 }
 
+<<<<<<< Updated upstream
 launch();
 
 refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
@@ -44,6 +45,9 @@ refs.libraryBtn.addEventListener('click', onLibBtn);
 refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
 refs.watchedBtn.addEventListener('click', onWatchedBtn);
 refs.queueBtn.addEventListener('click', onQueueBtn);
+=======
+TmdbApiService.fetchTrendingMovies().then(data => renderMainPage(data));
+>>>>>>> Stashed changes
 
 // =============== Псевдокод ===============
 
@@ -130,7 +134,10 @@ async function onSearchInput(e) {
 function onLibBtn() {
   // todo
   // - отрисовать шапку библиотеки
+<<<<<<< Updated upstream
   libraryRender();
+=======
+>>>>>>> Stashed changes
   // - проверка на авторизацию
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
@@ -177,11 +184,15 @@ function onLibBtn() {
 function onWatchedBtn() {
   // todo
   // - отрисовать список фильмов из очереди
+<<<<<<< Updated upstream
   if (storage.watchedMovies) {
     refs.filmsList.innerHTML = '';
     renderMainPage(storage.watchedMovies);
   }
   refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
+=======
+  //
+>>>>>>> Stashed changes
 }
 
 function onQueueBtn() {
