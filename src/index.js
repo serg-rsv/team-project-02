@@ -33,13 +33,53 @@ const storage = {
   searchMovies: [],
 };
 
-async function launch() {
-  const movies = await TmdbApiService.fetchTrendingMovies();
-  storage.trendingMovies.push(...movies);
-  renderMainPage(movies);
-}
+// async function launch() {
+//   const array = await TmdbApiService.fetchTrendingMovies('one');
+//   storage.trendingMovies.push(...array);
+//   await renderNew(array);
+// }
 
-launch();
+// launch();
+
+async function renderNew() {
+  const movies = await TmdbApiService.fetchTrendingMovies('one');
+  renderMainPage(movies);
+  if (
+    movies.length < 20 ||
+    TmdbApiService.getTrendingPage() > TmdbApiService.getTrendingTotalPage()
+  )
+    return;
+  const almostLastElement = refs.filmsList.querySelector(
+    '.products__cards-item:nth-last-child(4) img',
+  );
+  almostLastElement.addEventListener('load', onLoad);
+  async function onLoad() {
+    almostLastElement.removeEventListener('load', onLoad);
+    // const array = await TmdbApiService.fetchTrendingMovies('two');
+    loadMore(renderNew);
+  }
+}
+renderNew();
+
+// functionrenderInfinityQuery()
+
+function loadMore(callback, query, selector = '.products__cards-item:last-child') {
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          callback(query);
+        }
+      });
+    },
+    {
+      threshold: 0.1, // Процентне відношення елемента до відображення на екрані.
+    },
+  );
+
+  observer.observe(document.querySelector(selector));
+}
 
 refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
@@ -108,6 +148,7 @@ function onHomeBtn() {
   renderMainPage(storage.trendingMovies);
 }
 
+// =====================================================================================================
 async function onSearchInput(e) {
   // todo
   // - проверить что длина значения запроса > 0 или не равно пустой строке
@@ -127,6 +168,8 @@ async function onSearchInput(e) {
     renderMainPage(storage.searchMovies);
   }
 }
+
+async function renderInput() {}
 
 function onLibBtn() {
   // todo

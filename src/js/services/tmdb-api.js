@@ -66,7 +66,8 @@ export const TmdbApiService = {
    *
    * @returns повертає *проміс* в якому масив об'єктів популярних фільмів за день.
    */
-  fetchTrendingMovies: function () {
+  fetchTrendingMovies: function (place) {
+    console.log('I am fetched here:>>', place);
     const endPointUrl =
       BASE_URL + this.endPoints.trending + this.trending.mediaType + this.trending.timeWindow;
     const requestParams = {
