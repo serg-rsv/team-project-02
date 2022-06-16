@@ -1,31 +1,32 @@
-<div class="modal">
-    <div class="film-poster"> 
-        <img src="{{posterUrl}}" alt="{{title}}">
-    </div>
+<div class='modal'>
+  <div class='film-poster'>
+    <img src='{{posterUrl}}' alt='{{title}}' />
+  </div>
 
-    <div class="film-details">
-        <h2 class="film__title">{{title}}</h2>
-        <dl class="film-profile">
-                <dt class="film-profile__name">Vote / Votes</dt>
-                <dd class="film-profile__value"><span class="film-profile__value--accent">{{vote_average}}</span> / {{vote_count}}</dd>
-                <dt class="film-profile__name">Popularity</dt>
-                <dd class="film-profile__value">{{popularity}}</dd>
-                <dt class="film-profile__name">Original Title</dt>
-                <dd class="film-profile__value accent">{{original_title}}</dd>
-                <dt class="film-profile__name">Genre</dt>
-                <dd class="film-profile__value">{{#each genres}} {{this.name}} {{/each}}</dd>
-        </dl>
-        <h3 class="film-description">About</h3>
-        <p class="film-description__text">{{overview}}</p>
-        
-        <div class="btn-block">
-            <button type="button" data-add="watched" class="button-action watched"> ADD TO WATCHED</button>
-            <button type="button" data-add="queue" class="button-action queue">ADD TO QUEUE</button>
-        </div>
-    </div>
+  <div class='film-details'>
+    <h2 class='film__title'>{{title}}</h2>
+    <dl class='film-profile'>
+      <dt class='film-profile__name'>Vote / Votes</dt>
+      <dd class='film-profile__value'><span
+          class='film-profile__value--accent'
+        >{{vote_average}}</span>
+        /
+        {{vote_count}}</dd>
+      <dt class='film-profile__name'>Popularity</dt>
+      <dd class='film-profile__value'>{{popularity}}</dd>
+      <dt class='film-profile__name'>Original Title</dt>
+      <dd class='film-profile__value accent'>{{original_title}}</dd>
+      <dt class='film-profile__name'>Genre</dt>
+      <dd class='film-profile__value'>{{#each genres}} {{this}} {{/each}}</dd>
+    </dl>
+    <h3 class='film-description'>About</h3>
+    <p class='film-description__text'>{{overview}}</p>
 
-</div> 
- 
- 
- 
- 
+    <div class='btn-block'>
+      <button type='button' data-add='watched' class='button-action watched'>
+        ADD TO WATCHED</button>
+      <button type='button' data-add='queue' class='button-action queue'>ADD TO QUEUE</button>
+    </div>
+  </div>
+
+</div>

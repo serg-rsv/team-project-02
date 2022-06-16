@@ -7,11 +7,11 @@ const refFilmsList = document.querySelector('.films_list');
 export function renderMainPage(movies) {
   console.log(movies);
   const descriptionMarkup = movies
-    .map(({ id, title, genre_ids, posterUrl }) => {
+    .map(({ id, title, genres, posterUrl }) => {
       return `<li class="products__cards-item" data-movie-id="${id}">
-                <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
+                <img class="img" src="${posterUrl}" >
                 <p class="film_title">${title}</p>
-                <p class="film_genre">${genre_ids}</p>
+                <p class="film_genre">${genres}</p>
             </li>`;
     })
     .join('');
