@@ -1,14 +1,11 @@
-<<<<<<< Updated upstream
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/src/styles/main.scss';
-=======
->>>>>>> Stashed changes
 import cardTpl from '~/templates/modal.hbs';
+import { modalCall } from '../modal/modalCall';
 
 const refFilmsList = document.querySelector('.films_list');
 
 export function renderMainPage(movies) {
-  console.log(movies);
   const descriptionMarkup = movies
 
     .map(({ id, title, genre_ids, posterUrl, releaseYear, vote_average }) => {
@@ -40,8 +37,9 @@ export function openDetailsCard(movies) {
     if (filmId.includes(movieIdstringToNumber)) {
       const detailsCard = movies.filter(item => item.id === movieIdstringToNumber);
       const markup = cardTpl(...detailsCard);
-      const modalCard = basicLightbox.create(markup);
-      modalCard.show();
+      // const modalCard = basicLightbox.create(markup);
+      // modalCard.show();
+      modalCall(markup);
     }
   }
 }
