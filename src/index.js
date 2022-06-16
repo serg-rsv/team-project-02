@@ -36,13 +36,12 @@ const storage = {
 
 async function launch() {
   tmdbApi.fetchGenresMovies();
-  console.log('rrr');
-  const movies = await tmdbApi.fetchTrendingMovies();
-  storage.movies.push(...movies);
+  // const movies = await tmdbApi.fetchTrendingMovies();
+  // storage.movies.push(...movies);
 
   renderMainPage(movies);
   openDetailsCard(movies);
-  console.log(movies);
+  // infinityScrollData();
 }
 
 launch();
@@ -111,6 +110,7 @@ function onHomeBtn() {
   homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
   refs.filmsList.innerHTML = '';
+  tmdbApi.resetTrendingPage();
   infinityScrollData();
 }
 

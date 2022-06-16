@@ -96,11 +96,11 @@
   transform-origin: 50% 0%;
   transform: scaleY(0);
   text-align: justify;
-  color: $font-color-dark;
-  opacity: 50%;
+  color: rgba(0, 0, 0, 0.5);
 
-  .auth-form__label:nth-child(2) .auth-form__text-input:focus ~ & {
+  .auth-form__label:nth-child(2) .auth-form__text-input:focus ~ &,
+  .auth-form__label:nth-child(2) .auth-form__text-input:active ~ & {
     transform: scaleY(1);
-    transition: $animationDuration $animationTimeFunction;
+    transition: transform $animationDuration $animationTimeFunction;
   }
 }
