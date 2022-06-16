@@ -6,6 +6,7 @@ import { modalCall } from '../modal/modalCall';
 const refFilmsList = document.querySelector('.films_list');
 
 export function renderMainPage(movies) {
+  console.log(movies);
   const descriptionMarkup = movies
 
     .map(({ id, title, genre_ids, posterUrl, releaseYear, vote_average }) => {
