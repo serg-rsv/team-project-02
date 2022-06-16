@@ -13,6 +13,7 @@ import { modalCall } from './js/modal/modalCall';
 import './js/irina/modal.js';
 import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
+import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
 
 const refs = {
@@ -32,7 +33,15 @@ const storage = {
   movies: [],
 };
 
+// перелік єкшенів в submit інпутах форми, щоб зе робити помилку
+const ACTION_TYPE = {
+  SIGN_IN_WITH_EMAIL_AND_PASSWORD: 'sign-in-with-email-password',
+  SIGN_UP_WiTH_EMAIL_AND_PASSWORD: 'sign-up-with-email-password',
+  SIGN_IN_WITH_GOOGLE: 'sign-in-with-google-account',
+};
+
 async function launch() {
+  authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
   tmdbApi.fetchGenresMovies();
 
   const movies = await tmdbApi.fetchTrendingMovies();
@@ -144,7 +153,13 @@ function onLibBtn() {
   if (!storage.userId) {
     autorisationFormCall();
     autorizationFormUiValid();
+    const formRef = document.querySelector('[data-js="auth-form"]');
+    formRef.addEventListener('click', onAuthFormClick);
+    formRef.addEventListener('submit', () => formRef.removeEventListener('click', onAuthFormClick), {once: true});
   }
+
+  
+  databaseApi.get('watched', storage.userId, onGetMoviesFromFirebase);
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -164,6 +179,30 @@ function onLibBtn() {
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
 }
+
+// ================= Prokoptsov  CALBACKS ==============//
+function onGetMoviesFromFirebase (movieList) {
+  refs.filmsList.innerHTML = '';
+  renderMainPage(movieList)
+}
+function onSigninAfterRegister (userId) {
+storage.userId = userId;
+storage.isSingIn = true;
+
+alertAfterReggister();
+}
+function alertAfterReggister () {
+refs.filmsList.innerHTML = '<Nothing has been add here yet>'
+}
+function userIsSignedIn (userId) {
+  storage.userId = userId;
+  storage.isSingIn = true;
+}
+function userIsSignedOut () {
+  console.log('You are not signed in')
+}
+
+// =======================================================//
 
 // ========= Prokoptsov =======
 // Такий ще момент: коли натискаємо на будь-яку кнопку, яка виконую запит
@@ -266,3 +305,27 @@ function onDelQueueBtn(e) {
 // =============== Prokoptsov ==============
 // Ще раз повторюсь, треба не забувати ВИДАЛЯТИ СЛУХАЧІ!!!!!!!!!
 // І формою реєстрації я займаюсь, то я вже і напишу всі обробники і логіку, якщо ти не проти :=))
+
+// ================== Prokoptsov =================//
+function onAuthFormClick(e) {
+  e.preventDefault();
+  
+  const action = e.target.name;
+  const email = e.currentTarget.elements.email.value;
+  const password = e.currentTarget.elements.password.value;
+
+  switch (action) {
+    case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
+      authApi.signInWithEmailAndPassword(email, password, onSigninAfterRegister).then(getAndRenderMovies).catch(console.log);
+      break;
+    case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
+      authApi.createUserWithEmailAndPassword(email, password, onSigninAfterRegister).then(getAndRenderMovies).catch(console.log);
+      break;
+    case ACTION_TYPE.SIGN_IN_WITH_GOOGLE:
+      authApi.signInWithGoogle().then(getAndRenderMovies, onSigninAfterRegister).catch(console.log);
+      break;
+    default: return;
+  };
+
+  e.currentTarget.reset();
+}

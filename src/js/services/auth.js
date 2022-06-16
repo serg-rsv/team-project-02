@@ -19,10 +19,15 @@ export const authApi = {
      * @param {String} email // email користувача для реєстрації
      * @param {String} password // password користувача для реєстрації
      */
-    createUserWithEmailAndPassword: async (email, password) => {
+    createUserWithEmailAndPassword: async (email, password, callback) => {
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) =>  userCredential.user)
-        .catch(console.log);
+        .then((userCredential) => {
+            const user = userCredential.user;
+            callback(user.uid);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     },
 
     // вхід у систему за допомогою пошти та пароля
@@ -30,9 +35,12 @@ export const authApi = {
      * @param {String} email // email користувача для входу до системи
      * @param {String} password // password користувача для входу до системи
      */
-    signInWithEmailAndPassword: async (email, password) => {
+    signInWithEmailAndPassword: async (email, password, callback) => {
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => userCredential.user)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                callback(user.uid);
+            })
             .catch(console.log);
     },
 
@@ -44,15 +52,18 @@ export const authApi = {
     trackUserLoginState: async (callbackIfUserSignedIn = dummy, callbackOnIfUserSignedOut = dummy) => {
 
         // функція самого Firebase. Аргумент user потряпляє у фунцкію автоматично. Ми його поки ніяк не обробляємо.
-        onAuthStateChanged(auth, (user) => {
+        return onAuthStateChanged(auth, (user) => {
             if (user) {
-                callbackIfUserSignedIn(user.uid);
+                const uid = user.uid;
+
               // callback з кастомною логікою.
               // Сюди треба передати ID залогіненого користувача у Firedase,
               // щоб його можно було передати для запиту до бази данних у зовнішньому коді
+                callbackIfUserSignedIn(uid);
             } else {
-                callbackOnIfUserSignedOut();
               // callback з кастомною логікою
+                callbackOnIfUserSignedOut();
+                console.log('out');
             }
         });
     },
@@ -62,20 +73,7 @@ export const authApi = {
      * @param {Function} callbackOnSigningOut // callback з кастомною логікою
      * @returns {Promise} // можна підчипитися then у зовнішньому коді
      */
-    signOut: async (callbackOnSigningOut = dummy) => signOut(auth).then(() => callbackOnSigningOut()).catch(console.log),
-    
-    // реєєстрація/логін користувача до системи за допомогою Google Account
-    // колбек опціональний, додав його не перспективу, поки що ніякий колбек, окрім заглушки не передаю
-    signInWithGoogle: (callback = dummy) => {
-        const provider = new GoogleAuthProvider();
-        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-        auth.languageCode = 'it';
-
-        signInWithPopup(auth, provider).then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
-            callback();
-        }).catch(console.log);
+    signOut: async (callbackOnSigningOut = dummy) => {
+        return signOut(auth).then(() => callbackOnSigningOut()).catch(console.log);
     }
 }
