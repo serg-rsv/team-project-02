@@ -1,5 +1,8 @@
+<<<<<<< Updated upstream
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/src/styles/main.scss';
+=======
+>>>>>>> Stashed changes
 import cardTpl from '~/templates/modal.hbs';
 
 const refFilmsList = document.querySelector('.films_list');
