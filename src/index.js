@@ -1,26 +1,66 @@
 import './sass/main.scss';
 
-import { TmdbApiService } from './js/services/tmdb-api';
-import { renderMainPage } from './js/Oleksandr/render';
+import _ from 'lodash';
+
+import { tmdbApi } from './js/services/tmdb-api';
+import { renderMainPage } from './js/kaplunenko/render';
+import { autorisationFormCall } from './js/form/autorizaton-modal-call';
+import { autorizationFormUiValid } from './js/form/form-ui-valid';
+import { homeRender, libraryRender } from './js/header/change-header';
+import { loadMore } from './js/iffinity-render/infinityRender';
+import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
-import './js/header/change-header';
+import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
+import { Notify } from 'notiflix';
 
-renderMainPage(TmdbApiService.fetchTrendingMovies());
+const refs = {
+  homeBtn: document.querySelectorAll('[data-load="home"]'),
+  libraryBtn: document.querySelector('[data-load="library"]'),
+  filmsList: document.querySelector('.films_list'),
+  searchInput: document.querySelector('#name-input'),
+  watchedBtn: document.querySelector('[data-action="watched"]'),
+  queueBtn: document.querySelector('[data-action="queue"]'),
+};
+
+const storage = {
+  userId: null,
+  isSingIn: false,
+  watched: [],
+  queue: [],
+  movies: [],
+};
+
+async function launch() {
+  tmdbApi.fetchGenresMovies();
+
+  const movies = await tmdbApi.fetchTrendingMovies();
+  storage.movies.push(...movies);
+
+  renderMainPage(movies);
+}
+
+launch();
+
+refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
+refs.libraryBtn.addEventListener('click', onLibBtn);
+refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
+refs.watchedBtn.addEventListener('click', onWatchedBtn);
+refs.queueBtn.addEventListener('click', onQueueBtn);
 
 // =============== Псевдокод ===============
 
 // authApi.trackUserLoginState() ----> ункція має викликатися найпершою
 // і обовєязково з колбеками, які запишуть до стору стан користувача
 // я перевірив - нічого повренути із ціє функції окрім самої функції неможна.
-// 
+//
 // попроную створити файл та назвати його HandleUserState
 // він буду містити два колбека:
 // const userIsSignedIn = (userId) => {
 //     одразу зберегти id юзера, який у коблек прийду з authApi.trackUserLoginState
 //     store.userId = userId;
-//     
+//
 //     також записати стан до store
 //     store.isSignedIn = true;
 //     тут ще можна вивести нотіфікашку ти "З поверненням, ${пошта юзера}"
@@ -32,7 +72,6 @@ renderMainPage(TmdbApiService.fetchTrendingMovies());
 // і тоді передавати їх наступним чином
 // authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
 //  це важливо
-
 
 // список интерактивных елементов
 // const refs = {
@@ -50,8 +89,8 @@ renderMainPage(TmdbApiService.fetchTrendingMovies());
 
 // возможно для уменьшения количества запросов на сервера с БД
 // создать в памяти структуру для хранения информации по фильмам что-то вроде такого
-// const dataModel = {
-//   currentUser, // хранит uid пользователя.
+// const storage = {
+//   userId, // хранит uid пользователя.
 //   watchedList, // массив просмотренных фильмов которые обновляються при добавлении удалении фильмов из ФБ
 //   queueList,
 //   trendingList, // массив для отображения на главной
@@ -65,30 +104,52 @@ renderMainPage(TmdbApiService.fetchTrendingMovies());
 function onHomeBtn() {
   // todo
   // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
+  homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
-  // - получить ссылку на 'поле ввода' и повесить слушатель onSearchInput
+  refs.filmsList.innerHTML = '';
+  renderMainPage(storage.movies);
 }
 
-function onSearchInput(e) {
+async function onSearchInput(e) {
   // todo
-  // - проверить что длина значения запроса > 0 или не равно пустой строке
+  const query = e.target.value.trim();
+  // - проверить что запрос не пустая строка
+  if (query === '') {
+    return;
+  }
+
+  tmdbApi.resetSearchMoviePage();
+  const movies = await tmdbApi.fetchSearchMovie(query);
+  if (movies) storage.movies.push(...movies);
   // - если ничего не найдено по запросу
   //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  // - отрисовать список фильмов по данным от ТМДБ
+  if (tmdbApi.searchMovieTotalPage === 0) {
+    Notify.info('Search result not successful. Enter the correct movie name and try again.');
+  } else {
+    // - отрисовать список фильмов по данным от ТМДБ
+    refs.filmsList.innerHTML = '';
+    renderMainPage(movies);
+  }
 }
 
 function onLibBtn() {
   // todo
   // - отрисовать шапку библиотеки
-  // - проверка на авторизацию 
+  libraryRender();
+
+  // - проверка на авторизацию
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
+  if (!storage.userId) {
+    autorisationFormCall();
+    autorizationFormUiValid();
+  }
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
   // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, onGetWatchedMovieRender)
-  // 
+  //
   // onGetWatchedMovieRender ---> колбек-функція, яка після відповіді від FireBase
   // буду рендерети масив доданих фільмів.
   // const onGetWatchedMovieRender = (watchedMovieArray) => renderMainPage(watchedMovieArray);
@@ -96,9 +157,8 @@ function onLibBtn() {
   // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, renderMainPage)
   // Бо знову ж таки, функція нічого не повертає, тому треба колбек
   // ==============
-  // - получить ссылки на кнопки 'просмотрено' и 'очередь'
-  // - на кнопку 'просмотрено'повесить слушатель onWatchedBtnClick
-  // - на кнопку 'очередь' повесить слушатель onQueueBtnClick
+  // - на кнопку 'просмотрено'повесить слушатель onWatchedBtn
+  // - на кнопку 'очередь' повесить слушатель onQueueBtn
   // - отрисовать список просмотренных фильмов
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
@@ -123,12 +183,21 @@ function onLibBtn() {
 function onWatchedBtn() {
   // todo
   // - отрисовать список фильмов из очереди
-  // 
+  if (storage.watched) {
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.watched);
+  }
+  refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
 }
 
 function onQueueBtn() {
   // todo
   // - отрисовать список фильмов из очереди
+  if (storage.queue) {
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.queue);
+  }
+  refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
 }
 
 function onMovieCard(e) {
@@ -174,7 +243,7 @@ function onDelWatchedBtn(e) {
   // - вывести уведомление об успешности операции (notiflix)
   // - заменить кнопку на добавить
   // - получить ссылку на кнопку и повесить слушатель
-   // ============== Prokoptsov ============
+  // ============== Prokoptsov ============
   // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
   //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
   //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
@@ -187,7 +256,7 @@ function onDelQueueBtn(e) {
   // - вывести уведомление об успешности операции (notiflix)
   // - заменить кнопку на добавить
   // - получить ссылку на кнопку и повесить слушатель
-     // ============== Prokoptsov ============
+  // ============== Prokoptsov ============
   // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
   //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
   //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
