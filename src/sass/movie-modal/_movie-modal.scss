@@ -1,11 +1,15 @@
 .modal {
+  // overflow-y: auto;
   max-width: 280px;
-  height: auto;
-  // background-color: aquamarine;
+  height: 100vh;
   margin: auto;
   padding: 48px 20px;
+
+  background-color: $color-main;
+  
   @media screen and (min-width: $tablet) {
     max-width: 704px;
+    height: auto;
     padding: 40px 36px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -142,6 +146,54 @@
     grid-template-columns: 136px 136px;
   }
 }
+
+.modal_close-button {
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  padding: 0 0;
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 16px;
+
+  background: none;
+  color: transparent;
+  border: 0;
+  outline: none;
+  overflow: hidden;
+  
+    &::before {
+      content: ' ';
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      transform-origin: left;
+      
+      position: absolute;
+      top: 0;
+      transform: rotate(45deg);
+  
+      background-color: #000000;
+    }
+  
+    &::after {
+      content: ' ';
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      transform-origin: left;
+
+      position: absolute;
+      bottom: 0;
+      transform: rotate(-45deg);
+
+      background-color: #000000;
+    }
+  }
+
 
 // .btn{
 //     height: 44px;

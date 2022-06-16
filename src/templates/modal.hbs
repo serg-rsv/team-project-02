@@ -17,7 +17,7 @@
       <dt class='film-profile__name'>Original Title</dt>
       <dd class='film-profile__value accent'>{{original_title}}</dd>
       <dt class='film-profile__name'>Genre</dt>
-      <dd class='film-profile__value'>{{#each genres}} {{this}} {{/each}}</dd>
+      <dd class='film-profile__value'>{{#each genres}} {{this}}{{#unless @last}},{{/unless}} {{/each}}</dd>
     </dl>
     <h3 class='film-description'>About</h3>
     <p class='film-description__text'>{{overview}}</p>
@@ -28,5 +28,7 @@
       <button type='button' data-add='queue' class='button-action queue'>ADD TO QUEUE</button>
     </div>
   </div>
+
+  <button type="button" class="modal_close-button">Close</button>
 
 </div>
