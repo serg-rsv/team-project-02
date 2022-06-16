@@ -36,8 +36,8 @@ const storage = {
 
 async function launch() {
   tmdbApi.fetchGenresMovies();
-  // const movies = await tmdbApi.fetchTrendingMovies();
-  // storage.movies.push(...movies);
+  const movies = await tmdbApi.fetchTrendingMovies();
+  storage.movies.push(...movies);
 
   renderMainPage(movies);
   openDetailsCard(movies);
@@ -242,17 +242,17 @@ function onWatchedBtn() {
 //   refs.filmsList.innerHTML = '';
 // }
 // // -------------------------------------
-// function onNavigate(event) {
-//   const currentTab = event.target.dataset.action;
+function onNavigate(event) {
+  const currentTab = event.target.dataset.action;
 
-//   if (storage.currentTab !== currentTab) {
-//     // console.log(storage);
-//     // console.log(storage.currentTab);
-//     storage.currentTab = currentTab;
-//     // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
-//     onGetWatchedMovieRender();
-//   }
-// }
+  if (storage.currentTab !== currentTab) {
+    // console.log(storage);
+    // console.log(storage.currentTab);
+    storage.currentTab = currentTab;
+    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
+    onGetWatchedMovieRender();
+  }
+}
 // ----------------------------------
 // function renderMainPage(movies) {
 //   console.log(movies);
