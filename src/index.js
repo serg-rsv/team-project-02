@@ -27,9 +27,10 @@ const refs = {
 const storage = {
   userId: null,
   isSingIn: false,
-  watched: [],
-  queue: [],
-  movies: [],
+  watched: [], // тут будуть зберігатись данні з ФБ ,
+  queue: [], //тут будуть зберігатись данні з ФБ ,
+  movies: [], // сюди записуємо об'єкти фільмів які відрендерили на екрані
+  currentTab: '', // для перемикання між кнопками watched & queue
 };
 
 async function launch() {
@@ -46,9 +47,9 @@ launch();
 
 refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
-refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 350));
-refs.watchedBtn.addEventListener('click', onWatchedBtn);
-refs.queueBtn.addEventListener('click', onQueueBtn);
+refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 500));
+refs.watchedBtn.addEventListener('click', onNavigate);
+refs.queueBtn.addEventListener('click', onNavigate);
 
 // =============== Псевдокод ===============
 
@@ -108,7 +109,7 @@ function onHomeBtn() {
   homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
   refs.filmsList.innerHTML = '';
-  renderMainPage(storage.movies);
+  infinityScrollData();
 }
 
 // =====================================================================================================
@@ -122,7 +123,7 @@ async function onSearchInput(e) {
 
   refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
-  infinityScrollData(query)
+  infinityScrollData(query);
 
   // if (movies) storage.movies.push(...movies);
   // // - если ничего не найдено по запросу
@@ -193,15 +194,89 @@ function onWatchedBtn() {
   refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
 }
 
-function onQueueBtn() {
-  // todo
-  // - отрисовать список фильмов из очереди
-  if (storage.queue) {
-    refs.filmsList.innerHTML = '';
-    renderMainPage(storage.queue);
-  }
-  refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
-}
+// function onQueueBtn() {
+//   // todo
+//   // - отрисовать список фильмов из очереди
+//   if (storage.queue) {
+//     refs.filmsList.innerHTML = '';
+//     renderMainPage(storage.queue);
+//   }
+//   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
+// const test = [
+//   {
+//     id: 705861,
+//     genre_ids: [18, 35],
+//     title: 'Hustle',
+//     vote_average: 7.4,
+//     releaseYear: '2022',
+//     posterUrl: 'https://image.tmdb.org/t/p/w500/fVf4YHHkRfo1uuljpWBViEGmaUQ.jpg',
+//   },
+//   {
+//     id: 648579,
+//     genre_ids: [28, 35, 80],
+//     title: 'The Unbearable Weight of Massive Talent',
+//     vote_average: 7.4,
+//     releaseYear: '2022',
+//     posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
+//   },
+//   {
+//     id: 507086,
+//     genre_ids: [878, 28, 12, 53],
+//     title: 'Jurassic World Dominion',
+//     vote_average: 6.8,
+//     releaseYear: '2022',
+//     posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
+//   },
+// ];
+// // ------------------------------
+// function onGetWatchedMovieRender(watchedMovieArray) {
+//   destroyMovieList(); // очищаємо розмітку;
+//   watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
+//   renderMainPage(watchedMovieArray);
+// }
+
+// // ---------------------
+// function destroyMovieList() {
+//   refs.filmsList.innerHTML = '';
+// }
+// // -------------------------------------
+// function onNavigate(event) {
+//   const currentTab = event.target.dataset.action;
+
+//   if (storage.currentTab !== currentTab) {
+//     // console.log(storage);
+//     // console.log(storage.currentTab);
+//     storage.currentTab = currentTab;
+//     // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
+//     onGetWatchedMovieRender();
+//   }
+// }
+// ----------------------------------
+// function renderMainPage(movies) {
+//   console.log(movies);
+//   const descriptionMarkup = movies
+//     .map(({ id, title, genre_ids, posterUrl }) => {
+//       return `<li class="products__cards-item" data-movie-id="${id}">
+//             <div>
+//                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
+//                 <p class="film_title">${title}</p>
+//                 <p class="film_genre">${genre_ids}</p>
+//             </div>
+//             </li>`;
+//     })
+//     .join('');
+//   refs.filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
+// }
+
+// function onQueueBtn() {
+//   // todo
+//   // - отрисовать список фильмов из очереди
+//   if (storage.queueMovies) {
+//     refs.filmsList.innerHTML = '';
+//     renderMainPage(storage.queueMovies);
+//   }
+//   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
+// }
 
 function onMovieCard(e) {
   // todo
