@@ -122,6 +122,7 @@ async function onSearchInput(e) {
 
   refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
+  infinityScrollData(query)
 
   // if (movies) storage.movies.push(...movies);
   // // - если ничего не найдено по запросу
