@@ -8,12 +8,12 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
+import { loadMore } from './js/iffinity-render/infinityRender';
 import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
 import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
-import { ref } from 'firebase/database';
 import { Notify } from 'notiflix';
 
 const refs = {
@@ -26,17 +26,19 @@ const refs = {
 };
 
 const storage = {
-  currentUser: null,
+  userId: null,
   isSingIn: false,
-  watchedMovies: [],
-  queueMovies: [],
-  trendingMovies: [],
-  searchMovies: [],
+  watched: [],
+  queue: [],
+  movies: [],
 };
 
 async function launch() {
-  const movies = await TmdbApiService.fetchTrendingMovies();
-  storage.trendingMovies.push(...movies);
+  tmdbApi.fetchGenresMovies();
+
+  const movies = await tmdbApi.fetchTrendingMovies();
+  storage.movies.push(...movies);
+
   renderMainPage(movies);
   openDetailsCard(movies);
 }
@@ -90,7 +92,7 @@ refs.queueBtn.addEventListener('click', onQueueBtn);
 // возможно для уменьшения количества запросов на сервера с БД
 // создать в памяти структуру для хранения информации по фильмам что-то вроде такого
 // const storage = {
-//   currentUser, // хранит uid пользователя.
+//   userId, // хранит uid пользователя.
 //   watchedList, // массив просмотренных фильмов которые обновляються при добавлении удалении фильмов из ФБ
 //   queueList,
 //   trendingList, // массив для отображения на главной
@@ -107,40 +109,41 @@ function onHomeBtn() {
   homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
   refs.filmsList.innerHTML = '';
-  renderMainPage(storage.trendingMovies);
+  renderMainPage(storage.movies);
 }
 
 async function onSearchInput(e) {
   // todo
-  // - проверить что длина значения запроса > 0 или не равно пустой строке
-  if (refs.searchInput.value.trim() === 0) {
+  const query = e.target.value.trim();
+  // - проверить что запрос не пустая строка
+  if (query === '') {
     return;
   }
 
-  TmdbApiService.resetSearchMoviePage();
-  storage.searchMovies = await TmdbApiService.fetchSearchMovie(refs.searchInput.value.trim());
+  tmdbApi.resetSearchMoviePage();
+  const movies = await tmdbApi.fetchSearchMovie(query);
+  if (movies) storage.movies.push(...movies);
   // - если ничего не найдено по запросу
   //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  if (TmdbApiService.getSearchMovieTotalPage === 0) {
+  if (tmdbApi.searchMovieTotalPage === 0) {
     Notify.info('Search result not successful. Enter the correct movie name and try again.');
   } else {
     // - отрисовать список фильмов по данным от ТМДБ
     refs.filmsList.innerHTML = '';
-    renderMainPage(storage.searchMovies);
+    renderMainPage(movies);
   }
 }
 
 function onLibBtn() {
   // todo
   // - отрисовать шапку библиотеки
-
   libraryRender();
 
   // - проверка на авторизацию
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
-  if (!storage.currentUser) {
+  if (!storage.userId) {
     autorisationFormCall();
     autorizationFormUiValid();
   }
@@ -182,22 +185,19 @@ function onLibBtn() {
 function onWatchedBtn() {
   // todo
   // - отрисовать список фильмов из очереди
-
-  if (storage.watchedMovies) {
+  if (storage.watched) {
     refs.filmsList.innerHTML = '';
-    renderMainPage(storage.watchedMovies);
+    renderMainPage(storage.watched);
   }
   refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
-
-  //
 }
 
 function onQueueBtn() {
   // todo
   // - отрисовать список фильмов из очереди
-  if (storage.queueMovies) {
+  if (storage.queue) {
     refs.filmsList.innerHTML = '';
-    renderMainPage(storage.queueMovies);
+    renderMainPage(storage.queue);
   }
   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
 }
