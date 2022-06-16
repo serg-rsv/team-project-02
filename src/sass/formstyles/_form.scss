@@ -1,84 +1,106 @@
 .container.auth-form {
-	min-width: 100%;
-	position: relative;
-	padding: 50px 12px 40px;
-	background: linear-gradient(156deg, rgba(255, 255, 255, 0.7) 24%, rgba(148, 187, 233, 0.2) 69%),
-	radial-gradient(circle, rgba(148, 187, 233, 0.2) 18%, rgba(238, 174, 202, 0.2) 93%),
-	linear-gradient(45deg, rgba(255, 255, 255, 0.2) 0%, rgba(252, 252, 252, 0.5) 12%, rgba(252, 252, 252, 0.8) 25%, rgba(252, 252, 252, 0.8) 48%, rgba(252, 252, 252, 0.7) 75%, rgba(252, 252, 252, 0.6) 88%, rgba(255, 255, 255, 0.3) 100%);
-	border-radius: 10px;
+  min-width: 100%;
+  position: relative;
+  padding: 50px 12px 40px;
+  background: linear-gradient(156deg, rgba(255, 255, 255, 0.7) 24%, rgba(148, 187, 233, 0.2) 69%),
+    radial-gradient(circle, rgba(148, 187, 233, 0.2) 18%, rgba(238, 174, 202, 0.2) 93%),
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(252, 252, 252, 0.5) 12%,
+      rgba(252, 252, 252, 0.8) 25%,
+      rgba(252, 252, 252, 0.8) 48%,
+      rgba(252, 252, 252, 0.7) 75%,
+      rgba(252, 252, 252, 0.6) 88%,
+      rgba(255, 255, 255, 0.3) 100%
+    );
+  border-radius: 10px;
 
-	@media screen and (min-width: $tablet) {
-		min-width: none;
-		max-width: 350px;
-		padding: 50px 30px;
-	}
+  @media screen and (min-width: $tablet) {
+    min-width: none;
+    max-width: 350px;
+    padding: 50px 30px;
+  }
 }
 
 .auth-form__label {
-	position: relative;
-	display: block;
+  position: relative;
+  display: block;
 }
 
 .auth-form__text-input {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-	background: transparent;
-	border-radius: 5px;
-	outline: none;
-	color: $font-color-dark;
-	font-size: 1em;
-	transition: 0.5s;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: transparent;
+  border-radius: 5px;
+  outline: none;
+  color: $font-color-dark;
+  font-size: 1em;
+  transition: 0.5s;
 
-	&:focus {
-		border-color: var(--clr);
-	}
+  &:focus {
+    border-color: var(--clr);
+  }
 }
 
 .auth-form__input-name {
-	position: absolute;
-	left: 0;
-	padding: 10px;
-	pointer-events: none;
-	font-size: 1em;
-	color: rgba(0, 0, 0, 0.25);
-	text-transform: uppercase;
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
 
-	transition: 0.5s;
+  transition: 0.5s;
 
-	.auth-form__text-input:valid ~ &,
-	.auth-form__text-input:focus ~ &,
-	.auth-form__text-input--filled ~ & {
-		color: var(--clr);
-		transform: translateX(10px) translateY(-5px);
-		font-size: 0.65em;
-		padding: 0 10px;
-		background: #f0eef0;
-		border-left: 1px solid var(--clr);
-		border-right: 1px solid var(--clr);
-		letter-spacing: 0.2em;
-	}
+  .auth-form__text-input:valid ~ &,
+  .auth-form__text-input:focus ~ &,
+  .auth-form__text-input--filled ~ & {
+    color: var(--clr);
+    transform: translateX(10px) translateY(-5px);
+    font-size: 0.65em;
+    padding: 0 10px;
+    background: #f0eef0;
+    border-left: 1px solid var(--clr);
+    border-right: 1px solid var(--clr);
+    letter-spacing: 0.2em;
+  }
 
-	
-
-	.auth-form__label:nth-child(2) .auth-form__text-input:valid~&,
-	.auth-form__label:nth-child(2) .auth-form__text-input:focus~&,
-	.auth-form__label:nth-child(2) .auth-form__text-input--filled~& {
-		background-color: var(--clr);
-		color: $color-main;
-		border-radius: 2px;
-	}
+  .auth-form__label:nth-child(2) .auth-form__text-input:valid ~ &,
+  .auth-form__label:nth-child(2) .auth-form__text-input:focus ~ &,
+  .auth-form__label:nth-child(2) .auth-form__text-input--filled ~ & {
+    background-color: var(--clr);
+    color: $color-main;
+    border-radius: 2px;
+  }
 }
 
-
 .auth-form__label:nth-child(2) {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .controls {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 .controls_buttonbox {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.auth-form__input-tip {
+  position: relative;
+  top: 10px;
+  left: 0;
+  transform-origin: 50% 0%;
+  transform: scaleY(0);
+  text-align: justify;
+  color: $font-color-dark;
+  opacity: 50%;
+
+  .auth-form__label:nth-child(2) .auth-form__text-input:focus ~ & {
+    transform: scaleY(1);
+    transition: $animationDuration $animationTimeFunction;
+  }
 }
