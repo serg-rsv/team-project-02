@@ -1,5 +1,5 @@
-import * as basicLightbox from 'basiclightbox';
-import 'basiclightbox/src/styles/main.scss';
+// import * as basicLightbox from 'basiclightbox';
+// import 'basiclightbox/src/styles/main.scss';
 import cardTpl from '~/templates/modal.hbs';
 
 const refFilmsList = document.querySelector('.films_list');
@@ -12,7 +12,7 @@ export function renderMainPage(movies) {
       return `<li class="products__cards-item" data-movie-id="${id}">
                 <img class="img" src="${posterUrl}" >
                 <p class="film_title">${title}</p>
-                <ul class="info-list>
+                <ul class="info-list">
                     <li class="film_genre">${genre_ids}</li>
                     <li class="film_genre">${releaseYear}</li>
                     <li class="film_genre">${vote_average}</li>
