@@ -13,6 +13,24 @@
   font-size: $font-size-major;
   line-height: $font-height-major;
 }
+
+.film_genre:not(:first-child) {
+  padding-left: 5px;
+}
+.film_average {
+  margin-left: 8px;
+}
+.film_genre:first-child {
+  border-right: 2px solid $color-accent;
+  padding-right: 5px;
+}
+.info-list {
+  display: flex;
+  flex-direction: row;
+  color: $color-accent;
+  align-items: flex-end;
+}
+
 .img {
   @media screen and (min-width: $tablet) {
     width: $mobile;
@@ -28,7 +46,7 @@
   display: flex;
   flex-wrap: wrap;
   text-align: start;
-  margin: 0;
+  margin-bottom: 60px;
   margin-left: auto;
   margin-right: auto;
   justify-content: center;

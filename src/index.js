@@ -3,6 +3,7 @@ import './sass/main.scss';
 import _ from 'lodash';
 
 import { tmdbApi } from './js/services/tmdb-api';
+import { openDetailsCard } from './js/kaplunenko/render';
 import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
@@ -34,13 +35,14 @@ const storage = {
 };
 
 async function launch() {
-  await tmdbApi.fetchGenresMovies();
+  tmdbApi.fetchGenresMovies();
+  console.log('rrr');
+  const movies = await tmdbApi.fetchTrendingMovies();
+  storage.movies.push(...movies);
 
-  // const movies = await tmdbApi.fetchTrendingMovies();
-  // storage.movies.push(...movies);
-
-  // renderMainPage(movies);
-  infinityScrollData();
+  renderMainPage(movies);
+  openDetailsCard(movies);
+  console.log(movies);
 }
 
 launch();

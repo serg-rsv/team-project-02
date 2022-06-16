@@ -1,15 +1,14 @@
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/src/styles/main.scss';
 
-
 /**
- * 
- * @param {*} data - Обязательный атрибут. Принимает разметку, которую необходимо отобразить в модальном окне. 
+ *
+ * @param {*} data - Обязательный атрибут. Принимает разметку, которую необходимо отобразить в модальном окне.
  * Например функцию хендлбарса с разметкой.
- * @param {string} selector - Необязательный атрибут. Принимает селектор, валидный для document.querySelector. 
- * Например '.form_close-button' или '[data-modal-close]'. Обязательно в кавычках. Это ссылка на кнопку закрытия 
+ * @param {string} selector - Необязательный атрибут. Принимает селектор, валидный для document.querySelector.
+ * Например '.form_close-button' или '[data-modal-close]'. Обязательно в кавычках. Это ссылка на кнопку закрытия
  * модального окна, если она предусмотрена.
- * @returns 
+ * @returns
  */
 
 export function modalCall(data, selector) {
@@ -31,4 +30,3 @@ export function modalCall(data, selector) {
     }
   }
 }
-
