@@ -7,7 +7,7 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-// import { loadMore } from './js/iffinity-render/infinityRender';
+import { infinityScrollData, loadMore } from './js/infinity-scroll/infinityScrollData';
 import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
@@ -33,55 +33,16 @@ const storage = {
 };
 
 async function launch() {
-  tmdbApi.fetchGenresMovies();
+  await tmdbApi.fetchGenresMovies();
 
-  const movies = await tmdbApi.fetchTrendingMovies();
-  storage.movies.push(...movies);
+  // const movies = await tmdbApi.fetchTrendingMovies();
+  // storage.movies.push(...movies);
 
-  renderMainPage(movies);
+  // renderMainPage(movies);
+  infinityScrollData();
 }
 
-// launch();
-
-async function renderNew() {
-  const movies = await TmdbApiService.fetchTrendingMovies('one');
-  renderMainPage(movies);
-  if (
-    movies.length < 20 ||
-    TmdbApiService.getTrendingPage() > TmdbApiService.getTrendingTotalPage()
-  )
-    return;
-  const almostLastElement = refs.filmsList.querySelector(
-    '.products__cards-item:nth-last-child(4) img',
-  );
-  almostLastElement.addEventListener('load', onLoad);
-  async function onLoad() {
-    almostLastElement.removeEventListener('load', onLoad);
-    // const array = await TmdbApiService.fetchTrendingMovies('two');
-    loadMore(renderNew);
-  }
-}
-renderNew();
-
-// functionrenderInfinityQuery()
-
-function loadMore(callback, query, selector = '.products__cards-item:last-child') {
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          observer.unobserve(entry.target);
-          callback(query);
-        }
-      });
-    },
-    {
-      threshold: 0.1, // Процентне відношення елемента до відображення на екрані.
-    },
-  );
-
-  observer.observe(document.querySelector(selector));
-}
+launch();
 
 refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
@@ -91,7 +52,7 @@ refs.queueBtn.addEventListener('click', onQueueBtn);
 
 // =============== Псевдокод ===============
 
-// authApi.trackUserLoginState() ----> ункція має викликатися найпершою
+// authApi.trackUserLoginState() ----> функція має викликатися найпершою
 // і обовєязково з колбеками, які запишуть до стору стан користувача
 // я перевірив - нічого повренути із ціє функції окрім самої функції неможна.
 //
@@ -159,21 +120,19 @@ async function onSearchInput(e) {
     return;
   }
 
+  refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
-  const movies = await tmdbApi.fetchSearchMovie(query);
-  if (movies) storage.movies.push(...movies);
-  // - если ничего не найдено по запросу
-  //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  if (tmdbApi.searchMovieTotalPage === 0) {
-    Notify.info('Search result not successful. Enter the correct movie name and try again.');
-  } else {
-    // - отрисовать список фильмов по данным от ТМДБ
-    refs.filmsList.innerHTML = '';
-    renderMainPage(movies);
-  }
-}
 
-async function renderInput() {}
+  // if (movies) storage.movies.push(...movies);
+  // // - если ничего не найдено по запросу
+  // //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
+  // if (tmdbApi.searchMovieTotalPage === 0) {
+  //   Notify.info('Search result not successful. Enter the correct movie name and try again.');
+  // } else {
+  //   // - отрисовать список фильмов по данным от ТМДБ
+  //   renderMainPage(movies);
+  // }
+}
 
 function onLibBtn() {
   // todo
