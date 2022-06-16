@@ -20,10 +20,12 @@ async function infinityScrollData(query) {
     }
     renderMainPage(movies);
     if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) return;
-    const almostLastElement = document.querySelector('.products__cards-item:nth-last-child(4) img');
-    almostLastElement.addEventListener('load', onLoad);
+    const triggeredLoadMoreElement = document.querySelector(
+      '.products__cards-item:nth-last-child(4) img',
+    );
+    triggeredLoadMoreElement.addEventListener('load', onLoad);
     function onLoad() {
-      almostLastElement.removeEventListener('load', onLoad);
+      triggeredLoadMoreElement.removeEventListener('load', onLoad);
       loadMore(infinityScrollData, query);
     }
     return new Promise(resolve => resolve(movies));
