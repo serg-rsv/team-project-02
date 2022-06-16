@@ -1,5 +1,6 @@
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/src/styles/main.scss';
+import { isValidTimestamp } from '@firebase/util';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
 
@@ -9,14 +10,14 @@ export function renderMainPage(movies) {
   console.log(movies);
   const descriptionMarkup = movies
 
-    .map(({ id, title, genre_ids, posterUrl, releaseYear, vote_average }) => {
+    .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
       return `<li class="products__cards-item" data-movie-id="${id}">
                 <img class="img" src="${posterUrl}" >
                 <p class="film_title">${title}</p>
                 <ul class="info-list">
-                    <li class="film_genre">${genre_ids}</li>
+                    <li class="film_genre">${genres}</li>
                     <li class="film_genre">${releaseYear}</li>
-                    <li class="film_genre">${vote_average}</li>
+                    <li class="film-profile__value--accent film_average">${vote_average}</li>
                 </ul>
                 
             </li>`;
