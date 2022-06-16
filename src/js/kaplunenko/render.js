@@ -15,7 +15,7 @@ export function renderMainPage(movies) {
                 <img class="img" src="${posterUrl}" >
                 <p class="film_title">${title}</p>
                 <ul class="info-list">
-                    <li class="film_genre">${genres}</li>
+                    <li class="film_genre">${genres.join(', ')}</li>
                     <li class="film_genre">${releaseYear}</li>
                     <li class="film-profile__value--accent film_average">${vote_average}</li>
                 </ul>
