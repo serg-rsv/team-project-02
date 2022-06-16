@@ -23,7 +23,7 @@ export function renderMainPage(movies) {
             </li>`;
     })
     .join('');
-
+  genresListCut(movies);
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 }
 
@@ -44,4 +44,12 @@ export function openDetailsCard(movies) {
       modalCall(markup);
     }
   }
+}
+function genresListCut(array) {
+  const genresList = array.map(({ genres }) => {
+    if (genres.length === 2) {
+      return genres;
+    }
+  });
+  console.log(genresList);
 }
