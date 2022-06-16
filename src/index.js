@@ -41,7 +41,10 @@ const ACTION_TYPE = {
 };
 
 async function launch() {
+  // =============== Prokoptsov ===================//
+  // визначаємо чи залогінений юзер у системі при завантаженні сторінки та виконуємо логіку у колбеках
   authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
+  // =================================================
   tmdbApi.fetchGenresMovies();
 
   const movies = await tmdbApi.fetchTrendingMovies();
@@ -153,13 +156,16 @@ function onLibBtn() {
   if (!storage.userId) {
     autorisationFormCall();
     autorizationFormUiValid();
+    // ================= Prokoptsov ===========/
+    // пілся появи форми знаходимо її у DOM
     const formRef = document.querySelector('[data-js="auth-form"]');
+    // вішаємо слухач, та додаємо обробник подіїї
     formRef.addEventListener('click', onAuthFormClick);
-    formRef.addEventListener('submit', () => formRef.removeEventListener('click', onAuthFormClick), {once: true});
   }
 
   
-  databaseApi.get('watched', storage.userId, onGetMoviesFromFirebase);
+  getAndRenderMovies('watched');
+  // ===================================//
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -178,28 +184,6 @@ function onLibBtn() {
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
-}
-
-// ================= Prokoptsov  CALBACKS ==============//
-function onGetMoviesFromFirebase (movieList) {
-  refs.filmsList.innerHTML = '';
-  renderMainPage(movieList)
-}
-function onSigninAfterRegister (userId) {
-storage.userId = userId;
-storage.isSingIn = true;
-
-alertAfterReggister();
-}
-function alertAfterReggister () {
-refs.filmsList.innerHTML = '<Nothing has been add here yet>'
-}
-function userIsSignedIn (userId) {
-  storage.userId = userId;
-  storage.isSingIn = true;
-}
-function userIsSignedOut () {
-  console.log('You are not signed in')
 }
 
 // =======================================================//
@@ -307,25 +291,68 @@ function onDelQueueBtn(e) {
 // І формою реєстрації я займаюсь, то я вже і напишу всі обробники і логіку, якщо ти не проти :=))
 
 // ================== Prokoptsov =================//
+// оброблює реєстрацію та логін
 function onAuthFormClick(e) {
   e.preventDefault();
   
-  const action = e.target.name;
+  const action = e.target.parentElement.name;
   const email = e.currentTarget.elements.email.value;
   const password = e.currentTarget.elements.password.value;
 
   switch (action) {
     case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
-      authApi.signInWithEmailAndPassword(email, password, onSigninAfterRegister).then(getAndRenderMovies).catch(console.log);
+      authApi.signInWithEmailAndPassword(email, password, onSignInSuccess, onSiginInError)
       break;
     case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
-      authApi.createUserWithEmailAndPassword(email, password, onSigninAfterRegister).then(getAndRenderMovies).catch(console.log);
+      authApi.createUserWithEmailAndPassword(email, password, onSignInSuccess, onSiginInError)
       break;
     case ACTION_TYPE.SIGN_IN_WITH_GOOGLE:
-      authApi.signInWithGoogle().then(getAndRenderMovies, onSigninAfterRegister).catch(console.log);
+      authApi.signInWithGoogle(onSignInSuccess, onSiginInError)
       break;
     default: return;
   };
 
   e.currentTarget.reset();
 }
+// колбек для databaseApi.add(), щоб відмалювати додані до ФБ вільми
+function onGetMoviesFromFirebase (movieList) {
+  console.log(movieList);
+  refs.filmsList.innerHTML = '';
+  movieList.length ? renderMainPage(movieList) : refs.filmsList.insertAdjacentHTML('beforeend', '<p>Nothing has been added here yet</p>');
+}
+// колбек на випадок успіщноїї реєстрації та успішного логіну
+function onSignInSuccess (user) {
+  storage.userId = user.uid;
+  storage.isSingIn = true;
+  getAndRenderMovies('watched');
+
+}
+// колбек на випадок, коли юзер вже залогінений при завантаженні сторінки
+function userIsSignedIn (user) {
+  storage.userId = user.uid;
+  storage.isSingIn = true;
+
+  Notify.info(`Welcome, ${user.email}`);
+}
+
+// колбек на вилогінювання юзера
+function userIsSignedOut () {
+  console.log('You are not signed in')
+}
+
+// колбек для обробки помилки при запиті.
+function onSiginInError (error) {
+  // нормалізує повідомлення помилки з ФБ
+  const indexOfSlash = error.code.indexOf('/');
+  const nomalizedErrorMessage = error.code.slice(indexOfSlash + 1)[0].toUpperCase() + error.code.slice(indexOfSlash + 2).replaceAll('-', ' ');
+  
+  Notify.failure(`Ups... ${nomalizedErrorMessage}`);
+}
+// робить запити до ФБ і стягує фільми відповідно до переданого шляху
+/**
+ * @param {String} path // директорія у ФБ
+ */
+function getAndRenderMovies (path) {
+  databaseApi.get(path, storage.userId, onGetMoviesFromFirebase);
+}
+// ===============================================//
