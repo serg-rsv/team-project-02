@@ -104,15 +104,22 @@ export const tmdbApi = {
       language: LANGUAGES.ENGLISH,
     };
 
-    axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
-      genres.push(...data.genres);
-    });
+    return axios
+      .get(endPointUrl, { params: requestParams })
+      .then(({ data }) => {
+        genres.push(...data.genres);
+      })
+      .catch(error => console.log(error.message));
   },
   /**
    *
    * @returns повертає *проміс* в якому масив об'єктів популярних фільмів за день.
    */
-  fetchTrendingMovies() {
+  async fetchTrendingMovies() {
+    if (genres.length === 0) {
+      await this.fetchGenresMovies();
+    }
+
     const endPointUrl = BASE_URL + END_POINTS.TRENDING + trending.MEDIA_TYPE + trending.TIME_WINDOW;
     const requestParams = {
       api_key: API_KEY,
@@ -120,38 +127,41 @@ export const tmdbApi = {
       language: LANGUAGES.ENGLISH,
     };
 
-    return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
-      const { page, results, total_pages } = data;
-      trending.page = page;
-      trending.totalPages = total_pages;
-      return results.map(
-        ({
-          id,
-          title,
-          original_title,
-          release_date,
-          overview,
-          vote_average,
-          vote_count,
-          poster_path,
-          genre_ids,
-          popularity,
-        }) => {
-          return {
+    return axios
+      .get(endPointUrl, { params: requestParams })
+      .then(({ data }) => {
+        const { page, results, total_pages } = data;
+        trending.page = page;
+        trending.totalPages = total_pages;
+        return results.map(
+          ({
             id,
             title,
             original_title,
-            releaseYear: release_date && release_date.slice(0, 4),
+            release_date,
             overview,
             vote_average,
             vote_count,
-            posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
-            genres: getListOfGenres(genre_ids),
+            poster_path,
+            genre_ids,
             popularity,
-          };
-        },
-      );
-    });
+          }) => {
+            return {
+              id,
+              title,
+              original_title,
+              releaseYear: release_date && release_date.slice(0, 4),
+              overview,
+              vote_average,
+              vote_count,
+              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
+              genres: getListOfGenres(genre_ids),
+              popularity,
+            };
+          },
+        );
+      })
+      .catch(error => console.log(error.message));
   },
 
   /**
@@ -159,7 +169,11 @@ export const tmdbApi = {
    * @param {string} query назва фільму для пошуку.
    * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
-  fetchSearchMovie(query) {
+  async fetchSearchMovie(query) {
+    if (genres.length === 0) {
+      await this.fetchGenresMovies();
+    }
+
     const endPointUrl = BASE_URL + END_POINTS.SEARCH_MOVIE;
     const requestParams = {
       api_key: API_KEY,
@@ -168,38 +182,41 @@ export const tmdbApi = {
       query,
     };
 
-    return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
-      const { page, results, total_pages } = data;
-      searchMovie.page = page;
-      searchMovie.totalPages = total_pages;
-      return results.map(
-        ({
-          id,
-          title,
-          original_title,
-          release_date,
-          overview,
-          vote_average,
-          vote_count,
-          poster_path,
-          genre_ids,
-          popularity,
-        }) => {
-          return {
+    return axios
+      .get(endPointUrl, { params: requestParams })
+      .then(({ data }) => {
+        const { page, results, total_pages } = data;
+        searchMovie.page = page;
+        searchMovie.totalPages = total_pages;
+        return results.map(
+          ({
             id,
             title,
             original_title,
-            releaseYear: release_date && release_date.slice(0, 4),
+            release_date,
             overview,
             vote_average,
             vote_count,
-            posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
-            genres: getListOfGenres(genre_ids),
+            poster_path,
+            genre_ids,
             popularity,
-          };
-        },
-      );
-    });
+          }) => {
+            return {
+              id,
+              title,
+              original_title,
+              releaseYear: release_date && release_date.slice(0, 4),
+              overview,
+              vote_average,
+              vote_count,
+              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
+              genres: getListOfGenres(genre_ids),
+              popularity,
+            };
+          },
+        );
+      })
+      .catch(error => console.log(error.message));
   },
 
   /**
@@ -214,31 +231,34 @@ export const tmdbApi = {
       language: LANGUAGES.ENGLISH,
     };
 
-    return axios.get(endPointUrl, { params: requestParams }).then(({ data }) => {
-      const {
-        id,
-        title,
-        original_title,
-        release_date,
-        overview,
-        vote_average,
-        vote_count,
-        poster_path,
-        genres,
-        popularity,
-      } = data;
-      return {
-        id,
-        genres,
-        title,
-        original_title,
-        release_date,
-        overview,
-        popularity,
-        vote_average,
-        vote_count,
-        posterUrl: IMAGE_URL + 'w500' + poster_path,
-      };
-    });
+    return axios
+      .get(endPointUrl, { params: requestParams })
+      .then(({ data }) => {
+        const {
+          id,
+          title,
+          original_title,
+          release_date,
+          overview,
+          vote_average,
+          vote_count,
+          poster_path,
+          genres,
+          popularity,
+        } = data;
+        return {
+          id,
+          genres,
+          title,
+          original_title,
+          release_date,
+          overview,
+          popularity,
+          vote_average,
+          vote_count,
+          posterUrl: IMAGE_URL + 'w500' + poster_path,
+        };
+      })
+      .catch(error => console.log(error.message));
   },
 };

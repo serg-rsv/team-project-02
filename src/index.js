@@ -1,3 +1,49 @@
+// =============== Taras ===============>
+const testW = [
+  {
+    id: 705861,
+    genres: ['Action', 'Drama'],
+    title: 'Hustle',
+    vote_average: 7.4,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/fVf4YHHkRfo1uuljpWBViEGmaUQ.jpg',
+  },
+  {
+    id: 648579,
+    genres: ['Action', 'Drama'],
+    title: 'The Unbearable Weight of Massive Talent',
+    vote_average: 7.4,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
+  },
+  {
+    id: 507086,
+    genres: ['Action', 'Drama'],
+    title: 'Jurassic World Dominion',
+    vote_average: 6.8,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
+  },
+];
+const testQ = [
+  {
+    id: 507086,
+    genres: ['Action', 'Drama'],
+    title: 'Jurassic World Dominion',
+    vote_average: 6.8,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
+  },
+  {
+    id: 648579,
+    genres: ['Action', 'Drama'],
+    title: 'The Unbearable Weight of Massive Talent',
+    vote_average: 7.4,
+    releaseYear: '2022',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
+  },
+];
+// <============== Taras ===============
 import './sass/main.scss';
 
 import _ from 'lodash';
@@ -8,16 +54,16 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-import { infinityScrollData, loadMore } from './js/infinity-scroll/infinityScrollData';
 import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
 import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
 import { Notify } from 'notiflix';
+import { databaseApi } from './js/services/db';
 
 const refs = {
-  homeBtn: document.querySelectorAll('[data-load="home"]'),
+  homeBtns: document.querySelectorAll('[data-load="home"]'),
   libraryBtn: document.querySelector('[data-load="library"]'),
   filmsList: document.querySelector('.films_list'),
   searchInput: document.querySelector('#name-input'),
@@ -28,29 +74,26 @@ const refs = {
 const storage = {
   userId: null,
   isSingIn: false,
-  watched: [], // тут будуть зберігатись данні з ФБ ,
-  queue: [], //тут будуть зберігатись данні з ФБ ,
+  watched: testW, // тут будуть зберігатись данні з ФБ ,
+  queue: testQ, //тут будуть зберігатись данні з ФБ ,
   movies: [], // сюди записуємо об'єкти фільмів які відрендерили на екрані
   currentTab: '', // для перемикання між кнопками watched & queue
 };
 
 async function launch() {
-  tmdbApi.fetchGenresMovies();
-  const movies = await tmdbApi.fetchTrendingMovies();
-  storage.movies.push(...movies);
-
-  renderMainPage(movies);
-  openDetailsCard(movies);
-  // infinityScrollData();
+  // {show loader}
+  const movies = await infinityScrollData();
+  // {hide loader}
 }
 
 launch();
 
-refs.homeBtn.forEach(btn => btn.addEventListener('click', onHomeBtn));
+refs.homeBtns.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
 refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 500));
 refs.watchedBtn.addEventListener('click', onNavigate);
 refs.queueBtn.addEventListener('click', onNavigate);
+refs.filmsList.addEventListener('click', onMovieCard);
 
 // =============== Псевдокод ===============
 
@@ -77,41 +120,31 @@ refs.queueBtn.addEventListener('click', onNavigate);
 //  це важливо
 
 // список интерактивных елементов
-// const refs = {
-//   filmsList: document.querySelector('.films_list'),
-//   homeBtns: document.querySelectorAll('[data-load="home"]'),
-//   searchInput: document.querySelector('input'),
-//   libBtn: document.querySelector('[data-load="library"]'),
+// static:
+//   filmsList,
+//   homeBtns,
+//   searchInput,
+//   libBtn,
 //   watchedBtn,
 //   queueBtn,
+// dynamic:
 //   addWatchedBtn,
 //   addQueueBtn,
 //   delWatchedBtn,
 //   delQueueBtn,
+//   ... @Діма кнопки форми авторирзації на твій розсуд
 // };
-
-// возможно для уменьшения количества запросов на сервера с БД
-// создать в памяти структуру для хранения информации по фильмам что-то вроде такого
-// const storage = {
-//   userId, // хранит uid пользователя.
-//   watchedList, // массив просмотренных фильмов которые обновляються при добавлении удалении фильмов из ФБ
-//   queueList,
-//   trendingList, // массив для отображения на главной
-// };
-
-// refs.homeBtns.forEach(btn => btn.addEventListener('click', onHomeBtn));
-// refs.libBtn.addEventListener('click', onLibBtn);
-// refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 300));
-// refs.filmsList.addEventListener('click', onMovieCard);
 
 function onHomeBtn() {
   // todo
   // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
   homeRender();
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
+  // {show loader}
   refs.filmsList.innerHTML = '';
   tmdbApi.resetTrendingPage();
   infinityScrollData();
+  // {hide loader}
 }
 
 // =====================================================================================================
@@ -123,19 +156,18 @@ async function onSearchInput(e) {
     return;
   }
 
-  refs.filmsList.innerHTML = '';
-  tmdbApi.resetSearchMoviePage();
-  infinityScrollData(query);
-
-  // if (movies) storage.movies.push(...movies);
+  await tmdbApi.fetchSearchMovie(query);
   // // - если ничего не найдено по запросу
   // //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  // if (tmdbApi.searchMovieTotalPage === 0) {
-  //   Notify.info('Search result not successful. Enter the correct movie name and try again.');
-  // } else {
-  //   // - отрисовать список фильмов по данным от ТМДБ
-  //   renderMainPage(movies);
-  // }
+  if (tmdbApi.searchMovieTotalPage === 0) {
+    Notify.info('Search result not successful. Enter the correct movie name and try again.');
+    return;
+  }
+
+  refs.filmsList.innerHTML = '';
+
+  tmdbApi.resetSearchMoviePage();
+  infinityScrollData(query);
 }
 
 function onLibBtn() {
@@ -150,7 +182,11 @@ function onLibBtn() {
   if (!storage.userId) {
     autorisationFormCall();
     autorizationFormUiValid();
+
+    // - записати ID користувача в storage.userId
   }
+  // - завантаження списку watched і рендер
+
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -170,7 +206,6 @@ function onLibBtn() {
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
 }
-
 // ========= Prokoptsov =======
 // Такий ще момент: коли натискаємо на будь-яку кнопку, яка виконую запит
 // чи то до TMDB чи до Firebase треба РОБИТИ КНОПКИ НЕАКТИВНИМИ!!!!
@@ -186,62 +221,43 @@ function onLibBtn() {
 //  }).finally(() => button.disable = false;)
 // }
 // =========================
+
+// =============== Taras ===============>
 function onWatchedBtn() {
   // todo
-  // - отрисовать список фильмов из очереди
+  // - завантаження списку watched і рендер
   if (storage.watched) {
     refs.filmsList.innerHTML = '';
     renderMainPage(storage.watched);
+  } else {
+    // - повідомлення про пустий список
+    refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
   }
-  refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
 }
 
-// function onQueueBtn() {
-//   // todo
-//   // - отрисовать список фильмов из очереди
-//   if (storage.queue) {
-//     refs.filmsList.innerHTML = '';
-//     renderMainPage(storage.queue);
-//   }
-//   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
-// const test = [
-//   {
-//     id: 705861,
-//     genre_ids: [18, 35],
-//     title: 'Hustle',
-//     vote_average: 7.4,
-//     releaseYear: '2022',
-//     posterUrl: 'https://image.tmdb.org/t/p/w500/fVf4YHHkRfo1uuljpWBViEGmaUQ.jpg',
-//   },
-//   {
-//     id: 648579,
-//     genre_ids: [28, 35, 80],
-//     title: 'The Unbearable Weight of Massive Talent',
-//     vote_average: 7.4,
-//     releaseYear: '2022',
-//     posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
-//   },
-//   {
-//     id: 507086,
-//     genre_ids: [878, 28, 12, 53],
-//     title: 'Jurassic World Dominion',
-//     vote_average: 6.8,
-//     releaseYear: '2022',
-//     posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
-//   },
-// ];
-// // ------------------------------
-// function onGetWatchedMovieRender(watchedMovieArray) {
-//   destroyMovieList(); // очищаємо розмітку;
-//   watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
-//   renderMainPage(watchedMovieArray);
-// }
+function onQueueBtn() {
+  // todo
+  // - завантаження списку queue і рендер
+  if (storage.queue) {
+    refs.filmsList.innerHTML = '';
+    renderMainPage(storage.queue);
+  } else {
+    // - повідомлення про пустий список
+    refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
+  }
+}
+// ------------------------------
+function onGetWatchedMovieRender() {
+  destroyMovieList(); // очищаємо розмітку;
+  const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
+  renderMainPage(watchedMovieArray);
+}
 
-// // ---------------------
-// function destroyMovieList() {
-//   refs.filmsList.innerHTML = '';
-// }
-// // -------------------------------------
+// ---------------------
+function destroyMovieList() {
+  refs.filmsList.innerHTML = '';
+}
+// -------------------------------------
 function onNavigate(event) {
   const currentTab = event.target.dataset.action;
 
@@ -253,41 +269,24 @@ function onNavigate(event) {
     onGetWatchedMovieRender();
   }
 }
-// ----------------------------------
-// function renderMainPage(movies) {
-//   console.log(movies);
-//   const descriptionMarkup = movies
-//     .map(({ id, title, genre_ids, posterUrl }) => {
-//       return `<li class="products__cards-item" data-movie-id="${id}">
-//             <div>
-//                 <img class="img" src="https://image.tmdb.org/t/p/w500/${posterUrl}" >
-//                 <p class="film_title">${title}</p>
-//                 <p class="film_genre">${genre_ids}</p>
-//             </div>
-//             </li>`;
-//     })
-//     .join('');
-//   refs.filmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
-// }
-
-// function onQueueBtn() {
-//   // todo
-//   // - отрисовать список фильмов из очереди
-//   if (storage.queueMovies) {
-//     refs.filmsList.innerHTML = '';
-//     renderMainPage(storage.queueMovies);
-//   }
-//   refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
-// }
+// <============== Taras ===============
 
 function onMovieCard(e) {
   // todo
   // - проверить что клик именно по карточке фильма
+  const cardFilm = e.target.closest('.products__cards-item');
+  if (cardFilm === null) {
+    return;
+  }
+  // - получить детальную информацию из памяти
+  const movieId = Number(cardFilm.dataset.movieId);
+  const movieData = storage.movies.find(movie => movie.id === movieId);
+  // console.log(movieData);
   // - создать модальное окно
-  // - получить детальную информацию от ТМДБ
+  openDetailsCard(movieData, '.modal_close-button');
   // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
   // - отрисовать модалку с детальной информацией по фильму
-  //  - отрисовать кнопки соответсвенно добавить/удалить
+  // - отрисовать кнопки соответсвенно добавить/удалить
   // - получить ссылки на кнопки 'add/del to watched' и 'add/del to queue' и повесить слушатели
 }
 
@@ -346,3 +345,63 @@ function onDelQueueBtn(e) {
 // =============== Prokoptsov ==============
 // Ще раз повторюсь, треба не забувати ВИДАЛЯТИ СЛУХАЧІ!!!!!!!!!
 // І формою реєстрації я займаюсь, то я вже і напишу всі обробники і логіку, якщо ти не проти :=))
+// Тільки ЗА :D
+
+// =============== Niko ===============>
+/**
+ *
+ * @param {string} query  - Необов'язковий параметр, потрібен, якщо дані, які требя відмальовувати формуються
+ * за строковим запитом query до API. query - це і є наш строковий запит
+ * @returns {Promise} - повертає проміс, в якому зберігаються дані з API за нашим запитом
+ */
+async function infinityScrollData(query) {
+  try {
+    let movies;
+    if (!query) {
+      movies = await tmdbApi.fetchTrendingMovies();
+    }
+    if (query) {
+      movies = await tmdbApi.fetchSearchMovie(query);
+    }
+    renderMainPage(movies);
+    storage.movies.push(...movies);
+    if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) return;
+    const triggeredLoadMoreElement = document.querySelector(
+      '.products__cards-item:nth-last-child(4) img',
+    );
+    triggeredLoadMoreElement.addEventListener('load', onLoad);
+    function onLoad() {
+      triggeredLoadMoreElement.removeEventListener('load', onLoad);
+      loadMore(infinityScrollData, query);
+    }
+    return new Promise(resolve => resolve(movies));
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
+
+/**
+ *
+ * @param {function} callback - Функція, яка буде викликана після того, як третій параметр (селектор) з'явиться на екрані.
+ * @param {string} query - запит. Необов'язковий параметр, потрібен в якості атрибуту функциї callback.
+ * @param {string} selector - Селектор елементу, після якого буде додано нові дані. Обсервер чекає, доки цей елемент з'явиться на сторінці. По замовчанню '.products__cards-item:last-child'.
+ */
+function loadMore(callback, query, selector = '.products__cards-item:last-child') {
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          console.log('load more ', query);
+          callback(query);
+        }
+      });
+    },
+    {
+      threshold: 0.5, // Процентне відношення елемента до відображення на екрані.
+    },
+  );
+
+  observer.observe(document.querySelector(selector));
+}
+// <============== Niko ===============
