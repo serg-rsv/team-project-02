@@ -7,7 +7,7 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-import { loadMore } from './js/iffinity-render/infinityRender';
+import { infinityScrollData, loadMore } from './js/infinity-scroll/infinityScrollData';
 import { modalCall } from './js/modal/modalCall';
 
 import './js/irina/modal.js';
@@ -33,12 +33,13 @@ const storage = {
 };
 
 async function launch() {
-  tmdbApi.fetchGenresMovies();
+  await tmdbApi.fetchGenresMovies();
 
-  const movies = await tmdbApi.fetchTrendingMovies();
-  storage.movies.push(...movies);
+  // const movies = await tmdbApi.fetchTrendingMovies();
+  // storage.movies.push(...movies);
 
-  renderMainPage(movies);
+  // renderMainPage(movies);
+  infinityScrollData();
 }
 
 launch();
@@ -51,7 +52,7 @@ refs.queueBtn.addEventListener('click', onQueueBtn);
 
 // =============== Псевдокод ===============
 
-// authApi.trackUserLoginState() ----> ункція має викликатися найпершою
+// authApi.trackUserLoginState() ----> функція має викликатися найпершою
 // і обовєязково з колбеками, які запишуть до стору стан користувача
 // я перевірив - нічого повренути із ціє функції окрім самої функції неможна.
 //
@@ -110,6 +111,7 @@ function onHomeBtn() {
   renderMainPage(storage.movies);
 }
 
+// =====================================================================================================
 async function onSearchInput(e) {
   // todo
   const query = e.target.value.trim();
@@ -118,18 +120,18 @@ async function onSearchInput(e) {
     return;
   }
 
+  refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
-  const movies = await tmdbApi.fetchSearchMovie(query);
-  if (movies) storage.movies.push(...movies);
-  // - если ничего не найдено по запросу
-  //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
-  if (tmdbApi.searchMovieTotalPage === 0) {
-    Notify.info('Search result not successful. Enter the correct movie name and try again.');
-  } else {
-    // - отрисовать список фильмов по данным от ТМДБ
-    refs.filmsList.innerHTML = '';
-    renderMainPage(movies);
-  }
+
+  // if (movies) storage.movies.push(...movies);
+  // // - если ничего не найдено по запросу
+  // //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
+  // if (tmdbApi.searchMovieTotalPage === 0) {
+  //   Notify.info('Search result not successful. Enter the correct movie name and try again.');
+  // } else {
+  //   // - отрисовать список фильмов по данным от ТМДБ
+  //   renderMainPage(movies);
+  // }
 }
 
 function onLibBtn() {
