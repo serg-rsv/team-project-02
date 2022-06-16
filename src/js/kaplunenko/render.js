@@ -41,7 +41,7 @@ export function openDetailsCard(movies) {
       const markup = cardTpl(...detailsCard);
       // const modalCard = basicLightbox.create(markup);
       // modalCard.show();
-      modalCall(markup);
+      modalCall(markup, '.form_close-button');
     }
   }
 }

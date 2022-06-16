@@ -1,62 +1,60 @@
 .button-action {
-	width: 100%;
-	padding-top: 14px;
-	padding-bottom: 14px;
+  width: 100%;
+  padding-top: 14px;
+  padding-bottom: 14px;
 
-	text-transform: uppercase;
-	font-family: $font-main;
-	font-weight: $font-weight-major;
-	font-size: $font-size-major;
-	line-height: 1.17;
+  text-transform: uppercase;
+  font-family: $font-main;
+  font-weight: $font-weight-major;
+  font-size: $font-size-major;
+  line-height: 1.17;
 
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid $color-main;
+  color: $font-color-main;
+  position: relative;
 
-	border-radius: 5px;
-	background-color: transparent;
-	border: 1px solid $color-main;
-	color: $font-color-main;
-	position: relative;
+  cursor: pointer;
 
-	cursor: pointer;
+  &:hover {
+    background-color: $color-accent;
+    border-color: $color-accent;
+  }
 
-	&:hover {
-		background-color: $color-accent;
-		border-color: $color-accent;
-	}
+  .input-box-lib & {
+    @media screen and (min-width: $tablet) {
+      min-width: 152px;
+    }
 
+    @media screen and (min-width: $desktop) {
+      min-width: 148px;
+    }
 
-	.input-box-lib &{
-		@media screen and (min-width: $tablet) {
-			min-width: 152px;
-		}
-	
-		@media screen and (min-width: $desktop) {
-			min-width: 148px;
-		}
-	
-		&.current-button {
-			background-color: $color-accent;
-			border-color: $color-accent;
-		}
-	}
+    &.current-button {
+      background-color: $color-accent;
+      border-color: $color-accent;
+    }
+  }
 
-	&.watched {
-		background-color: $color-accent;
-		border-color: $color-accent;
+  &.watched {
+    background-color: $color-accent;
+    border-color: $color-accent;
 
-		&:hover {
-			background-color: $color-main;
-			color: $color-accent;
-		}
-	}
+    &:hover {
+      background-color: $color-main;
+      color: $color-accent;
+    }
+  }
 
-	&.queue{
-		border-color: #000000;
-		color: $font-color-dark;
+  &.queue {
+    border-color: #000000;
+    color: $font-color-dark;
 
-		&:hover {
-			background-color: $color-main;
-			color: $color-accent;
-		}
-	}
+    &:hover {
+      background-color: $color-main;
+      border-color: $color-accent;
+      color: $color-accent;
+    }
+  }
 }
-
