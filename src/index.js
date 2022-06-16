@@ -15,6 +15,11 @@ import './js/irina/modal.js';
 import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
 import { Notify } from 'notiflix';
+const ACTION_TYPE = {
+  SIGN_IN_WITH_EMAIL_AND_PASSWORD: 'sign-in-with-email-password',
+  SIGN_UP_WiTH_EMAIL_AND_PASSWORD: 'sign-up-with-email-password',
+  SIGN_IN_WITH_GOOGLE: 'sign-in-with-google-account',
+};
 
 const refs = {
   homeBtn: document.querySelectorAll('[data-load="home"]'),
@@ -147,10 +152,12 @@ function onLibBtn() {
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
-  if (!storage.userId) {
+  if (!storage.isSingIn) {
     autorisationFormCall();
     autorizationFormUiValid();
+    document.querySelector("[data-js='auth-form']").addEventListener('click', onAuthFormClick);
   }
+
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -169,6 +176,26 @@ function onLibBtn() {
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
+}
+function onAuthFormClick(e) {
+  e.preventDefault();
+  console.log(e.target);
+  const action = e.target.parentElement.name;
+  const email = e.currentTarget.elements.email.value;
+  const password = e.currentTarget.elements.password.value;
+  console.log(action);
+  switch (action) {
+    case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
+      authApi.signInWithEmailAndPassword(email, password);
+      break;
+    case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
+      authApi.createUserWithEmailAndPassword(email, password);
+      break;
+    default:
+      return;
+  }
+
+  e.currentTarget.reset();
 }
 
 // ========= Prokoptsov =======

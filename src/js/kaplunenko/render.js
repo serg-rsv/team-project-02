@@ -1,13 +1,15 @@
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/src/styles/main.scss';
-import { isValidTimestamp } from '@firebase/util';
+// import { isValidTimestamp } from '@firebase/util';
+import { values } from 'lodash';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
+import { tmdbApi } from '../services/tmdb-api';
+import { databaseApi } from '../services/db';
 
 const refFilmsList = document.querySelector('.films_list');
 
 export function renderMainPage(movies) {
-  console.log(movies);
   const descriptionMarkup = movies
 
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
@@ -23,7 +25,7 @@ export function renderMainPage(movies) {
             </li>`;
     })
     .join('');
-  genresListCut(movies);
+
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 }
 
@@ -45,11 +47,26 @@ export function openDetailsCard(movies) {
     }
   }
 }
-function genresListCut(array) {
-  const genresList = array.map(({ genres }) => {
-    if (genres.length === 2) {
-      return genres;
-    }
-  });
-  console.log(genresList);
-}
+
+// function genresListCut(array) {
+//   const genresList = array.map(({ genres }) => {
+//     if (genres.length === 2) {
+//       return genres;
+//     }
+//   });
+//   console.log(genresList);
+// }
+// function onFetchMovieSaveData(movieList, userId) {
+//   DATA_FROM_DATABASE = {
+//     userId,
+//     movieList,
+//   };
+// }
+// console.log(onFetchMovieSaveData());
+// const wrt = tmdbApi.fetchTrendingMovies();
+// console.log(
+//   wrt.then(value => {
+//     return value;
+//   }),
+// );
+console.log(databaseApi.get);
