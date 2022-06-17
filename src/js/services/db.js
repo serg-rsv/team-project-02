@@ -10,7 +10,7 @@ import {
   query,
   limitToLast,
 } from 'firebase/database';
-import { app } from './firebase-sdk'; // ругався на 'init-app-api', правильно замінив?
+import { app } from './firebase-sdk';
 import { serialaize } from './serialize';
 
 // створення посилання на базу даних додатку/сайту
@@ -35,20 +35,20 @@ export const databaseApi = {
   // завантажує список додадних фільмів
   get: async (path, userId, callback) => {
     onValue(ref(db, `users/${userId}/${path}`), async snapshot =>
-      callback(serialaize.transform(snapshot.val()), userId),
+      callback(serialaize.transform(snapshot.val())),
     );
   },
   /**
-   * @param {String} path // Endpoint у базі данних. Їх буде лише два - 'watched' або 'queue'. Для зручності та запобіганню помилки при написанні виніс ці endpoint  до об'єкта const DB_ENDPOINTS = {  WATCHED: 'watched', QUEUE: 'queue'}
    * @param {Object} userId // ID користувача приходить у колбек після успішної авторизації. Все що треба, це передати цей айді до функції
    * @param {String} movieId // id фільму
    * @returns {Promise} // якщо фільм вже доданий, то поверне Promise зі значенням true, а інакще - false.
    */
   // перевіряє, чи був вже доданий фільм до бази даних
-  check: (path, userId, movieId) =>
-    get(child(ref(db), `users/${userId}/${path}`)).then(snapshot =>
-      snapshot.hasChild(String(movieId)),
-    ),
+  check: (userId, movieId) =>
+    get(child(ref(db), `users/${userId}/`)).then(snapshot => ({
+      isInWatched: snapshot.child('watched').hasChild(movieId),
+      isInQueue: snapshot.child('queue').hasChild(movieId),
+    })),
   /**
    * @param {String} path // Endpoint у базі данних. Їх буде лише два - 'watched' або 'queue'. Для зручності та запобіганню помилки при написанні виніс ці endpoint  до об'єкта const DB_ENDPOINTS = {  WATCHED: 'watched', QUEUE: 'queue'}
    * @param {Object} userId // ID користувача приходить у колбек після успішної авторизації. Все що треба, це передати цей айді до функції
@@ -57,6 +57,5 @@ export const databaseApi = {
    */
   // видаляє фільм по ID
   delete: async (path, userId, movieDbId) =>
-    remove(child(ref(db, 'users/' + userId + `/${path}`), String(movieDbId))),
-  // query: () => query(ref(db, 'users/'), limitToLast(2)),
+    remove(child(ref(db, `users/${userId}/${path}`), String(movieDbId))),
 };
