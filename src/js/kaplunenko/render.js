@@ -2,8 +2,6 @@
 // import 'basiclightbox/src/styles/main.scss';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
-import { tmdbApi } from '../services/tmdb-api';
-import { databaseApi } from '../services/db';
 
 const refFilmsList = document.querySelector('.films_list');
 
@@ -64,4 +62,3 @@ export function openDetailsCard(detailsCard, selectorCloseBtn) {
 //     return value;
 //   }),
 // );
-console.log(databaseApi.get);
