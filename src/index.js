@@ -300,7 +300,7 @@ function onMovieCard(e) {
   const movieData = storage.movies.find(movie => movie.id === movieId);
   // console.log(movieData);
   // - создать модальное окно
-  openDetailsCard(movieData, '.modal_close-button');
+  openDetailsCard(movieData, '.form_close-button');
   // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
   // - отрисовать модалку с детальной информацией по фильму
   // - отрисовать кнопки соответсвенно добавить/удалить
