@@ -18,12 +18,12 @@ if (localStorage.getItem('theme') === 'dark') {
     onChangeTheme()
 };
 
-// навешен слушатель на кнопку
+// слушатель на кнопку
 refs.changeThemeBtns.forEach(button => {
     button.addEventListener('click', onChangeTheme);   
 });
 
-// смена стиля и иконки при клике
+// смена стиля(bcg) и иконки при клике
 function onChangeTheme() {
      if (refs.light.hasAttribute("style")) {
         // dark theme

@@ -1,11 +1,13 @@
 .theme{
-    padding: 8px;
+    width: 35px;
+    height: 35px;
+    padding: 5px 5px;
     
     position: fixed;
-    top:50%;
-    left: 0;
+    bottom:1em;
+    left: 1em;
 
-    background-color: aqua;
+    background-color: #737373;
     border-radius: 5px;
     cursor: pointer; 
 }
@@ -15,7 +17,5 @@
     background-color: #181818;
 }
 
-.film__title.dark-theme{
-    color:white;
-}
+
 
