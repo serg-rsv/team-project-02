@@ -275,6 +275,7 @@ function onGetWatchedMovieRender() {
   destroyMovieList(); // очищаємо розмітку;
   const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
   renderMainPage(watchedMovieArray);
+  console.log(watchedMovieArray);
 }
 
 // ---------------------
@@ -290,14 +291,13 @@ function onNavigate(event) {
     // console.log(storage.currentTab);
     storage.currentTab = currentTab;
     toggleButtons(currentTab);
-
-    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
-    onGetWatchedMovieRender();
+    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender); //Uncaught ReferenceError: store is not defined at HTMLButtonElement.onNavigate
+    onGetWatchedMovieRender(); // test-line, звертаємось до storage{} і звідти малюємо розмітку;
   }
 }
 /**
  * ф-я перемикає стан кнопок: disabled/ enabled. та присвоює/видаляє клас, щоб підсвітити активну кнопку;
- * @param {де саме був клік} currentTab
+ * @param {string} currentTab -де саме був клік;
  */
 function toggleButtons(currentTab) {
   if (currentTab === 'watched') {
