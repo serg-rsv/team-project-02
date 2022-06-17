@@ -289,10 +289,31 @@ function onNavigate(event) {
     // console.log(storage);
     // console.log(storage.currentTab);
     storage.currentTab = currentTab;
+    toggleButtons(currentTab);
+
     // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
     onGetWatchedMovieRender();
   }
 }
+/**
+ * ф-я перемикає стан кнопок: disabled/ enabled. та присвоює/видаляє клас, щоб підсвітити активну кнопку;
+ * @param {де саме був клік} currentTab
+ */
+function toggleButtons(currentTab) {
+  if (currentTab === 'watched') {
+    refs.watchedBtn.classList.add('current-button');
+    refs.queueBtn.classList.remove('current-button');
+    refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
+    refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
+  }
+  if (currentTab === 'queue') {
+    refs.queueBtn.classList.add('current-button');
+    refs.watchedBtn.classList.remove('current-button');
+    refs.queueBtn.disabled = true;
+    refs.watchedBtn.disabled = false;
+  }
+}
+
 // <============== Taras ===============
 
 function onMovieCard(e) {
