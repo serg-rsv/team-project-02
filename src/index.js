@@ -329,31 +329,30 @@ function onMovieCard(e) {
   // - получить детальную информацию из памяти
   const movieId = Number(cardFilm.dataset.movieId);
   const movieData = storage.movies.find(movie => movie.id === movieId);
-  // console.log(movieData);
+  console.log(movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
   // - поиск кнопок watched queue------------------------------------------
-  const watchedBtn = document.querySelector('.modal .watched');
-  const queueBtn = document.querySelector('.modal .queue');
+  const watchedBtn = document.querySelector('#watched');
+  const queueBtn = document.querySelector('#queue');
 
   watchedBtn.addEventListener('click', onModalWatchedBtn);
   queueBtn.addEventListener('click', onModalQueueBtn);
 
   function onModalWatchedBtn() {
     if (watchedBtn.dataset.action === 'add-watched') {
-      // - додати об'єкт фільму по movieId в ФБ
+      databaseApi.add('watched', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
       watchedBtn.setAttribute('data-action', 'del-watched'); // - поміняти кнопці текст контент і дата сет атрибут
       watchedBtn.textContent = 'DELETE WATCHED';
-      watchedBtn.classList.add('current-button'); // - додати клас актив
-      console.log('add-watched');
+      watchedBtn.classList.add('delete-button'); // - додати клас актив
       return;
     }
     if (watchedBtn.dataset.action === 'del-watched') {
-      // - видалити об'єкт фільму по movieId з ФБ
+      databaseApi.delete('watched', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
 
       watchedBtn.setAttribute('data-action', 'add-watched'); // - поміняти кнопці текст контент і дата сет атрибут
       watchedBtn.textContent = 'ADD WATCHED';
-      watchedBtn.classList.remove('current-button'); // - зняти клас актив
+      watchedBtn.classList.remove('delete-button'); // - зняти клас актив
       console.log('DELETE FROM WATCHED');
       return;
     }
@@ -361,18 +360,18 @@ function onMovieCard(e) {
   // ------------------------------------------------
   function onModalQueueBtn() {
     if (queueBtn.dataset.action === 'add-queue') {
-      // - додати об'єкт фільму по movieId в ФБ
+      databaseApi.add('queue', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
       queueBtn.setAttribute('data-action', 'del-queue'); // - поміняти кнопці текст контент і дата сет атрибут
       queueBtn.textContent = 'DELETE QUEUE';
-      queueBtn.classList.add('current-button'); // - додати клас актив
+      queueBtn.classList.add('delete-button'); // - додати клас актив
       console.log('add-queue');
       return;
     }
     if (queueBtn.dataset.action === 'del-queue') {
-      // - видалити об'єкт фільму по movieId з ФБ
+      databaseApi.delete('queue', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
       queueBtn.setAttribute('data-action', 'add-queue'); // - поміняти кнопці текст контент і дата сет атрибут
       queueBtn.textContent = 'AD QUEUE';
-      queueBtn.classList.remove('current-button'); // - зняти клас актив
+      queueBtn.classList.remove('delete-button'); // - зняти клас актив
       console.log('DELETE queue');
       return;
     }
@@ -382,6 +381,11 @@ function onMovieCard(e) {
   // - отрисовать кнопки соответсвенно добавить/удалить
   // - получить ссылки на кнопки 'add/del to watched' и 'add/del to queue' и повесить слушатели
 }
+
+// ********************************
+// function addMoviestoFB(path) {
+// databaseApi.add(path, storage.userId, onGetMoviesFromFirebase);
+// }
 
 function onAddWatchedBtn(e) {
   // todo
