@@ -82,16 +82,20 @@
         
       color: #000000;
         
-        &--accent {
+        &-votes {
           display: inline-block;
           text-align: center;
           padding-top: 1px;
           // padding: 1px 10px;
           width: 36px;
         
-          color: $color-main;
-          background-color: $color-accent;
+          color: #000000;
+          background-color:#F7F7F7;
           border-radius: 5px;
+          &.accent{
+            color: $color-main;
+            background-color: $color-accent;
+          }
         }
         
         &.accent {

@@ -1,0 +1,21 @@
+.theme{
+    padding: 8px;
+    
+    position: fixed;
+    top:50%;
+    left: 0;
+
+    background-color: aqua;
+    border-radius: 5px;
+    cursor: pointer; 
+}
+
+// стилизация фона темной темы
+.dark{
+    background-color: #181818;
+}
+
+.film__title.dark-theme{
+    color:white;
+}
+
