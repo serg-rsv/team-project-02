@@ -3,7 +3,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    signOut
+    signOut,
+    signInWithPopup,
+    GoogleAuthProvider 
 } from "firebase/auth";
 import { app } from "./firebase-sdk";
 
@@ -19,14 +21,12 @@ export const authApi = {
      * @param {String} email // email користувача для реєстрації
      * @param {String} password // password користувача для реєстрації
      */
-    createUserWithEmailAndPassword: async (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword: async (email, password, callbackOnSucces, callbackOnError) => {
+        return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            callbackOnSucces(user);
+        }).catch(error => callbackOnError(error));
     },
 
     // вхід у систему за допомогою пошти та пароля
@@ -34,12 +34,12 @@ export const authApi = {
      * @param {String} email // email користувача для входу до системи
      * @param {String} password // password користувача для входу до системи
      */
-    signInWithEmailAndPassword: async (email, password) => {
+    signInWithEmailAndPassword: async (email, password, callbackOnSuccess, callbackOnError) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-            })
-            .catch(console.log);
+                callbackOnSuccess(user);
+            }).catch(error => callbackOnError(error));
     },
 
     // функція, яка відстежує чи знаходиться зараз користувач у системі чи ні
@@ -57,7 +57,7 @@ export const authApi = {
               // callback з кастомною логікою.
               // Сюди треба передати ID залогіненого користувача у Firedase,
               // щоб його можно було передати для запиту до бази данних у зовнішньому коді
-                callbackIfUserSignedIn(uid);
+                callbackIfUserSignedIn(user);
             } else {
               // callback з кастомною логікою
                 callbackOnIfUserSignedOut();
@@ -73,5 +73,21 @@ export const authApi = {
      */
     signOut: async (callbackOnSigningOut = dummy) => {
         return signOut(auth).then(() => callbackOnSigningOut()).catch(console.log);
+    },
+    signInWithGoogle: (callbackOnSucces, callbackOnError) => {
+        const provider = new GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        auth.languageCode = 'it';
+  
+        signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+          // The signed-in user info.
+            const user = result.user;
+            callbackOnSucces(user);
+          // ...
+        }).catch(error => callbackOnError(error));
     }
 }

@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix';
 import { renderMainPage } from '../kaplunenko/render';
 import { tmdbApi } from '../services/tmdb-api';
-
+// переніс таки в індекс =)
 /**
  *
  * @param {string} query  - Необов'язковий параметр, потрібен, якщо дані, які требя відмальовувати формуються

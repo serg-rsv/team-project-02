@@ -15,20 +15,24 @@
 
 // // Initialize Firebase
 // export const app = initializeApp(firebaseConfig);
+
+// ================== Prokoptsov. Моя база даних. Залищу тут, щоб не копіювати зайвий раз ================//
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAnalytics } from 'firebase/analytics';
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyBIwPrT5HwWiY3FLb7YTPcJkBgfrR0TfKM',
-  authDomain: 'test-e8d48.firebaseapp.com',
-  projectId: 'test-e8d48',
-  storageBucket: 'test-e8d48.appspot.com',
-  messagingSenderId: '344709051541',
-  appId: '1:344709051541:web:8d2aa7b9fbb55d2305979c',
+  apiKey: 'AIzaSyDwSvxW_JXUXvoWY1_A9PdYIPJMFKQzzDI',
+  authDomain: 'register-auth-test.firebaseapp.com',
+  databaseURL: 'https://register-auth-test-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'register-auth-test',
+  storageBucket: 'register-auth-test.appspot.com',
+  messagingSenderId: '168929157221',
+  appId: '1:168929157221:web:a174132e7602c8904d668c',
+  measurementId: 'G-ZCRJSGC9ER',
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+//==============================================================================//
