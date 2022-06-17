@@ -54,12 +54,11 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-import { modalCall } from './js/modal/modalCall';
 
-import './js/Fedorenko/team-modal';
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
+import { showTeamModal } from './js/Fedorenko/team-modal';
 
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
@@ -68,6 +67,7 @@ const refs = {
   searchInput: document.querySelector('#name-input'),
   watchedBtn: document.querySelector('[data-action="watched"]'),
   queueBtn: document.querySelector('[data-action="queue"]'),
+  teamLnk: document.querySelector('.js-team-link'),
 };
 
 const storage = {
@@ -104,6 +104,7 @@ refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 500));
 refs.watchedBtn.addEventListener('click', onNavigate);
 refs.queueBtn.addEventListener('click', onNavigate);
 refs.filmsList.addEventListener('click', onMovieCard);
+refs.teamLnk.addEventListener('click', onTeamLnk);
 
 // =============== Псевдокод ===============
 
@@ -144,6 +145,12 @@ refs.filmsList.addEventListener('click', onMovieCard);
 //   delQueueBtn,
 //   ... @Діма кнопки форми авторирзації на твій розсуд
 // };
+
+// =============== Sveta ===============>
+function onTeamLnk() {
+  showTeamModal();
+}
+// <============== Sveta ===============
 
 function onHomeBtn() {
   // todo
