@@ -60,6 +60,8 @@ import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
 import { showTeamModal } from './js/Fedorenko/team-modal';
 
+Notify.init({ clickToClose: true, position: 'center-top' });
+
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
   libraryBtn: document.querySelector('[data-load="library"]'),
@@ -275,6 +277,7 @@ function onGetWatchedMovieRender() {
   destroyMovieList(); // очищаємо розмітку;
   const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
   renderMainPage(watchedMovieArray);
+  console.log(watchedMovieArray);
 }
 
 // ---------------------
@@ -289,10 +292,30 @@ function onNavigate(event) {
     // console.log(storage);
     // console.log(storage.currentTab);
     storage.currentTab = currentTab;
-    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
-    onGetWatchedMovieRender();
+    toggleButtons(currentTab);
+    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender); //Uncaught ReferenceError: store is not defined at HTMLButtonElement.onNavigate
+    onGetWatchedMovieRender(); // test-line, звертаємось до storage{} і звідти малюємо розмітку;
   }
 }
+/**
+ * ф-я перемикає стан кнопок: disabled/ enabled. та присвоює/видаляє клас, щоб підсвітити активну кнопку;
+ * @param {string} currentTab -де саме був клік;
+ */
+function toggleButtons(currentTab) {
+  if (currentTab === 'watched') {
+    refs.queueBtn.classList.remove('current-button');
+    refs.watchedBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
+    // refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
+  }
+  if (currentTab === 'queue') {
+    refs.watchedBtn.classList.remove('current-button');
+    refs.queueBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = true;
+    // refs.watchedBtn.disabled = false;
+  }
+}
+
 // <============== Taras ===============
 
 function onMovieCard(e) {
@@ -308,6 +331,26 @@ function onMovieCard(e) {
   // console.log(movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
+  // - поиск кнопок watched queue
+  const watchedBtn = document.querySelector('.modal .watched');
+  const queueBtn = document.querySelector('.modal .queue');
+
+  watchedBtn.addEventListener('click', onModalWatchedBtn);
+
+  function onModalWatchedBtn() {
+    if (watchedBtn.dataset.action === 'add-watched') {
+      // - додати об'єкт фільму по movieId в ФБ
+      // - поміняти кнопці текст контент і дата сет атрибут
+      // - додати клас актив
+      return;
+    }
+    if (watchedBtn.dataset.action === 'del-watched') {
+      // - видалити об'єкт фільму по movieId з ФБ
+      // - поміняти кнопці текст контент і дата сет атрибут
+      // - зняти клас актив
+      return;
+    }
+  }
   // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
   // - отрисовать модалку с детальной информацией по фильму
   // - отрисовать кнопки соответсвенно добавить/удалить
