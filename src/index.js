@@ -177,7 +177,7 @@ async function onSearchInput(e) {
   // // - если ничего не найдено по запросу
   // //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
   if (tmdbApi.searchMovieTotalPage === 0) {
-    Notify.info('Search result not successful. Enter the correct movie name and try again.');
+    Notify.warning('Search result not successful. Enter the correct movie name and try again.');
     return;
   }
 
