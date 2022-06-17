@@ -60,6 +60,8 @@ import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
 import { showTeamModal } from './js/Fedorenko/team-modal';
 
+Notify.init({ clickToClose: true, position: 'center-top' });
+
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
   libraryBtn: document.querySelector('[data-load="library"]'),
@@ -301,16 +303,16 @@ function onNavigate(event) {
  */
 function toggleButtons(currentTab) {
   if (currentTab === 'watched') {
-    refs.watchedBtn.classList.add('current-button');
     refs.queueBtn.classList.remove('current-button');
-    refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
-    refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
+    refs.watchedBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
+    // refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
   }
   if (currentTab === 'queue') {
-    refs.queueBtn.classList.add('current-button');
     refs.watchedBtn.classList.remove('current-button');
-    refs.queueBtn.disabled = true;
-    refs.watchedBtn.disabled = false;
+    refs.queueBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = true;
+    // refs.watchedBtn.disabled = false;
   }
 }
 
@@ -329,6 +331,26 @@ function onMovieCard(e) {
   // console.log(movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
+  // - поиск кнопок watched queue
+  const watchedBtn = document.querySelector('.modal .watched');
+  const queueBtn = document.querySelector('.modal .queue');
+
+  watchedBtn.addEventListener('click', onModalWatchedBtn);
+
+  function onModalWatchedBtn() {
+    if (watchedBtn.dataset.action === 'add-watched') {
+      // - додати об'єкт фільму по movieId в ФБ
+      // - поміняти кнопці текст контент і дата сет атрибут
+      // - додати клас актив
+      return;
+    }
+    if (watchedBtn.dataset.action === 'del-watched') {
+      // - видалити об'єкт фільму по movieId з ФБ
+      // - поміняти кнопці текст контент і дата сет атрибут
+      // - зняти клас актив
+      return;
+    }
+  }
   // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
   // - отрисовать модалку с детальной информацией по фильму
   // - отрисовать кнопки соответсвенно добавить/удалить
