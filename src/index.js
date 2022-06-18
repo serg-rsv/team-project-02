@@ -45,6 +45,7 @@ const testQ = [
 ];
 // <============== Taras ===============
 import './sass/main.scss';
+import './js/arrow-up/arrow-up';
 
 import _ from 'lodash';
 
@@ -54,7 +55,6 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
