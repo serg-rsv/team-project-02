@@ -2,41 +2,30 @@
 // import 'basiclightbox/src/styles/main.scss';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
-
+import { tmdbApi } from '../services/tmdb-api';
+import filmCardTpl from '../../templates/filmCard.hbs';
 const refFilmsList = document.querySelector('.films_list');
 
+function getShortGenresString(genres) {
+  if (genres.length >= 3) {
+    const validGenres = genres.slice(0, 2);
+    validGenres.push('Other');
+    return validGenres;
+  }
+  return genres;
+}
+
 export function renderMainPage(movies) {
-  console.log('renderMainPage -->', movies);
   const descriptionMarkup = movies
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
-      return `<li class="products__cards-item" data-movie-id="${id}">
-                <img class="img" src="${posterUrl}" >
-                <p class="film_title">${title}</p>
-                <ul class="info-list">
-                    <li class="film_genre">${genres.join(', ')}</li>
-                    <li class="film_genre">${releaseYear}</li>
-                    <li class="film-profile__value--accent film_average">${vote_average}</li>
-                </ul>
-             </li>`;
+      const genresString = getShortGenresString(genres);
+      return filmCardTpl({ id, title, genresString, posterUrl, releaseYear, vote_average });
     })
     .join('');
 
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 }
-
 export function openDetailsCard(detailsCard, selectorCloseBtn) {
-  // refFilmsList.addEventListener('click', handleClick);
-  // function handleClick(event) {
-  //   const swatch = event.target;
-  //   const cardFilm = swatch.closest('.products__cards-item');
-  //   const getMovieId = cardFilm.dataset.movieId;
-  //   const movieIdstringToNumber = Number(getMovieId);
-  //   const filmId = movies.map(item => item.id);
-
-  //   if (filmId.includes(movieIdstringToNumber)) {
-  //     const detailsCard = movies.filter(item => item.id === movieIdstringToNumber);
   const markup = cardTpl(detailsCard);
   modalCall(markup, selectorCloseBtn);
-  // }
-  // }
 }
