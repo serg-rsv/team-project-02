@@ -28,17 +28,23 @@
   display: flex;
   flex-direction: row;
   color: $color-accent;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.img {
+.imgCard {
   @media screen and (min-width: $tablet) {
     width: $mobile;
     padding: 0px;
+    height: 455px;
+
+    object-fit: cover;
   }
 
   @media screen and (min-width: $desktop) {
     width: 309px;
+    padding: 0px;
+    height: 449px;
+    object-fit: cover;
   }
 }
 

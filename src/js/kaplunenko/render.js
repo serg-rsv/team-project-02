@@ -21,7 +21,7 @@ export function renderMainPage(movies) {
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
       const genresString = getShortGenresString(genres);
       return `<li class="products__cards-item" data-movie-id="${id}">
-                <img class="img" src="${posterUrl}" >
+                <img class="imgCard" src="${posterUrl}" >
                 <p class="film_title">${title}</p>
                 <ul class="info-list">
                     <li class="film_genre">${genresString}</li>
