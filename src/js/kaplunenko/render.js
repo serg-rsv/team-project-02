@@ -2,11 +2,11 @@
 // import 'basiclightbox/src/styles/main.scss';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
+import { tmdbApi } from '../services/tmdb-api';
 
 const refFilmsList = document.querySelector('.films_list');
 
 export function renderMainPage(movies) {
-  console.log('renderMainPage -->', movies);
   const descriptionMarkup = movies
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
       return `<li class="products__cards-item" data-movie-id="${id}">
@@ -62,3 +62,8 @@ export function openDetailsCard(detailsCard, selectorCloseBtn) {
 //     return value;
 //   }),
 // );
+tmdbApi.fetchTrendingMovies().then(rrr);
+
+function rrr(test) {
+  return test;
+}
