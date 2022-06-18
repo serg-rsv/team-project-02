@@ -6,7 +6,7 @@
       <li class='film_genre'>{{#each genresString}}
           {{this}}{{#unless @last}},{{/unless}}
         {{/each}}</li>
-      <li class='film_genre'>${{releaseYear}}</li>
+      <li class='film_genre'>{{releaseYear}}</li>
       <li class='film-profile__value--accent film_average'>{{vote_average}}</li>
     </ul>
   </article>
