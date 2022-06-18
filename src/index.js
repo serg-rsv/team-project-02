@@ -338,41 +338,51 @@ function onMovieCard(e) {
 
   watchedBtn.addEventListener('click', onModalWatchedBtn);
   queueBtn.addEventListener('click', onModalQueueBtn);
+  // *************************************************
+
+  databaseApi.check('watched', storage.userId, movieId);
 
   function onModalWatchedBtn() {
     if (watchedBtn.dataset.action === 'add-watched') {
-      databaseApi.add('watched', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
-      watchedBtn.setAttribute('data-action', 'del-watched'); // - поміняти кнопці текст контент і дата сет атрибут
-      watchedBtn.textContent = 'DELETE WATCHED';
-      watchedBtn.classList.add('delete-button'); // - додати клас актив
+      // - додати об'єкт фільму по movieId в ФБ
+      databaseApi.add('watched', storage.userId, movieData).then(
+        watchedBtn.setAttribute('data-action', 'del-watched'), // - поміняти кнопці текст контент і дата сет атрибут
+        (watchedBtn.textContent = 'DELETE WATCHED'),
+        watchedBtn.classList.add('delete-button'),
+      ); // - додати клас актив
       return;
     }
     if (watchedBtn.dataset.action === 'del-watched') {
-      databaseApi.delete('watched', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
-
-      watchedBtn.setAttribute('data-action', 'add-watched'); // - поміняти кнопці текст контент і дата сет атрибут
-      watchedBtn.textContent = 'ADD WATCHED';
-      watchedBtn.classList.remove('delete-button'); // - зняти клас актив
-      console.log('DELETE FROM WATCHED');
+      // - видалити об'єкт фільму по movieId з ФБ
+      databaseApi.delete('watched', storage.userId, movieId).then(
+        watchedBtn.setAttribute('data-action', 'add-watched'), // - поміняти кнопці текст контент і дата сет атрибут
+        (watchedBtn.textContent = 'ADD WATCHED'),
+        watchedBtn.classList.remove('delete-button'),
+      ); // - зняти клас актив
+      // console.log('DELETE FROM WATCHED');
       return;
     }
   }
   // ------------------------------------------------
   function onModalQueueBtn() {
     if (queueBtn.dataset.action === 'add-queue') {
-      databaseApi.add('queue', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
-      queueBtn.setAttribute('data-action', 'del-queue'); // - поміняти кнопці текст контент і дата сет атрибут
-      queueBtn.textContent = 'DELETE QUEUE';
-      queueBtn.classList.add('delete-button'); // - додати клас актив
-      console.log('add-queue');
+      databaseApi.add('queue', storage.userId, movieData).then(
+        // - додати об'єкт фільму по movieId в ФБ
+        queueBtn.setAttribute('data-action', 'del-queue'), // - поміняти кнопці текст контент і дата сет атрибут
+        (queueBtn.textContent = 'DELETE QUEUE'),
+        queueBtn.classList.add('delete-button'),
+      ); // - додати клас актив
+      // console.log('add-queue');
       return;
     }
     if (queueBtn.dataset.action === 'del-queue') {
-      databaseApi.delete('queue', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
-      queueBtn.setAttribute('data-action', 'add-queue'); // - поміняти кнопці текст контент і дата сет атрибут
-      queueBtn.textContent = 'AD QUEUE';
-      queueBtn.classList.remove('delete-button'); // - зняти клас актив
-      console.log('DELETE queue');
+      databaseApi.delete('queue', storage.userId, movieId).then(
+        // - видалити об'єкт фільму по movieId з ФБ
+        queueBtn.setAttribute('data-action', 'add-queue'), // - поміняти кнопці текст контент і дата сет атрибут
+        (queueBtn.textContent = 'AD QUEUE'),
+        queueBtn.classList.remove('delete-button'),
+      ); // - зняти клас актив
+      // console.log('DELETE queue');
       return;
     }
   }
