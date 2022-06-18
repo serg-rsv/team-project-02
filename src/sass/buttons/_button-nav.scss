@@ -67,13 +67,6 @@
     opacity: 1;
     transition: $animationDuration $animationTimeFunction;
   }
-  .header-box-lib & {
-    margin-bottom: 30px;
-
-    @media screen and (min-width: $tablet) {
-      margin-bottom: 10px;
-    }
-  }
 
   &:first-child {
     transform: translateX(-101%);
