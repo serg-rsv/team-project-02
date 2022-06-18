@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="20px" viewBox="0 0 15 20" style="enable-background:new 0 0 15 20;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FF6B01;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#FF6B01;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#FF6B01;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#FF6B01;stroke-width:1.5;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M1.658,6.19C7.5,1.81,7.5,1.81,7.5,1.81l5.842,4.381">
+	<animateTransform attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						from="0 0"
+						values="0, 20; 0 0; 0 0"
+						dur="3s"
+						begin=".53"
+						repeatCount="indefinite"
+						/> 
+	</path>
+<path class="st1" d="M4.125,10C7.5,7.468,7.5,7.468,7.5,7.468l3.375,2.531">
+	<animateTransform attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						from="0 0"
+						values="0, 20; 0 0; 0 0"
+						dur="3s"
+						begin=".3"
+						repeatCount="indefinite"
+						/> 
+	</path>
+<path class="st2" d="M5.146,14.552C7.5,12.786,7.5,12.786,7.5,12.786l2.354,1.765">
+	<animateTransform attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						from="0 0"
+						values="0, 20; 0 0; 0 0"
+						dur="3s"
+						begin=".1"
+						repeatCount="indefinite"
+						/>
+	</path>
+<path class="st3" d="M6.911,18c0.883-0.662,0.883-0.662,0.883-0.662L8.677,18">
+<animateTransform attributeName="transform"
+						attributeType="XML"
+						type="translate"
+						from="0 0"
+						values="0, 20; 0 0; 0 0"
+						dur="3s"
+						begin="-.1"
+						repeatCount="indefinite"
+						/>
+	</path>
+</svg>
