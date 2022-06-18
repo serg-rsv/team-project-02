@@ -1,0 +1,21 @@
+.modal .button-action {
+    border-color: #000000;
+    color: $font-color-dark;
+    
+    &:hover {
+        background-color: $color-main;
+        border-color: $color-accent;
+        color: $color-accent;
+    }
+    &.delete-button {
+        background-color: $color-accent;
+        border-color: $color-accent;
+        
+        &:hover {
+            background-color: $color-main;
+            color: $color-accent;
+        }
+    }
+}
+//  ці стилі для кнопок в модалці картки фільму, потрібно можливо відредагувати.
+// стилі скопійовані з watched та queue (класи видалили з кнопок);
