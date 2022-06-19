@@ -1,49 +1,3 @@
-// =============== Taras ===============>
-const testW = [
-  {
-    id: 705861,
-    genres: ['Action', 'Drama'],
-    title: 'Hustle',
-    vote_average: 7.4,
-    releaseYear: '2022',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/fVf4YHHkRfo1uuljpWBViEGmaUQ.jpg',
-  },
-  {
-    id: 648579,
-    genres: ['Action', 'Drama'],
-    title: 'The Unbearable Weight of Massive Talent',
-    vote_average: 7.4,
-    releaseYear: '2022',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
-  },
-  {
-    id: 507086,
-    genres: ['Action', 'Drama'],
-    title: 'Jurassic World Dominion',
-    vote_average: 6.8,
-    releaseYear: '2022',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
-  },
-];
-const testQ = [
-  {
-    id: 507086,
-    genres: ['Action', 'Drama'],
-    title: 'Jurassic World Dominion',
-    vote_average: 6.8,
-    releaseYear: '2022',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg',
-  },
-  {
-    id: 648579,
-    genres: ['Action', 'Drama'],
-    title: 'The Unbearable Weight of Massive Talent',
-    vote_average: 7.4,
-    releaseYear: '2022',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/bmxCAO0tz79xn40swJAEIJPRnC1.jpg',
-  },
-];
-// <============== Taras ===============
 import './sass/main.scss';
 import './js/arrow-up/arrow-up';
 import './js/irina/theme';
@@ -71,15 +25,19 @@ const refs = {
   watchedBtn: document.querySelector('[data-action="watched"]'),
   queueBtn: document.querySelector('[data-action="queue"]'),
   teamLnk: document.querySelector('.js-team-link'),
+  boxLoginBtns: document.querySelector('.header__logbuttons-list'),
+  logInBtn: document.querySelector('[data-log="in"]'),
+  logOutBtn: document.querySelector('[data-log="out"]'),
+  headerEl: document.querySelector('header'),
 };
 
 const storage = {
   userId: null,
   isSingIn: false,
-  watched: testW, // тут будуть зберігатись данні з ФБ ,
-  queue: testQ, //тут будуть зберігатись данні з ФБ ,
+  watched: [], // тут будуть зберігатись данні з ФБ ,
+  queue: [], //тут будуть зберігатись данні з ФБ ,
   movies: [], // сюди записуємо об'єкти фільмів які відрендерили на екрані
-  currentTab: '', // для перемикання між кнопками watched & queue
+  currentTab: 'watched', // для перемикання між кнопками watched & queue
 };
 
 // перелік єкшенів в submit інпутах форми, щоб зе робити помилку
@@ -95,7 +53,7 @@ async function launch() {
   // визначаємо чи залогінений юзер у системі при завантаженні сторінки та виконуємо логіку у колбеках
   authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut);
   // =================================================
-  const movies = await infinityScrollData();
+  await infinityScrollData();
   // {hide loader}
 }
 
@@ -108,8 +66,8 @@ refs.watchedBtn.addEventListener('click', onNavigate);
 refs.queueBtn.addEventListener('click', onNavigate);
 refs.filmsList.addEventListener('click', onMovieCard);
 refs.teamLnk.addEventListener('click', onTeamLnk);
-
-// =============== Псевдокод ===============
+refs.logInBtn.addEventListener('click', onLogInBtn);
+refs.logOutBtn.addEventListener('click', onLogOutBtn);
 
 // authApi.trackUserLoginState() ----> функція має викликатися найпершою
 // і обовєязково з колбеками, які запишуть до стору стан користувача
@@ -133,22 +91,30 @@ refs.teamLnk.addEventListener('click', onTeamLnk);
 // authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
 //  це важливо
 
-// список интерактивных елементов
-// static:
-//   filmsList,
-//   homeBtns,
-//   searchInput,
-//   libBtn,
-//   watchedBtn,
-//   queueBtn,
-// dynamic:
-//   addWatchedBtn,
-//   addQueueBtn,
-//   delWatchedBtn,
-//   delQueueBtn,
-//   ... @Діма кнопки форми авторирзації на твій розсуд
-// };
+// =============== LOGIN ===============>
+function onLogInBtn() {
+  // - отрисовать форму регистрации/авторизации
+  autorisationFormCall();
+  autorizationFormUiValid();
+  // ================= Prokoptsov ===========/
+  // пілся появи форми знаходимо її у DOM
+  const formRef = document.querySelector('[data-js="auth-form"]');
+  // вішаємо слухач, та додаємо обробник подіїї
+  formRef.addEventListener('click', onAuthFormClick);
+}
 
+function onLogOutBtn() {
+  authApi.signOut();
+  storage.isSingIn = false;
+  if (refs.headerEl.classList.contains('header-lib')) {
+    homeRender();
+    tmdbApi.resetTrendingPage();
+    refs.filmsList.innerHTML = '';
+    infinityScrollData();
+  }
+  refs.boxLoginBtns.classList.remove('authorized');
+}
+// <============== LOGIN ===============
 // =============== Sveta ===============>
 function onTeamLnk() {
   showTeamModal();
@@ -159,8 +125,10 @@ function onHomeBtn() {
   // todo
   // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
   homeRender();
+  storage.movies = [];
   // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
   // {show loader}
+  refs.searchInput.value = '';
   refs.filmsList.innerHTML = '';
   tmdbApi.resetTrendingPage();
   infinityScrollData();
@@ -177,40 +145,48 @@ async function onSearchInput(e) {
   }
 
   await tmdbApi.fetchSearchMovie(query);
-  // // - если ничего не найдено по запросу
-  // //  - вывести уведомление 'Search result not successful. Enter the correct movie name and try again'
+  // - если ничего не найдено по запросу
+  // - вывести уведомление 'Search result not successful.'
   if (tmdbApi.searchMovieTotalPage === 0) {
     Notify.warning('Search result not successful. Enter the correct movie name and try again.');
     return;
   }
-
+  // відмальовуємо знайдені фільми
   refs.filmsList.innerHTML = '';
-
   tmdbApi.resetSearchMoviePage();
   infinityScrollData(query);
 }
 
 function onLibBtn() {
   // todo
+  if (!storage.isSingIn) {
+    Notify.info('Please Log-in');
+    return;
+  }
   // - отрисовать шапку библиотеки
   libraryRender();
 
-  // - проверка на авторизацию
-  //  - если не авторизован
-  //    - отрисовать форму регистрации/авторизации
-  //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
-  if (!storage.isSingIn) {
-    autorisationFormCall();
-    autorizationFormUiValid();
-    // ================= Prokoptsov ===========/
-    // пілся появи форми знаходимо її у DOM
-    const formRef = document.querySelector('[data-js="auth-form"]');
-    // вішаємо слухач, та додаємо обробник подіїї
-    formRef.addEventListener('click', onAuthFormClick);
-  }
-
-  getAndRenderMovies('watched');
   // ===================================//
+  refs.filmsList.innerHTML = '';
+  switch (storage.currentTab) {
+    case 'watched':
+      storage.watched.length
+        ? renderMainPage(storage.watched)
+        : refs.filmsList.insertAdjacentHTML(
+            'afterbegin',
+            '<h2>Nothing has been added to queue</h2>',
+          );
+      break;
+    case 'queue':
+      storage.queue.length
+        ? renderMainPage(storage.queue)
+        : refs.filmsList.insertAdjacentHTML(
+            'afterbegin',
+            '<h2>Nothing has been added to queue</h2>',
+          );
+    default:
+      break;
+  }
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -223,12 +199,6 @@ function onLibBtn() {
   // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, renderMainPage)
   // Бо знову ж таки, функція нічого не повертає, тому треба колбек
   // ==============
-  // - на кнопку 'просмотрено'повесить слушатель onWatchedBtn
-  // - на кнопку 'очередь' повесить слушатель onQueueBtn
-  // - отрисовать список просмотренных фильмов
-  // ========== Prokoptsov.
-  // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
-  // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
 }
 function onAuthFormClick(e) {
   e.preventDefault();
@@ -253,70 +223,34 @@ function onAuthFormClick(e) {
 
 // =======================================================//
 
-// ========= Prokoptsov =======
-// Такий ще момент: коли натискаємо на будь-яку кнопку, яка виконую запит
-// чи то до TMDB чи до Firebase треба РОБИТИ КНОПКИ НЕАКТИВНИМИ!!!!
-// і в середені вставити спінер маленький.
-// А по закінчені запиту незалежно від результата запиту
-// ВМИКАТИ КНОПКИ ТА ПРИБИРАТИ СПІНЕР
-// типу
-// (e) => {
-// const button = e.target;
-// button.disable = true;
-//  запит..... .then(data => {
-//      щось робимо за даними
-//  }).finally(() => button.disable = false;)
-// }
-// =========================
-
-// =============== Taras ===============>
-function onWatchedBtn() {
-  // todo
-  // - завантаження списку watched і рендер
-  if (storage.watched) {
-    refs.filmsList.innerHTML = '';
-    renderMainPage(storage.watched);
-  } else {
-    // - повідомлення про пустий список
-    refs.filmsList.innerHTML = '<h2>Your list of watched is empty.</h2>';
-  }
-}
-
-function onQueueBtn() {
-  // todo
-  // - завантаження списку queue і рендер
-  if (storage.queue) {
-    refs.filmsList.innerHTML = '';
-    renderMainPage(storage.queue);
-  } else {
-    // - повідомлення про пустий список
-    refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
-  }
-}
-// ------------------------------ ф-я використовувалась для тесту , зараз не потрібна
-// function onGetWatchedMovieRender() {
-//   destroyMovieList(); // очищаємо розмітку;
-//   const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
-//   renderMainPage(watchedMovieArray);
-//   console.log(watchedMovieArray);
-// }
-
-// ---------------------
-// function destroyMovieList() {
-//   refs.filmsList.innerHTML = '';
-// }
-// -------------------------------------
 function onNavigate(event) {
   const currentTab = event.target.dataset.action;
 
-  if (storage.currentTab !== currentTab) {
-    // console.log(storage);
-    // console.log(storage.currentTab);
-    storage.currentTab = currentTab;
-    toggleButtons(currentTab);
-    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender); //Uncaught ReferenceError: store is not defined at HTMLButtonElement.onNavigate
-    // onGetWatchedMovieRender(); // test-line, звертаємось до storage{} і звідти малюємо розмітку;
-    getAndRenderMovies(currentTab); // робить запити до ФБ і стягує фільми відповідно до переданого шляху (currentTab)
+  if (storage.currentTab === currentTab) return;
+  // console.log(storage);
+  // console.log(storage.currentTab);
+  storage.currentTab = currentTab;
+  toggleButtons(currentTab);
+
+  refs.filmsList.innerHTML = '';
+  switch (storage.currentTab) {
+    case 'watched':
+      storage.watched.length
+        ? renderMainPage(storage.watched)
+        : refs.filmsList.insertAdjacentHTML(
+            'afterbegin',
+            '<h2>Nothing has been added to queue</h2>',
+          );
+      break;
+    case 'queue':
+      storage.queue.length
+        ? renderMainPage(storage.queue)
+        : refs.filmsList.insertAdjacentHTML(
+            'afterbegin',
+            '<h2>Nothing has been added to queue</h2>',
+          );
+    default:
+      break;
   }
 }
 /**
@@ -349,8 +283,22 @@ function onMovieCard(e) {
   }
   // - получить детальную информацию из памяти
   const movieId = Number(cardFilm.dataset.movieId);
-  const movieData = storage.movies.find(movie => movie.id === movieId);
-  console.log(movieData);
+  // ?замінити метод отримання фільму
+  let movieData;
+  if (!refs.headerEl.classList.contains('header-lib')) {
+    movieData = storage.movies.find(movie => movie.id == movieId);
+  } else {
+    switch (storage.currentTab) {
+      case 'watched':
+        movieData = storage.watched.find(movie => movie.id == movieId);
+        break;
+      case 'queue':
+        movieData = storage.queue.find(movie => movie.id == movieId);
+      default:
+        break;
+    }
+  }
+  console.log('Movie in Modal:', movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
   // - поиск кнопок watched queue------------------------------------------
@@ -464,62 +412,6 @@ function onMovieCard(e) {
 }
 
 // ********************************
-// function addMoviestoFB(path) {
-// databaseApi.add(path, storage.userId, onGetMoviesFromFirebase);
-// }
-
-function onAddWatchedBtn(e) {
-  // todo
-  // - databaseApi.add - добавить в БД фаербэйз
-  // - вывести уведомление об успешности операции (notiflix)
-  // - заменить кнопку на удалить
-  // - получить ссылку на кнопку и повесить слушатель
-  // ============== Prokoptsov ============
-  // databaseApi.add повертає проміс, тому у коді можна зачейнити then і catch
-  //  databaseApi.add().then(вывести уведомление об успешности операции (notiflix))
-  //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
-  // ===================================
-}
-
-function onAddQueueBtn(e) {
-  // todo
-  // - databaseApi.add - добавить в БД фаербэйз
-  // - вывести уведомление об успешности операции (notiflix)
-  // - заменить кнопку на удалить
-  // - получить ссылку на кнопку и повесить слушатель
-  // ============== Prokoptsov ============
-  // databaseApi.add повертає проміс, тому у коді можна зачейнити then і catch
-  //  databaseApi.add().then(вывести уведомление об успешности операции (notiflix))
-  //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
-  // ===================================
-}
-
-function onDelWatchedBtn(e) {
-  // todo
-  // - databaseApi.delete - удалить из БД фаербэйз
-  // - вывести уведомление об успешности операции (notiflix)
-  // - заменить кнопку на добавить
-  // - получить ссылку на кнопку и повесить слушатель
-  // ============== Prokoptsov ============
-  // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
-  //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
-  //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
-  // ===================================
-}
-
-function onDelQueueBtn(e) {
-  // todo
-  // - databaseApi.delete - удалить из БД фаербэйз
-  // - вывести уведомление об успешности операции (notiflix)
-  // - заменить кнопку на добавить
-  // - получить ссылку на кнопку и повесить слушатель
-  // ============== Prokoptsov ============
-  // databaseApi.delete повертає проміс, тому у коді можна зачейнити then і catch
-  //  databaseApi.delete().then(вывести уведомление об успешности операции (notiflix))
-  //                    .catch(вывести уведомление об НЕ успешности операции (notiflix))
-  // ===================================
-}
-
 // =============== Prokoptsov ==============
 // Ще раз повторюсь, треба не забувати ВИДАЛЯТИ СЛУХАЧІ!!!!!!!!!
 // І формою реєстрації я займаюсь, то я вже і напишу всі обробники і логіку, якщо ти не проти :=))
@@ -533,6 +425,10 @@ function onDelQueueBtn(e) {
  * @returns {Promise} - повертає проміс, в якому зберігаються дані з API за нашим запитом
  */
 async function infinityScrollData(query) {
+  if (refs.headerEl.classList.contains('header-lib')) {
+    console.log('exit at start infinity()');
+    return;
+  }
   try {
     let movies;
     if (!query) {
@@ -541,15 +437,23 @@ async function infinityScrollData(query) {
     if (query) {
       movies = await tmdbApi.fetchSearchMovie(query);
     }
+    if (refs.headerEl.classList.contains('header-lib')) {
+      console.log('exit befor render infinity()');
+      return;
+    }
     renderMainPage(movies);
     storage.movies.push(...movies);
     if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) return;
     const triggeredLoadMoreElement = document.querySelector(
       '.products__cards-item:nth-last-child(4) img',
     );
-    triggeredLoadMoreElement.addEventListener('load', onLoad);
+    triggeredLoadMoreElement?.addEventListener('load', onLoad);
     function onLoad() {
-      triggeredLoadMoreElement.removeEventListener('load', onLoad);
+      triggeredLoadMoreElement?.removeEventListener('load', onLoad);
+      if (refs.headerEl.classList.contains('header-lib')) {
+        console.log('exit before loadMore()');
+        return;
+      }
       loadMore(infinityScrollData, query);
     }
     return new Promise(resolve => resolve(movies));
@@ -580,7 +484,9 @@ function loadMore(callback, query, selector = '.products__cards-item:last-child'
     },
   );
 
-  observer.observe(document.querySelector(selector));
+  if (document.querySelector(selector)) {
+    observer.observe(document.querySelector(selector));
+  }
 }
 // <============== Niko ===============
 
@@ -609,26 +515,23 @@ function onAuthFormClick(e) {
 
   e.currentTarget.reset();
 }
-// колбек для databaseApi.add(), щоб відмалювати додані до ФБ вільми
-function onGetMoviesFromFirebase(movieList) {
-  console.log(movieList);
-  refs.filmsList.innerHTML = '';
-  movieList.length
-    ? renderMainPage(movieList)
-    : refs.filmsList.insertAdjacentHTML('beforeend', '<p>Nothing has been added here yet</p>');
-}
+
 // колбек на випадок успіщноїї реєстрації та успішного логіну
 function onSignInSuccess(user) {
   storage.userId = user.uid;
   storage.isSingIn = true;
-  getAndRenderMovies('watched');
 }
 // колбек на випадок, коли юзер вже залогінений при завантаженні сторінки
 function userIsSignedIn(user) {
   storage.userId = user.uid;
   storage.isSingIn = true;
 
+  refs.boxLoginBtns.classList.add('authorized');
+
   Notify.info(`Welcome, ${user.email}`);
+
+  addListenerOnWatchedFB();
+  addListenerOnQueueFB();
 }
 
 // колбек на вилогінювання юзера
@@ -646,11 +549,50 @@ function onSiginInError(error) {
 
   Notify.failure(`Ups... ${normalizedErrorMessage}`);
 }
-// робить запити до ФБ і стягує фільми відповідно до переданого шляху
-/**
- * @param {String} path // директорія у ФБ
- */
-function getAndRenderMovies(path) {
-  databaseApi.get(path, storage.userId, onGetMoviesFromFirebase);
-}
+
 // ===============================================//
+
+function addListenerOnWatchedFB() {
+  console.log('addListenerOnWatchedFB-->');
+  // databaseApi.get('watched', storage.userId, onChangeWatched);
+  databaseApi.get('watched', storage.userId, onChangeWatched);
+}
+function addListenerOnQueueFB() {
+  console.log('addListenerOnQueueFB-->');
+  databaseApi.get('queue', storage.userId, onChangeQueue);
+}
+// колбекs щоб відмалювати додані ФБ
+function onChangeWatched(movieList) {
+  storage.watched = [...movieList];
+  console.log('onChangeWatched', storage.watched);
+  if (
+    refs.headerEl.classList.contains('header-lib') &&
+    refs.watchedBtn.classList.contains('current-button')
+  ) {
+    refs.filmsList.innerHTML = '';
+    storage.watched.length
+      ? renderMainPage(storage.watched)
+      : refs.filmsList.insertAdjacentHTML(
+          'afterbegin',
+          '<h2>Nothing has been added to watched</h2>',
+        );
+  }
+  console.log('Мы в хэдере || Lib.QUEUE');
+  return;
+}
+
+function onChangeQueue(movieList) {
+  storage.queue = [...movieList];
+  console.log('onChangeQueue', storage.queue);
+  if (
+    refs.headerEl.classList.contains('header-lib') &&
+    refs.queueBtn.classList.contains('current-button')
+  ) {
+    refs.filmsList.innerHTML = '';
+    storage.queue.length
+      ? renderMainPage(storage.queue)
+      : refs.filmsList.insertAdjacentHTML('afterbegin', '<h2>Nothing has been added to queue</h2>');
+  }
+  console.log('Мы в хэдере || Lib.WATCHED');
+  return;
+}
