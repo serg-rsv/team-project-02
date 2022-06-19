@@ -198,7 +198,7 @@ function onLibBtn() {
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
-  if (!storage.userId) {
+  if (!storage.isSingIn) {
     autorisationFormCall();
     autorizationFormUiValid();
     // ================= Prokoptsov ===========/
@@ -228,6 +228,26 @@ function onLibBtn() {
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
+}
+function onAuthFormClick(e) {
+  e.preventDefault();
+  console.log(e.target);
+  const action = e.target.parentElement.name;
+  const email = e.currentTarget.elements.email.value;
+  const password = e.currentTarget.elements.password.value;
+  console.log(action);
+  switch (action) {
+    case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
+      authApi.signInWithEmailAndPassword(email, password);
+      break;
+    case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
+      authApi.createUserWithEmailAndPassword(email, password);
+      break;
+    default:
+      return;
+  }
+
+  e.currentTarget.reset();
 }
 
 // =======================================================//
