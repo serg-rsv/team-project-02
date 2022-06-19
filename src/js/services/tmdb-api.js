@@ -256,7 +256,7 @@ export const tmdbApi = {
           popularity,
           vote_average,
           vote_count,
-          posterUrl: IMAGE_URL + 'w500' + poster_path,
+          posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`,
         };
       })
       .catch(error => console.log(error.message));

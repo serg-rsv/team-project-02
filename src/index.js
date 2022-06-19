@@ -45,6 +45,7 @@ const testQ = [
 ];
 // <============== Taras ===============
 import './sass/main.scss';
+import './js/arrow-up/arrow-up';
 
 import _ from 'lodash';
 
@@ -54,11 +55,12 @@ import { renderMainPage } from './js/kaplunenko/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
-
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
 import { showTeamModal } from './js/Fedorenko/team-modal';
+
+Notify.init({ clickToClose: true, position: 'center-top' });
 
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
@@ -196,7 +198,7 @@ function onLibBtn() {
   //  - если не авторизован
   //    - отрисовать форму регистрации/авторизации
   //    - получить ссылку на форму и повесить обработчик событий для регистрации/авторизации
-  if (!storage.userId) {
+  if (!storage.isSingIn) {
     autorisationFormCall();
     autorizationFormUiValid();
     // ================= Prokoptsov ===========/
@@ -226,6 +228,26 @@ function onLibBtn() {
   // ========== Prokoptsov.
   // ще пропоную видаляти слухачі після того, як юзер перейшов на вкладку HOME
   // те саме пропоную робити, коли юзер пішов з вкалдки HOME та натиснув вкалдку MyLibrary
+}
+function onAuthFormClick(e) {
+  e.preventDefault();
+  console.log(e.target);
+  const action = e.target.parentElement.name;
+  const email = e.currentTarget.elements.email.value;
+  const password = e.currentTarget.elements.password.value;
+  console.log(action);
+  switch (action) {
+    case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
+      authApi.signInWithEmailAndPassword(email, password);
+      break;
+    case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
+      authApi.createUserWithEmailAndPassword(email, password);
+      break;
+    default:
+      return;
+  }
+
+  e.currentTarget.reset();
 }
 
 // =======================================================//
@@ -270,17 +292,18 @@ function onQueueBtn() {
     refs.filmsList.innerHTML = '<h2>Your list of queue is empty.</h2>';
   }
 }
-// ------------------------------
-function onGetWatchedMovieRender() {
-  destroyMovieList(); // очищаємо розмітку;
-  const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
-  renderMainPage(watchedMovieArray);
-}
+// ------------------------------ ф-я використовувалась для тесту , зараз не потрібна
+// function onGetWatchedMovieRender() {
+//   destroyMovieList(); // очищаємо розмітку;
+//   const watchedMovieArray = storage[storage.currentTab]; //тут має бути список фільмів(watched або queue- значення зберігається в змінній currentTab)
+//   renderMainPage(watchedMovieArray);
+//   console.log(watchedMovieArray);
+// }
 
 // ---------------------
-function destroyMovieList() {
-  refs.filmsList.innerHTML = '';
-}
+// function destroyMovieList() {
+//   refs.filmsList.innerHTML = '';
+// }
 // -------------------------------------
 function onNavigate(event) {
   const currentTab = event.target.dataset.action;
@@ -289,10 +312,31 @@ function onNavigate(event) {
     // console.log(storage);
     // console.log(storage.currentTab);
     storage.currentTab = currentTab;
-    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender);
-    onGetWatchedMovieRender();
+    toggleButtons(currentTab);
+    // databaseApi.get(currentTab, store.userId, onGetWatchedMovieRender); //Uncaught ReferenceError: store is not defined at HTMLButtonElement.onNavigate
+    // onGetWatchedMovieRender(); // test-line, звертаємось до storage{} і звідти малюємо розмітку;
+    getAndRenderMovies(currentTab); // робить запити до ФБ і стягує фільми відповідно до переданого шляху (currentTab)
   }
 }
+/**
+ * ф-я перемикає стан кнопок: disabled/ enabled. та присвоює/видаляє клас, щоб підсвітити активну кнопку;
+ * @param {string} currentTab -де саме був клік;
+ */
+function toggleButtons(currentTab) {
+  if (currentTab === 'watched') {
+    refs.queueBtn.classList.remove('current-button');
+    refs.watchedBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
+    // refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
+  }
+  if (currentTab === 'queue') {
+    refs.watchedBtn.classList.remove('current-button');
+    refs.queueBtn.classList.add('current-button');
+    // refs.queueBtn.disabled = true;
+    // refs.watchedBtn.disabled = false;
+  }
+}
+
 // <============== Taras ===============
 
 function onMovieCard(e) {
@@ -305,14 +349,63 @@ function onMovieCard(e) {
   // - получить детальную информацию из памяти
   const movieId = Number(cardFilm.dataset.movieId);
   const movieData = storage.movies.find(movie => movie.id === movieId);
-  // console.log(movieData);
+  console.log(movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
+  // - поиск кнопок watched queue------------------------------------------
+  const watchedBtn = document.querySelector('#watched');
+  const queueBtn = document.querySelector('#queue');
+
+  watchedBtn.addEventListener('click', onModalWatchedBtn);
+  queueBtn.addEventListener('click', onModalQueueBtn);
+
+  function onModalWatchedBtn() {
+    if (watchedBtn.dataset.action === 'add-watched') {
+      databaseApi.add('watched', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
+      watchedBtn.setAttribute('data-action', 'del-watched'); // - поміняти кнопці текст контент і дата сет атрибут
+      watchedBtn.textContent = 'DELETE WATCHED';
+      watchedBtn.classList.add('delete-button'); // - додати клас актив
+      return;
+    }
+    if (watchedBtn.dataset.action === 'del-watched') {
+      databaseApi.delete('watched', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
+
+      watchedBtn.setAttribute('data-action', 'add-watched'); // - поміняти кнопці текст контент і дата сет атрибут
+      watchedBtn.textContent = 'ADD WATCHED';
+      watchedBtn.classList.remove('delete-button'); // - зняти клас актив
+      console.log('DELETE FROM WATCHED');
+      return;
+    }
+  }
+  // ------------------------------------------------
+  function onModalQueueBtn() {
+    if (queueBtn.dataset.action === 'add-queue') {
+      databaseApi.add('queue', storage.userId, movieData); // - додати об'єкт фільму по movieId в ФБ
+      queueBtn.setAttribute('data-action', 'del-queue'); // - поміняти кнопці текст контент і дата сет атрибут
+      queueBtn.textContent = 'DELETE QUEUE';
+      queueBtn.classList.add('delete-button'); // - додати клас актив
+      console.log('add-queue');
+      return;
+    }
+    if (queueBtn.dataset.action === 'del-queue') {
+      databaseApi.delete('queue', storage.userId, movieId); // - видалити об'єкт фільму по movieId з ФБ
+      queueBtn.setAttribute('data-action', 'add-queue'); // - поміняти кнопці текст контент і дата сет атрибут
+      queueBtn.textContent = 'AD QUEUE';
+      queueBtn.classList.remove('delete-button'); // - зняти клас актив
+      console.log('DELETE queue');
+      return;
+    }
+  }
   // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
   // - отрисовать модалку с детальной информацией по фильму
   // - отрисовать кнопки соответсвенно добавить/удалить
   // - получить ссылки на кнопки 'add/del to watched' и 'add/del to queue' и повесить слушатели
 }
+
+// ********************************
+// function addMoviestoFB(path) {
+// databaseApi.add(path, storage.userId, onGetMoviesFromFirebase);
+// }
 
 function onAddWatchedBtn(e) {
   // todo

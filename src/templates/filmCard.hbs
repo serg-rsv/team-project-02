@@ -1,0 +1,13 @@
+<li class='products__cards-item' data-movie-id='{{id}}'>
+  <article class='film-card'>
+    <img class='img' src='{{validPosterUrl}}' />
+    <p class='film_title'>{{title}}</p>
+    <ul class='info-list'>
+      <li class='film_genre'>{{#each validGenres}}
+          {{this}}{{#unless @last}},{{/unless}}
+        {{/each}}</li>
+      <li class='film_genre'>${{releaseYear}}</li>
+      <li class='film-profile__value--accent film_average'>{{vote_average}}</li>
+    </ul>
+  </article>
+</li>
