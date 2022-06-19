@@ -1,37 +1,64 @@
+// стилизация кнопки смены темы (иконки)
 .theme{
     width: 35px;
     height: 35px;
     padding: 5px 5px;
     
     position: fixed;
-    bottom:1em;
-    left: 1em;
+    bottom: 45px;
+    left: 5px;
 
     background-color: #737373;
     border-radius: 5px;
     cursor: pointer; 
+    @media screen and (max-width: 767px){
+        bottom: 65px;
+        left: 1px;
+    }
 }
 .change-theme{
     margin: auto;
 }
 
-// стилизация фона темной темы
-body.dark{
-    background-color: #181818;
+// стилизация фона и модалки фильма темной темы
+body.theme-dark{
+    background-color: #333333;
+    .modal{
+        background-color: #3D3D3D;
+        .button-action{
+            border-color: $color-main;
+            color: $font-color-main;
+        }
+    }
+    .film__title{
+        color: #E6E6E6;
+    }
+    .film-profile__value{
+        color: #E6E6E6;
+    }
+    .film-description{
+        color: #E6E6E6;
+        &__text{
+            color: #E6E6E6;
+        }
+    }
+
 }
 
-.footer.dark{
-    background-color: #00000050;
+// стилизация карточек фильма
+.films_list.theme-dark {
+    .film_title {
+        color: #E6E6E6;
+    }
 }
 
-.footer-text.dark{
-    color: #ffffff90;
-}
-.footer-heart.dark{
-    color:#ffffff90;
-}
-.footer__link.dark{
-    color: #ffffff90;
+
+// стилизация футера
+.footer.theme-dark{
+    background-image: linear-gradient(180deg, rgba(57, 57, 57, 0) 0%, rgba(50, 50, 50, 0.5) 12%, rgba(50, 50, 50, 0.9) 25%, rgb(50, 50, 50) 37%, rgb(50, 50, 50) 100%);
+    .footer-text{color: #E6E6E6;}
+    .footer-heart{color: #E6E6E6;}
+    .footer__link{color: #E6E6E6;}
 }
 
 
