@@ -1,7 +1,9 @@
-import teamCardTpl from '../../templates/team-card.hbs';
+// import teamCardTpl from '../../templates/team-card.hbs';
+import creatorCardTpl from '../../templates/creator-card.hbs';
 import { modalCall } from '../modal/modalCall';
 
 const searchIdItem = document.querySelectorAll('.team-list__image');
+const creatorCardinModal = document.querySelector('.person-card');
 console.log(searchIdItem);
 searchIdItem.forEach(item => item.addEventListener('mouseenter', onImageHover));
 // const teamLink = document.querySelector('.js-team-link');
@@ -159,8 +161,7 @@ export function showTeamModal() {
 }
 
 function onImageHover(e) {
-  console.log('onImageHover :>> ');
   const name = e.target.dataset.name;
-  const dataOfHoveredPerson = data.find(item => item.id === name);
-  console.log('c :>> ', dataOfHoveredPerson);
+  const markup = creatorCardTpl(data.find(item => item.id === name));
+  creatorCardinModal.innerHTML = markup;
 }

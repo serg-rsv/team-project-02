@@ -142,8 +142,9 @@
   overflow: hidden;
   aspect-ratio: 1.5/1;
   width: 300px;
-  //   height: 400px;
-  outline: 1px solid firebrick;
+  background-color: rgb(209, 209, 209);
+  // height: 400px;
+  //   outline: 1px solid firebrick;
   position: relative;
   top: 0;
   left: 50%;
@@ -165,7 +166,7 @@
   //   box-shadow: 0px 15px 15px -5px rgba(0, 0, 0, 0.9) inset;
   transform-origin: bottom center;
   transform: perspective(200px) scaleX(1.1) scaleY(1.25) scaleZ(1) rotateX(12deg) rotateY(0deg)
-    rotateZ(0deg) translateX(5%) translateY(0%) translateZ(0px) skewX(0deg) skewY(0deg);
+    rotateZ(0deg) translateX(5%) translateY(0%) translateZ(0px) skewX(4deg) skewY(0deg);
 }
 
 .team-list__box {
@@ -180,7 +181,7 @@
   /* height: 1080px; */
   padding-top: 0;
   animation-name: team-tribute;
-  animation-duration: 10s;
+  animation-duration: 20s;
   animation-timing-function: linear;
   animation-delay: 0s;
   animation-iteration-count: infinite;
@@ -237,9 +238,9 @@
 
 .team-list__box:last-child {
   animation-name: team-tribute-additional;
-  animation-duration: 10s;
+  animation-duration: 20s;
   animation-timing-function: linear;
-  animation-delay: 5s;
+  animation-delay: 10s;
   animation-iteration-count: infinite;
 }
 
@@ -262,9 +263,10 @@
 }
 
 .thereisnospoon:hover .team-list__box,
-.thereisnospoon:hover .team-list__box:last-child,
-.person-card:hover + .thereisnospoon > .team-list__box,
-.person-card:hover + .thereisnospoon > .team-list__box:last-child {
+.thereisnospoon:hover .team-list__box:last-child
+// .person-card:hover + .thereisnospoon > .team-list__box,
+// .person-card:hover + .thereisnospoon > .team-list__box:last-child
+{
   animation-play-state: paused;
 }
 
@@ -315,14 +317,46 @@
   margin-top: 2%;
 }
 
+// ===============================================Creators=====================================================
 .person-card {
   position: absolute;
-  background-color: aqua;
+  //   background-color: aqua;
   z-index: 4;
-  bottom: 0;
-  right: 0;
+  bottom: -7%;
+  right: 5%;
   padding: 2%;
-  outline: 1px solid firebrick;
+  //   outline: 1px solid firebrick;
   width: 75%;
   height: 65%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+// .person-card {
+//
+// }
+.person-data {
+  display: flex;
+}
+.person-links {
+  display: inline-block;
+}
+.person-image {
+  display: inline-block;
+  border-radius: 50%;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 70%;
+  object-fit: contain;
+  background-color: rgb(235, 235, 235);
+
+  bottom: 0;
+  left: -2%;
+  box-shadow: 0px -5px 4px 1px rgba(34, 60, 80, 0.4);
+}
+
+// .person-name__image-wrap {
+//   position: absolute;
+//   border-radius: 50%;
+//   overflow: hidden;
+// }
