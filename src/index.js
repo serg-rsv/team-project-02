@@ -340,8 +340,12 @@ function onMovieCard(e) {
   queueBtn.addEventListener('click', onModalQueueBtn);
   // *************************************************
   async function changeNameBtn() {
-    const { isInWatched } = await databaseApi.check('watched', storage.userId, movieId);
-    const { isInQueue } = await databaseApi.check('queue', storage.userId, movieId);
+    if (!storage.userId) {
+      Notify.warning('Download, please wait a bit ');
+    } else {
+      Notify.info('UserID: ' + storage.userId);
+    }
+    const { isInWatched, isInQueue } = await databaseApi.check(storage.userId, movieId);
 
     if (isInWatched) {
       //якщо фільм є в 'watched'
