@@ -339,8 +339,33 @@ function onMovieCard(e) {
   watchedBtn.addEventListener('click', onModalWatchedBtn);
   queueBtn.addEventListener('click', onModalQueueBtn);
   // *************************************************
+  async function changeNameBtn() {
+    const { isInWatched } = await databaseApi.check('watched', storage.userId, movieId);
+    const { isInQueue } = await databaseApi.check('queue', storage.userId, movieId);
 
-  databaseApi.check('watched', storage.userId, movieId);
+    if (isInWatched) {
+      //якщо фільм є в 'watched'
+      watchedBtn.setAttribute('data-action', 'del-watched'); // змінюємо атрибут,
+      watchedBtn.textContent = 'DELETE WATCHED'; // текстконтент і клас
+      watchedBtn.classList.add('delete-button');
+    } else {
+      watchedBtn.setAttribute('data-action', 'add-watched');
+      watchedBtn.textContent = 'ADD WATCHED';
+      watchedBtn.classList.remove('delete-button');
+    }
+
+    if (isInQueue) {
+      //якщо фільм є в 'queue'
+      queueBtn.setAttribute('data-action', 'del-queue');
+      queueBtn.textContent = 'DELETE QUEUE';
+      queueBtn.classList.add('delete-button');
+    } else {
+      queueBtn.setAttribute('data-action', 'add-queue');
+      queueBtn.textContent = 'AD QUEUE';
+      queueBtn.classList.remove('delete-button');
+    }
+  }
+  changeNameBtn();
 
   function onModalWatchedBtn() {
     if (watchedBtn.dataset.action === 'add-watched') {
