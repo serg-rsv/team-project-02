@@ -3,7 +3,7 @@
     <img class='imgCard' src='{{validPosterUrl}}' />
     <p class='film_title'>{{title}}</p>
     <ul class='info-list'>
-      <li class='film_genre'>{{#each validGenres}}
+      <li class='film_genre'>{{#each genresString}}
           {{this}}{{#unless @last}},{{/unless}}
         {{/each}}</li>
       <li class='film_genre'>{{releaseYear}}</li>
