@@ -15,17 +15,25 @@ function getShortGenresString(genres) {
   return genres;
 }
 
+function getValidPosterUrl(posterUrl) {
+  return posterUrl ? posterUrl : 'https://i.ibb.co/hMpzYvM/poster.png';
+}
+
 export function renderMainPage(movies) {
   const descriptionMarkup = movies
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
       const genresString = getShortGenresString(genres);
-      return filmCardTpl({ id, title, genresString, posterUrl, releaseYear, vote_average });
+      const validPosterUrl = getValidPosterUrl(posterUrl);
+      return filmCardTpl({ id, title, genresString, validPosterUrl, releaseYear, vote_average });
     })
     .join('');
 
   refFilmsList.insertAdjacentHTML('beforeend', descriptionMarkup);
 }
 export function openDetailsCard(detailsCard, selectorCloseBtn) {
+  const { posterUrl } = detailsCard;
+  const validPosterUrl = getValidPosterUrl(posterUrl);
+  detailsCard.posterUrl = validPosterUrl;
   const markup = cardTpl(detailsCard);
   modalCall(markup, selectorCloseBtn);
 }
