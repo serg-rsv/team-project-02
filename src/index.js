@@ -46,6 +46,7 @@ const testQ = [
 // <============== Taras ===============
 import './sass/main.scss';
 import './js/arrow-up/arrow-up';
+import './js/irina/theme';
 
 import _ from 'lodash';
 
