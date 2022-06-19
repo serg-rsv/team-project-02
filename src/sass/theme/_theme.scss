@@ -11,10 +11,27 @@
     border-radius: 5px;
     cursor: pointer; 
 }
+.change-theme{
+    margin: auto;
+}
 
 // стилизация фона темной темы
-.dark{
+body.dark{
     background-color: #181818;
+}
+
+.footer.dark{
+    background-color: #00000050;
+}
+
+.footer-text.dark{
+    color: #ffffff90;
+}
+.footer-heart.dark{
+    color:#ffffff90;
+}
+.footer__link.dark{
+    color: #ffffff90;
 }
 
 
