@@ -45,10 +45,13 @@ export const databaseApi = {
    */
   // перевіряє, чи був вже доданий фільм до бази даних
   check: (userId, movieId) =>
-    get(child(ref(db), `users/${userId}/`)).then(snapshot => ({
-      isInWatched: snapshot.child('watched').hasChild(movieId),
-      isInQueue: snapshot.child('queue').hasChild(movieId),
-    })),
+    get(child(ref(db), `users/${userId}/`)).then(snapshot => {
+      const movieIdToString = movieId.toString();
+      return {
+        isInWatched: snapshot.child('watched').hasChild(movieIdToString),
+        isInQueue: snapshot.child('queue').hasChild(movieIdToString),
+      };
+    }),
   /**
    * @param {String} path // Endpoint у базі данних. Їх буде лише два - 'watched' або 'queue'. Для зручності та запобіганню помилки при написанні виніс ці endpoint  до об'єкта const DB_ENDPOINTS = {  WATCHED: 'watched', QUEUE: 'queue'}
    * @param {Object} userId // ID користувача приходить у колбек після успішної авторизації. Все що треба, це передати цей айді до функції
