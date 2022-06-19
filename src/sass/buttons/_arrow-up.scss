@@ -1,18 +1,38 @@
-#myBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
+.button-up {
+  position: absolute;
+  top: 0;
+  right: 0%;
   z-index: 99;
-  border: none;
+  transform: translateY(100%) scale(0);
+  border: 2px solid $color-accent;
+  border-bottom: none;
   outline: none;
-  background-color: rgb(226, 118, 29);
-  color: white;
+  background-color: transparent;
+  background-image: url(../../src/images/svg/arrowup.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  width: 24px;
+  height: 32px;
+  opacity: 0.3;
   cursor: pointer;
-  padding: 15px;
-  border-radius: 50%;
+  transition: 0.5s;
+
+  @media screen and (min-width: $tablet) {
+    width: 32px;
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 }
 
-#myBtn:hover {
-  background-color: rgba(179, 171, 171, 0.623);
+.button-up.button-up-active {
+  transform: translateY(-110%) scale(1);
 }
 
+.button-up:hover {
+  opacity: 0.7;
+  transform: scale(1.1) translateY(-112%);
+  transition: 0.5s;
+}

@@ -1,17 +1,18 @@
-const arrowUp = document.querySelector('#myBtn');
+const { throttle } = require('lodash');
 
+const arrowUp = document.querySelector('#button-up');
+console.log('arrowUp :>> ', arrowUp);
 // Коли користувач прокручує вниз на 20 пікселів від верхньої частини документа, показуємо кнопку
-window.onscroll = function () {
-  scrollFunction();
-};
+window.onscroll = throttle(scrollFunction, 400);
 
 arrowUp.addEventListener('click', topFunction);
 
 function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    arrowUp.style.display = 'block';
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    arrowUp.classList.add('button-up-active');
+    return;
   } else {
-    arrowUp.style.display = 'none';
+    arrowUp.classList.remove('button-up-active');
   }
 }
 
