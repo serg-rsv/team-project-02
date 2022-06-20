@@ -246,6 +246,7 @@
   width: 70%;
   object-fit: contain;
   border-top: 1.5px solid rgb(226, 226, 226);
+  background-color: rgba(226, 226, 226);
 
   bottom: 0;
   left: -2.5%;
@@ -274,8 +275,23 @@
   height: 24px;
   border: 1px solid $color-buttons-grey;
   border-radius: 10%;
+  transition: $animationDuration;
+  box-shadow: 0px 4px 2px 1px rgba(0, 0, 0, 0.6);
 
   & > svg path {
+    transition: $animationDuration;
     fill: $color-buttons-grey;
+  }
+
+  &:hover {
+    border: 1px solid $color-accent;
+    & > svg path {
+      fill: $color-accent;
+    }
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.6);
   }
 }
