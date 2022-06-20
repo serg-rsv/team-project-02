@@ -29,4 +29,8 @@ export function modalCall(data, selector) {
       document.body.removeEventListener('keydown', onEscapeKeyDown);
     }
   }
+
+  // ========== Prokoptsov ================//
+  // роблю ретурн instance, щоб закрити потів модалку з авторизацією
+  return instance;
 }

@@ -29,15 +29,12 @@ export const databaseApi = {
   /**
    * @param {String} path // Endpoint у базі данних. Їх буде лише два - 'watched' або 'queue'. Для зручності та запобіганню помилки при написанні виніс ці endpoint  до об'єкта const DB_ENDPOINTS = {  WATCHED: 'watched', QUEUE: 'queue'}
    * @param {Object} userId // ID користувача приходить у колбек після успішної авторизації. Все що треба, це передати цей айді до функції
-   * @param {Function} callback // Функція onValue нічого не повертає, тому треба передати колбек, який передасть у зовнішній код список фільмів. Можна зробити then тут у database-api, але на мій погляд це краще робити у зовнішньому коді через колбек.
-   * @returns
+   * @returns {Promise}
    */
   // завантажує список додадних фільмів
-  get: async (path, userId, callback) => {
-    onValue(ref(db, `users/${userId}/${path}`), async snapshot =>
-      callback(serialaize.transform(snapshot.val())),
-    );
-  },
+  get: async (path, userId) => get(child(ref(db), `users/${userId}/${path}`))
+    .then(snapshot => serialaize.transform(snapshot.val()))
+    .catch(console.log),
   /**
    * @param {Object} userId // ID користувача приходить у колбек після успішної авторизації. Все що треба, це передати цей айді до функції
    * @param {String} movieId // id фільму
