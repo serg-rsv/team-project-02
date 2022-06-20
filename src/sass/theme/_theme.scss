@@ -4,8 +4,10 @@
     height: 24px;
     padding: 2px 2px;
     position: fixed;
-    top: 260px;
-    right:calc(50vw - 158px);
+    bottom: 63px;
+    left: calc(50vw - 158px);
+    // top: 260px;
+    // right:calc(50vw - 158px);
 
     background-color: transparent;
     border: 1px solid $color-accent;
@@ -16,11 +18,11 @@
         height: 32px;
         padding: 5px 5px;
 
-        top: 247px;
-        right: calc(50vw - 378px );
+        bottom: 48px;
+        left: calc(50vw - 378px );
     }
     @media screen and (min-width:$desktop) {
-        right: calc(50vw - 508px);
+        left: calc(50vw - 508px);
     }
 }
 
