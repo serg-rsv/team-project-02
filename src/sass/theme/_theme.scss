@@ -1,33 +1,58 @@
 // стилизация кнопки смены темы (иконки)
 .theme{
-    width: 35px;
-    height: 35px;
-    padding: 5px 5px;
-    
+    width: 24px;
+    height: 24px;
+    padding: 2px 2px;
     position: fixed;
-    bottom: 45px;
-    left: 5px;
+    bottom: 63px;
+    left: calc(50vw - 158px);
+    // top: 260px;
+    // right:calc(50vw - 158px);
 
-    background-color: #737373;
+    background-color: transparent;
+    border: 1px solid $color-accent;
     border-radius: 5px;
     cursor: pointer; 
-    @media screen and (max-width: 767px){
-        bottom: 65px;
-        left: 1px;
+    @media screen and (min-width: $tablet){
+        width: 32px;
+        height: 32px;
+        padding: 5px 5px;
+
+        bottom: 48px;
+        left: calc(50vw - 378px );
+    }
+    @media screen and (min-width:$desktop) {
+        left: calc(50vw - 508px);
     }
 }
+
+
 .change-theme{
-    margin: auto;
+    // margin: auto;
+    width: 18px;
+    height: 18px;
+    @media screen and (min-width: $tablet){
+        width: 20px;
+        height: 20px;
+    }
 }
 
 // стилизация фона и модалки фильма темной темы
 body.theme-dark{
     background-color: #333333;
+    .theme {
+            border: 1px solid $color-main;
+        }
     .modal{
         background-color: #3D3D3D;
         .button-action{
             border-color: $color-main;
             color: $font-color-main;
+            &:hover {
+                    background-color: #3D3D3D;
+                    border-color: $color-accent;
+                    color: $color-accent;
+                }
         }
     }
     .film__title{
