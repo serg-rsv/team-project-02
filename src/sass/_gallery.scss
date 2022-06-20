@@ -47,6 +47,14 @@
     object-fit: cover;
   }
 }
+.modal {
+  @media screen and (max-width: 767px) {
+    overflow-y: auto;
+    .body {
+      overflow: hidden;
+    }
+  }
+}
 
 .films_list {
   display: flex;
@@ -57,7 +65,7 @@
   margin-right: auto;
   justify-content: center;
 
-  // @media screen and(max-width:767px) {
+  // @media screen and() {
   //   margin: auto;
   //   padding: auto;
   // }
