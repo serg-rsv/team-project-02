@@ -152,6 +152,10 @@ button:disabled {
   }
 }
 
+#team-close-button {
+  @extend .form_close-button;
+}
+
 .controls__btn--google {
   display: inline-flex;
   align-items: center;
