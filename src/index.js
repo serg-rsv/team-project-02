@@ -14,7 +14,6 @@ import { homeRender, libraryRender } from './js/header/change-header';
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
-import { showTeamModal } from './js/Fedorenko/team-modal';
 
 Notify.init({ clickToClose: true, position: 'center-top' });
 
@@ -66,7 +65,6 @@ refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 500));
 refs.watchedBtn.addEventListener('click', onNavigate);
 refs.queueBtn.addEventListener('click', onNavigate);
 refs.filmsList.addEventListener('click', onMovieCard);
-refs.teamLnk.addEventListener('click', onTeamLnk);
 refs.logInBtn.addEventListener('click', onLogInBtn);
 refs.logOutBtn.addEventListener('click', onLogOutBtn);
 
@@ -117,9 +115,6 @@ function onLogOutBtn() {
 }
 // <============== LOGIN ===============
 // =============== Sveta ===============>
-function onTeamLnk() {
-  showTeamModal();
-}
 // <============== Sveta ===============
 
 function onHomeBtn() {

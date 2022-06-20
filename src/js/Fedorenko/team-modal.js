@@ -4,9 +4,7 @@ import { modalCall } from '../modal/modalCall';
 
 const searchIdItem = document.querySelectorAll('.team-list__image');
 const creatorCardinModal = document.querySelector('.person-card');
-console.log(searchIdItem);
-searchIdItem.forEach(item => item.addEventListener('mouseenter', onImageHover));
-// const teamLink = document.querySelector('.js-team-link');
+const itemForHide = document.querySelector('.person-data');
 const data = [
   {
     id: 'serhii',
@@ -117,51 +115,16 @@ const data = [
     mail: 'strelezzzz@gmai.com',
   },
 ];
-// teamLink.addEventListener('click', onTeamModalShow);
 
-// function onTeamModalShow() {
-//   const teamCardsMarkup = teamCardTpl(data);
-//   document.addEventListener('click', onClick);
-//   document.addEventListener('keydown', onCloseEsc);
+export function startListenModal(stopper) {
+  searchIdItem.forEach(item => item.addEventListener('mouseenter', onImageHover));
+  if (stopper) {
+    searchIdItem.forEach(item => item.removeEventListener('mouseenter', onImageHover));
+  }
 
-//   function onClick(e) {
-//     // e.target.classList.value === 'cards-container js-team list' ||
-//     e.target.classList.value === 'team__title' ||
-//     e.target.classList.value === 'team__title_accent' ||
-//     e.target.classList.value === 'basicLightbox'
-//       ? teamModal.close()
-//       : teamModal.show();
-
-//     if (localStorage.getItem('theme') === 'dark') {
-//       document.querySelector('.team-section').classList.add('dark-bg');
-//     }
-//   }
-
-//   function onCloseEsc(e) {
-//     e.code === 'Escape' ? teamModal.close() : teamModal.show();
-//   }
-
-//   const teamModal = basicLightbox.create(teamCardsMarkup, {
-//     onShow: () => {
-//       document.body.style.overflow = 'hidden';
-//     },
-//     onClose: () => {
-//       document.body.style.overflow = 'visible';
-//       document.removeEventListener('click', onClick);
-//       document.removeEventListener('keydown', onCloseEsc);
-//     },
-//   });
-
-//   teamModal.show();
-// }
-export function showTeamModal() {
-  const teamCardsMarkup = teamCardTpl(data);
-  console.log('showTeamModal:>> ');
-  modalCall(teamCardsMarkup);
-}
-
-function onImageHover(e) {
-  const name = e.target.dataset.name;
-  const markup = creatorCardTpl(data.find(item => item.id === name));
-  creatorCardinModal.innerHTML = markup;
+  function onImageHover(e) {
+    const name = e.target.dataset.name;
+    const markup = creatorCardTpl(data.find(item => item.id === name));
+    creatorCardinModal.innerHTML = markup;
+  }
 }

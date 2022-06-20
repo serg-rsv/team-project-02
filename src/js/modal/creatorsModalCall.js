@@ -1,55 +1,54 @@
+import { startListenModal } from '../Fedorenko/team-modal';
+
 document.addEventListener('DOMContentLoaded', function () {
   /* Записываем в переменные массив элементов-кнопок и подложку.
       Подложке зададим id, чтобы не влиять на другие элементы с классом overlay*/
-  let modalButtons = document.querySelectorAll('.js-open-modal'),
+  let modalButton = document.querySelector('.js-open-modal'),
     overlay = document.querySelector('.js-overlay-modal'),
-    closeButtons = document.querySelectorAll('.js-modal-close');
+    closeButton = document.querySelector('#team-close-button');
+  console.log('object :>> ', closeButton);
 
   /* Перебираем массив кнопок */
-  modalButtons.forEach(function (item) {
-    /* Назначаем каждой кнопке обработчик клика */
-    item.addEventListener('click', function (e) {
-      /* Предотвращаем стандартное действие элемента. Так как кнопку разные
+  /* Назначаем каждой кнопке обработчик клика */
+  modalButton.addEventListener('click', function (e) {
+    /* Предотвращаем стандартное действие элемента. Так как кнопку разные
             люди могут сделать по-разному. Кто-то сделает ссылку, кто-то кнопку.
             Нужно подстраховаться. */
-      e.preventDefault();
+    e.preventDefault();
 
-      /* При каждом клике на кнопку мы будем забирать содержимое атрибута data-modal
+    /* При каждом клике на кнопку мы будем забирать содержимое атрибута data-modal
             и будем искать модальное окно с таким же атрибутом. */
-      let modalId = this.getAttribute('data-modal'),
-        modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
+    let modalId = this.getAttribute('data-modal'),
+      modalElem = document.querySelector('.modal-creators[data-modal="' + modalId + '"]');
 
-      /* После того как нашли нужное модальное окно, добавим классы
+    /* После того как нашли нужное модальное окно, добавим классы
             подложке и окну чтобы показать их. */
-      modalElem.classList.add('active');
-      overlay.classList.add('active');
-    }); // end click
-  }); // end foreach
+    modalElem.classList.add('active');
+    overlay.classList.add('active');
+    startListenModal();
+  }); // end click
 
-  closeButtons.forEach(function (item) {
-    item.addEventListener('click', function (e) {
-      var parentModal = this.closest('.modal');
+  closeButton.addEventListener('click', function (e) {
+    const parentModal = e.target.closest('.modal-creators');
+    console.log('e.target :>> ', e.target);
+    parentModal.classList.remove('active');
+    overlay.classList.remove('active');
+    startListenModal(stop);
+  });
 
-      parentModal.classList.remove('active');
-      overlay.classList.remove('active');
-    });
-  }); // end foreach
-
-  document.body.addEventListener(
-    'keyup',
-    function (e) {
-      var key = e.keyCode;
-
-      if (key == 27) {
-        document.querySelector('.modal.active').classList.remove('active');
-        document.querySelector('.overlay').classList.remove('active');
-      }
-    },
-    false,
-  );
+  document.body.addEventListener('keydown', function (e) {
+    let key = e.code;
+    if (key !== 'Escape') return;
+    const modalWindow = document.querySelector('.modal-creators.active');
+    if (!modalWindow) return;
+    modalWindow.classList.remove('active');
+    document.querySelector('.overlay').classList.remove('active');
+    startListenModal(stop);
+  });
 
   overlay.addEventListener('click', function () {
-    document.querySelector('.modal.active').classList.remove('active');
+    document.querySelector('.modal-creators.active').classList.remove('active');
     this.classList.remove('active');
+    startListenModal(stop);
   });
-}); // end ready
+});
