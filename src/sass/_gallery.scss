@@ -47,9 +47,14 @@
     object-fit: cover;
   }
 }
+.modal::-webkit-scrollbar {
+  width: 0;
+}
+
 .modal {
   @media screen and (max-width: 767px) {
     overflow-y: auto;
+
     .body {
       overflow: hidden;
     }
