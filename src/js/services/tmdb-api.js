@@ -33,7 +33,7 @@ const trending = {
   page: 0,
   totalPages: 1,
   MEDIA_TYPE: 'movie/',
-  TIME_WINDOW: 'day',
+  TIME_WINDOW: 'week',
 };
 
 const searchMovie = {
@@ -180,6 +180,7 @@ export const tmdbApi = {
       page: searchMovie.page + 1,
       language: LANGUAGES.ENGLISH,
       query,
+      include_adult: false,
     };
 
     return axios

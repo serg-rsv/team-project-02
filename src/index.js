@@ -14,6 +14,7 @@ import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import { Notify } from 'notiflix';
 import { showTeamModal } from './js/Fedorenko/team-modal';
+import loader from './js/loader/loader';
 
 Notify.init({ clickToClose: true, position: 'center-top' });
 
@@ -49,12 +50,14 @@ const ACTION_TYPE = {
 
 async function launch() {
   // {show loader}
+  loader.show(refs.filmsList, 'beforebegin');
   // =============== Prokoptsov ===================//
   // визначаємо чи залогінений юзер у системі при завантаженні сторінки та виконуємо логіку у колбеках
   authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut);
   // =================================================
   await infinityScrollData();
   // {hide loader}
+  loader.hide();
 }
 
 launch();
@@ -123,6 +126,8 @@ function onTeamLnk() {
 
 function onHomeBtn() {
   // todo
+  // {show loader}
+  loader.show(refs.filmsList, 'beforebegin');
   // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
   homeRender();
   storage.movies = [];
@@ -133,6 +138,7 @@ function onHomeBtn() {
   tmdbApi.resetTrendingPage();
   infinityScrollData();
   // {hide loader}
+  loader.hide();
 }
 
 // =====================================================================================================
@@ -143,18 +149,21 @@ async function onSearchInput(e) {
   if (query === '') {
     return;
   }
-
+  // {show loader}
+  loader.show(refs.filmsList, 'beforebegin');
   await tmdbApi.fetchSearchMovie(query);
   // - если ничего не найдено по запросу
   // - вывести уведомление 'Search result not successful.'
   if (tmdbApi.searchMovieTotalPage === 0) {
     Notify.warning('Search result not successful. Enter the correct movie name and try again.');
+    loader.hide();
     return;
   }
   // відмальовуємо знайдені фільми
   refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
-  infinityScrollData(query);
+  await infinityScrollData(query);
+  loader.hide();
 }
 
 function onLibBtn() {
@@ -165,7 +174,6 @@ function onLibBtn() {
   }
   // - отрисовать шапку библиотеки
   libraryRender();
-
   // ===================================//
   refs.filmsList.innerHTML = '';
   switch (storage.currentTab) {
@@ -309,6 +317,11 @@ function onMovieCard(e) {
   queueBtn.addEventListener('click', onModalQueueBtn);
   // *************************************************
   async function changeNameBtn() {
+    // перевірка авторизації перед запитом до фб
+    if (!storage.isSingIn) {
+      Notify.info('Please Log-in');
+      return;
+    }
     //змінює текст та атрибути кнопок додати/видалити
     const { isInWatched, isInQueue } = await databaseApi.check(storage.userId, movieId);
     try {
