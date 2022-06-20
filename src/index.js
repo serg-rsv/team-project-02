@@ -104,7 +104,7 @@ function onLogInBtn() {
   const formRef = document.querySelector('[data-js="auth-form"]');
   // вішаємо слухач, та додаємо обробник подіїї
 
-  formRef.addEventListener('click', (e) => onAuthFormClick(e, modal));
+  formRef.addEventListener('click', e => onAuthFormClick(e, modal));
 }
 
 function onLogOutBtn() {
@@ -197,13 +197,6 @@ function onLibBtn() {
       break;
   }
 
-  //================= Prokoptsov ==========================//
-  // це треба пергий раз робити одразу, як перейшли на вкладку MyLibrary
-  databaseApi.get('watched', storage.userId).then(moviList => {
-    refs.filmsList.innerHTML = '';
-    console.log(moviList);
-    renderMainPage(moviList)
-  }).catch(console.log);
   // ========= Prokoptsov.
   // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
   // а потім відмальовувати іх. Це буду виглядати так
@@ -217,30 +210,6 @@ function onLibBtn() {
   // Бо знову ж таки, функція нічого не повертає, тому треба колбек
   // ==============
 }
-function onAuthFormClick(e, modalInstance) {
-  e.preventDefault();
-
-  const action = e.target.parentElement.name;
-  const email = e.currentTarget.elements.email.value;
-  const password = e.currentTarget.elements.password.value;
-
-  switch (action) {
-    case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
-      authApi.signInWithEmailAndPassword(email, password);
-      break;
-    case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
-      authApi.createUserWithEmailAndPassword(email, password);
-      break;
-    case ACTION_TYPE.SIGN_IN_WITH_GOOGLE:
-      authApi.signInWithGoogle();
-      break;
-    default:
-      return;
-  }
-
-  e.currentTarget.reset();
-}
-
 // =======================================================//
 
 function onNavigate(event) {
@@ -533,22 +502,32 @@ function onAuthFormClick(e, modalInstance) {
 
   switch (action) {
     case ACTION_TYPE.SIGN_IN_WITH_EMAIL_AND_PASSWORD:
-      authApi.signInWithEmailAndPassword(email, password, (user) => {
-        onSignInSuccess(user)
-        modalInstance.close();
-      }, onSiginInError)
+      authApi.signInWithEmailAndPassword(
+        email,
+        password,
+        user => {
+          onSignInSuccess(user);
+          modalInstance.close();
+        },
+        onSiginInError,
+      );
       break;
     case ACTION_TYPE.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:
-      authApi.createUserWithEmailAndPassword(email, password, (user) => {
-        onSignInSuccess(user)
-        modalInstance.close();
-      }, onSiginInError)
+      authApi.createUserWithEmailAndPassword(
+        email,
+        password,
+        user => {
+          onSignInSuccess(user);
+          modalInstance.close();
+        },
+        onSiginInError,
+      );
       break;
     case ACTION_TYPE.SIGN_IN_WITH_GOOGLE:
-      authApi.signInWithGoogle((user) => {
-        onSignInSuccess(user)
+      authApi.signInWithGoogle(user => {
+        onSignInSuccess(user);
         modalInstance.close();
-      }, onSiginInError)
+      }, onSiginInError);
       break;
     default:
       return;
