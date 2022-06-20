@@ -319,7 +319,6 @@ function onMovieCard(e) {
   async function changeNameBtn() {
     // перевірка авторизації перед запитом до фб
     if (!storage.isSingIn) {
-      Notify.info('Please Log-in');
       return;
     }
     //змінює текст та атрибути кнопок додати/видалити
@@ -363,6 +362,10 @@ function onMovieCard(e) {
   }
 
   function onModalWatchedBtn() {
+    if (!storage.isSingIn) {
+      Notify.info('Please Log-in');
+      return;
+    }
     if (watchedBtn.dataset.action === 'add-watched') {
       // - додати об'єкт фільму по movieId в ФБ
       databaseApi
@@ -392,6 +395,10 @@ function onMovieCard(e) {
   }
   // ------------------------------------------------
   function onModalQueueBtn() {
+    if (!storage.isSingIn) {
+      Notify.info('Please Log-in');
+      return;
+    }
     if (queueBtn.dataset.action === 'add-queue') {
       databaseApi
         .add('queue', storage.userId, movieData)
