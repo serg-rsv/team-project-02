@@ -447,9 +447,9 @@ async function infinityScrollData(query) {
     const triggeredLoadMoreElement = document.querySelector(
       '.products__cards-item:nth-last-child(4) img',
     );
-    triggeredLoadMoreElement?.addEventListener('load', onLoad);
+    if (triggeredLoadMoreElement) triggeredLoadMoreElement.addEventListener('load', onLoad);
     function onLoad() {
-      triggeredLoadMoreElement?.removeEventListener('load', onLoad);
+      if (triggeredLoadMoreElement) triggeredLoadMoreElement.removeEventListener('load', onLoad);
       if (refs.headerEl.classList.contains('header-lib')) {
         console.log('exit before loadMore()');
         return;
