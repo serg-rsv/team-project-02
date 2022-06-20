@@ -1,13 +1,12 @@
 <footer class="footer">
   <div class="container">
-    <p class="footer-decsr">
-      <span class="footer-text">
-        © 2022
-
-        <span data-key="rights">| All Rights Reserved |</span>
-      </span>
-      <span class="footer-heart">
-        <span data-key="developed">Developed with</span>
+    <p class="footer-text">
+      © 2022
+      <span data-key="rights">| All Rights Reserved |</span>
+    </p>
+    <span class="footer-heart">
+      <span data-key="developed">Developed with</span>
+      <div class="footer__heart-wrap">
         <svg width="14" height="13" viewBox="0 0 200 200">
           <g transform="translate(100 100)">
             <path
@@ -18,25 +17,26 @@
             <animateTransform
               attributeName="transform"
               type="scale"
-              values="1.25; 1.5; 1.75; 2; 1.5;"
-              dur="1.5s"
+              values="1.25; 2; 1.5; 2; 1.5; 1.25; 1; 1; 1; 1; 1; 1; 1; 1; 1"
+              dur="2s"
               repeatCount="indefinite"
               additive="sum"
             ></animateTransform>
           </g>
         </svg>
-
-        <a
-          id="footer"
-          class="footer__link js-team-link"
-          href="#footer"
-          rel="noreferrer noopener"
-          data-key="students"
-        >
-          by GoIT Students
-        </a>
-      </span>
-    </p>
+      </div>
+      <span>by</span>
+      <a
+        id="footer"
+        class="js-open-modal footer__link js-team-link"
+        href="#footer"
+        rel="noreferrer noopener"
+        data-key="students"
+        data-modal="creators"
+      >
+        GoIT Students
+      </a>
+    </span>
     <button id="button-up" title="Go to top" class="button-up"></button>
   </div>
 </footer>

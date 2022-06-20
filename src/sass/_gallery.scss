@@ -5,7 +5,6 @@
   font-size: $font-size-major;
   line-height: $font-height-major;
   text-transform: uppercase;
-  margin-top: 8px;
 }
 .film_genre {
   color: $color-accent;
@@ -32,6 +31,12 @@
 }
 
 .imgCard {
+  transform-origin: bottom center;
+  .products__cards-item:hover & {
+    transform: scale(1.05);
+    transition: 0.75s ease-in-out;
+  }
+
   @media screen and (min-width: $tablet) {
     width: $mobile;
     padding: 0px;
@@ -84,6 +89,13 @@
   margin-right: 20px;
   margin-left: 20px;
   margin-top: 32px;
+  transition: $animationDuration;
+  border-radius: 5px;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
 
   @media screen and (min-width: $tablet) and(max-width:991px) {
     width: calc((100% - 2 * 32px) / 2);
@@ -98,4 +110,8 @@
     margin-left: 8px;
     margin-right: 8px;
   }
+}
+
+.film-card__info-box {
+  padding: 8px;
 }

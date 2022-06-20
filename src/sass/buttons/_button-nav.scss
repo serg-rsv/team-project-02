@@ -6,6 +6,7 @@
   line-height: 1.17;
   padding: 0;
   cursor: pointer;
+  transition: $animationDuration;
 
   &.current {
     position: relative;
@@ -20,9 +21,14 @@
       background-color: $color-accent;
     }
   }
+
+  &:hover {
+    color: $color-buttons-grey;
+  }
 }
 
 .header__logbuttons-list {
+  display: inline-flex;
   width: max-content;
   //   display: block;
   margin-left: auto;
@@ -47,7 +53,7 @@
   align-items: center;
   top: 0;
   right: 0;
-  opacity: 0.5;
+  opacity: 0.7;
   transition: transform $animationDuration $animationTimeFunction;
 
   &::after {

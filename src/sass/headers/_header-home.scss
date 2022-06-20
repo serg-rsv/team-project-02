@@ -62,7 +62,9 @@ header {
     margin-left: 40px;
   }
   & li:first-child {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
   }
 }
 
