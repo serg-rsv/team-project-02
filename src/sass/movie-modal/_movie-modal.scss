@@ -1,12 +1,17 @@
+body.modal-open {
+  overflow: hidden;
+}
+
 .modal {
-  // overflow-y: auto;
+  overflow-y: overlay;
+
   max-width: 280px;
   height: 100vh;
   margin: auto;
   padding: 48px 20px;
 
   background-color: $color-main;
-  
+
   @media screen and (min-width: $tablet) {
     max-width: 704px;
     height: auto;
@@ -64,44 +69,44 @@
   display: grid;
   grid-template-columns: 70px 1fr;
   grid-gap: 8px 39px;
-    &__name{
-      text-align: start;
-      font-family: $font-main;
-      font-weight: $font-weight-major;
-      font-size: $font-size-major;
-      line-height: $font-height-major;
-      
-      color: #8c8c8c;
-    }
-    &__value{
-      text-align: start;
-      font-family: inherit;
-      font-weight: $font-weight-major;
-      font-size: $font-size-major;
-      line-height: $font-height-major;
-        
+  &__name {
+    text-align: start;
+    font-family: $font-main;
+    font-weight: $font-weight-major;
+    font-size: $font-size-major;
+    line-height: $font-height-major;
+
+    color: #8c8c8c;
+  }
+  &__value {
+    text-align: start;
+    font-family: inherit;
+    font-weight: $font-weight-major;
+    font-size: $font-size-major;
+    line-height: $font-height-major;
+
+    color: $font-color-dark;
+
+    &-votes {
+      display: inline-block;
+      text-align: center;
+      padding-top: 1px;
+      // padding: 1px 10px;
+      width: 36px;
+
       color: $font-color-dark;
-        
-        &-votes {
-          display: inline-block;
-          text-align: center;
-          padding-top: 1px;
-          // padding: 1px 10px;
-          width: 36px;
-        
-          color: $font-color-dark;
-          background-color:$color-additional;
-          border-radius: 5px;
-          &.accent{
-            color: $font-color-main;
-            background-color: $color-accent;
-          }
-        }
-        
-        &.accent {
-          text-transform: uppercase;
-        }
+      background-color: $color-additional;
+      border-radius: 5px;
+      &.accent {
+        color: $font-color-main;
+        background-color: $color-accent;
+      }
     }
+
+    &.accent {
+      text-transform: uppercase;
+    }
+  }
 
   @media screen and (min-width: $tablet) {
     grid-gap: 8px 32px;
@@ -168,36 +173,35 @@
   border: 0;
   outline: none;
   overflow: hidden;
-  
-    &::before {
-      content: ' ';
-      display: block;
-      width: 18px;
-      height: 1.5px;
-      transform-origin: left;
-      
-      position: absolute;
-      top: 0;
-      transform: rotate(45deg);
-  
-      background-color: $font-color-dark;
-    }
-  
-    &::after {
-      content: ' ';
-      display: block;
-      width: 18px;
-      height: 1.5px;
-      transform-origin: left;
 
-      position: absolute;
-      bottom: 0;
-      transform: rotate(-45deg);
+  &::before {
+    content: ' ';
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    transform-origin: left;
 
-      background-color: $font-color-dark;
-    }
+    position: absolute;
+    top: 0;
+    transform: rotate(45deg);
+
+    background-color: $font-color-dark;
   }
 
+  &::after {
+    content: ' ';
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    transform-origin: left;
+
+    position: absolute;
+    bottom: 0;
+    transform: rotate(-45deg);
+
+    background-color: $font-color-dark;
+  }
+}
 
 // .btn{
 //     height: 44px;

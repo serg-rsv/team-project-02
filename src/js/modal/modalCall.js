@@ -12,7 +12,10 @@ import 'basiclightbox/src/styles/main.scss';
  */
 
 export function modalCall(data, selector) {
-  const instance = basicLightbox.create(data);
+  const instance = basicLightbox.create(data, {
+    onShow: () => document.body.classList.add('modal-open'),
+    onClose: () => document.body.classList.remove('modal-open'),
+  });
   instance.show();
   document.body.addEventListener('keydown', onEscapeKeyDown);
 
