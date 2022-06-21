@@ -1,42 +1,42 @@
 .logo-button {
-	display: flex;
-	align-items: center;
-	padding: 0;
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-	position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
 
-	& p {
-		display: none;
+  & span {
+    display: none;
 
-		@media screen and (min-width: $tablet) {
-			display: inline-block;
-			text-decoration: none;
-			color: $font-color-main;
-			font-size: 30px;
-			line-height: 1.17;
-			padding-left: 8px;
-		}
-	}
+    @media screen and (min-width: $tablet) {
+      display: inline-block;
+      text-decoration: none;
+      color: $font-color-main;
+      font-size: 30px;
+      line-height: 1.17;
+      padding-left: 8px;
+    }
+  }
 
-	// &:before{
-	//   content: '⋆';
-	//   top: 1px;
-	//   right: 25px;
-	//   display: block;
-	//   position: absolute;
-	//   color: $color-accent;
-	// }
-	// &:hover::before {
-	//     animation: spin 1s infinite linear;
-	//   }
+  // &:before{
+  //   content: '⋆';
+  //   top: 1px;
+  //   right: 25px;
+  //   display: block;
+  //   position: absolute;
+  //   color: $color-accent;
+  // }
+  // &:hover::before {
+  //     animation: spin 1s infinite linear;
+  //   }
 }
 
 .logo-img {
-	display: inline-block;
-	width: 24px;
-	height: 24px;
-	margin: 0;
-	padding: 0;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
 }
