@@ -145,16 +145,16 @@
 }
 
 .team-list__image {
-  filter: brightness(0.5);
+  filter: brightness(0) saturate(0);
   width: 100%;
   display: block;
   z-index: 1;
   object-fit: contain;
   height: auto;
-
+  transition: 0.75s;
   &:hover {
-    filter: brightness(1);
-    transition: 0.5s;
+    filter: brightness(1) saturate(0);
+    transition: 2s;
   }
 }
 
