@@ -5,9 +5,7 @@
     padding: 2px 2px;
     position: fixed;
     bottom: 63px;
-    left: calc(50vw - 158px);
-    // top: 260px;
-    // right:calc(50vw - 158px);
+    left: calc(50vw - 148px);
 
     background-color: transparent;
     border: 1px solid $color-accent;
@@ -19,10 +17,10 @@
         padding: 5px 5px;
 
         bottom: 48px;
-        left: calc(50vw - 378px );
+        left: calc(50vw - 370px );
     }
     @media screen and (min-width:$desktop) {
-        left: calc(50vw - 508px);
+        left: calc(50vw - 498px);
     }
 }
 
