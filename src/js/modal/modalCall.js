@@ -18,10 +18,6 @@ export function modalCall(data, selector) {
   });
   instance.show();
 
-  const markup =
-    '<div class="background-container"><div class="stars"></div><div class="twinkling"></div></div>';
-
-  document.querySelector('.basicLightbox').insertAdjacentHTML('beforeend', markup);
   document.body.addEventListener('keydown', onEscapeKeyDown);
 
   if (!selector) {

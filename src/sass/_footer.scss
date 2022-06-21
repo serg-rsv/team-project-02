@@ -35,6 +35,11 @@ footer .container {
   position: relative;
 }
 
+.footer-heart {
+  @media screen and (min-width: $tablet) {
+    display: inline-block;
+  }
+}
 .footer__heart-wrap {
   position: absolute;
   top: 3px;
