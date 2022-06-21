@@ -15,13 +15,13 @@ body.modal-open {
   @media screen and (min-width: $tablet) {
     max-width: 704px;
     height: auto;
+
     padding: 40px 36px;
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
   @media screen and (min-width: $desktop) {
     max-width: 814px;
-    height: 558px;
     padding: 40px 16px;
     grid-gap: 0 16px;
   }
@@ -29,19 +29,20 @@ body.modal-open {
 
 .film-poster {
   width: 240px;
-  height: 357px;
+  // height: 357px;
+  min-height: max-content;
 
   border-radius: 5px;
   overflow: hidden;
 
   @media screen and (min-width: $tablet) {
     width: 264px;
-    height: 373px;
+    // height: 373px;
   }
 
   @media screen and (min-width: $desktop) {
     width: 375px;
-    height: 478px;
+    // height: 478px;
   }
 }
 
