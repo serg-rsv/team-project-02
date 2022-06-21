@@ -1,130 +1,168 @@
-// import teamCardTpl from '../../templates/team-card.hbs';
+import dmytro1x from '../../images/team/faint/dmytro@1x.png';
+import dmytro2x from '../../images/team/faint/dmytro@2x.png';
+import dmytro4x from '../../images/team/faint/dmytro@4x.png';
+import iryna1x from '../../images/team/faint/iryna@1x.png';
+import iryna2x from '../../images/team/faint/iryna@2x.png';
+import iryna4x from '../../images/team/faint/iryna@4x.png';
+import mykola1x from '../../images/team/faint/mykola@1x.png';
+import mykola2x from '../../images/team/faint/mykola@2x.png';
+import mykola4x from '../../images/team/faint/mykola@4x.png';
+import oleksandr1x from '../../images/team/faint/oleksandr@1x.png';
+import oleksandr2x from '../../images/team/faint/oleksandr@2x.png';
+import oleksandr4x from '../../images/team/faint/oleksandr@4x.png';
+import serhii1x from '../../images/team/faint/serhii@1x.png';
+import serhii2x from '../../images/team/faint/serhii@2x.png';
+import serhii4x from '../../images/team/faint/serhii@4x.png';
+import svitlana1x from '../../images/team/faint/svitlana@1x.png';
+import svitlana2x from '../../images/team/faint/svitlana@2x.png';
+import svitlana4x from '../../images/team/faint/svitlana@4x.png';
+import taras1x from '../../images/team/faint/taras@1x.png';
+import taras2x from '../../images/team/faint/taras@2x.png';
+import taras4x from '../../images/team/faint/taras@4x.png';
+import tetiana1x from '../../images/team/faint/tetiana@1x.png';
+import tetiana2x from '../../images/team/faint/tetiana@2x.png';
+import tetiana4x from '../../images/team/faint/tetiana@4x.png';
+import teamlogo from '../../images/svg/teamlogo.svg';
+
 import creatorCardTpl from '../../templates/creator-card.hbs';
+import creatorsTpl from '../../templates/creators.hbs';
+
 import { modalCall } from '../modal/modalCall';
 
-const searchIdItem = document.querySelectorAll('.team-list__image');
-const creatorCardinModal = document.querySelector('.person-card');
-const itemForHide = document.querySelector('.person-data');
-const data = [
-  {
-    id: 'serhii',
-    name: 'Serhii Rybak',
-    position: 'team lead',
-    imagesolar1xURL: 'https://i.ibb.co/xst44J2/sergiy-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/dJBfH4W/sergiy-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/tqxd92y/sergiy-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/8P0jJF5/sergiy-2x.png',
-    github: 'https://github.com/serg-rsv',
-    linkdIn: 'https://www.linkedin.com/in/serhii-rybak-aaa300231/',
-    mail: 'rybaksw@gmail.com',
-  },
-  {
-    id: 'mykola',
-    name: 'Mykola Tymoshchuk',
-    position: 'scrum master',
-    imagesolar1xURL: 'https://i.ibb.co/pLq8RhN/mykola-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/yfkLn1F/mykola-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/8jZdGG9/mykola-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/jrvrf52/mykola-2x.png',
-    github: 'https://github.com/Nikolay-Tymoshchuk',
-    linkdIn: 'https://www.linkedin.com/in/nikolay-timoshchuk-153384240/',
-    mail: 'nikolaytymoshchuk@gmail.com',
-  },
-  {
-    id: 'svitlana',
-    name: 'Svitlana Fedorenko',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/b3V73BW/svetlana-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/HqK719x/svetlana-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/94XfySt/svetlana-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/0XvBsyj/svetlana-2x.png',
-    github: 'https://github.com/Svetlana493',
-    linkdIn: 'https://www.linkedin.com/in/svetlana-fedorenko-35a479231/',
-    mail: 'fedorenkosvitlana726@gmail.com',
-  },
-  {
-    id: 'dmytro',
-    name: 'Dmytro Prokoptsov',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/dQHnGkY/dmytro-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/5TcNc29/dmytro-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/0mv7H0S/dmytro-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/WzRwSB0/dmytro-2x.png',
-    github: 'https://github.com/ProkoptsovD',
-    linkdIn: 'https://www.linkedin.com/in/prokoptsovd',
-    mail: 'fenderman1992@gmail.com',
-  },
-  {
-    id: 'tetiana',
-    name: 'Tetiana Mykhailenko',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/dLX5vx6/tetyana-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/mbX3H3k/tetyana-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/HXsW5c8/tetyana-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/qDySKmv/tetyana-2x.png',
-    github: 'https://github.com/Tata-git ',
-    linkdIn: 'https://www.linkedin.com/',
-    mail: 'fsd.tetiana@gmail.com',
-  },
-  {
-    id: 'ivan',
-    name: 'Ivan Skliar',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/VY9x9GH/ivan-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/3YVsxbz/ivan-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/CbgTNBW/ivan-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/k95yLTB/ivan-2x.png',
-    github: '  https://github.com/IvanSkliar',
-    linkdIn: 'linkedin.com/in/ivan-skliar-404119228     ',
-    mail: 'skliariv91@gmail.com ',
-  },
-  {
-    id: 'iryna',
-    name: 'Iryna Honchar',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/HGtzmv4/iryna-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/TWxq9Km/iryna-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/J5H77xw/iryna-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/rHb9MY8/iryna-2x.png',
-    github: 'https://github.com/irinaog',
-    linkdIn: 'https://www.linkedin.com/in/irina-gonchar-170850241/',
-    mail: 'goncharirina08@gmail.com',
-  },
-  {
-    id: 'oleksandr',
-    name: 'Oleksandr Kaplunenko',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/6XcfX6L/oleksandr-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/fSxPBwK/oleksandr-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/sP3xBwX/oleksandr-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/jZDMd1z/oleksandr-2x.png',
-    github: 'https://github.com/Kaplynenko',
-    linkdIn: 'https://www.linkedin.com/',
-    mail: 's.kaplynenko@gmail.com',
-  },
-  {
-    id: 'taras',
-    name: 'Taras Bondar',
-    position: 'developer',
-    imagesolar1xURL: 'https://i.ibb.co/vPqXLRc/taras-1x.png',
-    imagesolar2xURL: 'https://i.ibb.co/7vmrbQV/taras-2x.png',
-    imagecolorized1xURL: 'https://i.ibb.co/whfzsTN/taras-1x.png',
-    imagecolorized2xURL: 'https://i.ibb.co/VS27G5n/taras-2x.png',
-    github: 'https://github.com/strelezzzz',
-    linkdIn: 'https://www.linkedin.com/in/taras-bondar-468131119',
-    mail: 'strelezzzz@gmai.com',
-  },
-];
+const triggeredModalButton = document.querySelector('.footer__link');
+const data = {
+  creators: [
+    {
+      id: 'serhii',
+      name: 'Serhii Rybak',
+      position: 'team lead',
+      imagefaint1xURL: serhii1x,
+      imagefaint2xURL: serhii2x,
+      imagefaint4xURL: serhii4x,
+      github: 'https://github.com/serg-rsv',
+      linkdIn: 'https://www.linkedin.com/in/serhii-rybak-aaa300231/',
+      mail: 'rybaksw@gmail.com',
+    },
+    {
+      id: 'mykola',
+      name: 'Mykola Tymoshchuk',
+      position: 'scrum master',
+      imagefaint1xURL: mykola1x,
+      imagefaint2xURL: mykola2x,
+      imagefaint4xURL: mykola4x,
+      github: 'https://github.com/Nikolay-Tymoshchuk',
+      linkdIn: 'https://www.linkedin.com/in/nikolay-timoshchuk-153384240/',
+      mail: 'nikolaytymoshchuk@gmail.com',
+    },
+    {
+      id: 'svitlana',
+      name: 'Svitlana Fedorenko',
+      position: 'developer',
+      imagefaint1xURL: svitlana1x,
+      imagefaint2xURL: svitlana2x,
+      imagefaint4xURL: svitlana4x,
+      github: 'https://github.com/Svetlana493',
+      linkdIn: 'https://www.linkedin.com/in/svetlana-fedorenko-35a479231/',
+      mail: 'fedorenkosvitlana726@gmail.com',
+    },
+    {
+      id: 'dmytro',
+      name: 'Dmytro Prokoptsov',
+      position: 'developer',
+      imagefaint1xURL: dmytro1x,
+      imagefaint2xURL: dmytro2x,
+      imagefaint4xURL: dmytro4x,
+      github: 'https://github.com/ProkoptsovD',
+      linkdIn: 'https://www.linkedin.com/in/prokoptsovd',
+      mail: 'fenderman1992@gmail.com',
+    },
+    {
+      id: 'tetiana',
+      name: 'Tetiana Mykhailenko',
+      position: 'developer',
+      imagefaint1xURL: tetiana1x,
+      imagefaint2xURL: tetiana2x,
+      imagefaint4xURL: tetiana4x,
+      github: 'https://github.com/Tata-git ',
+      linkdIn: 'https://www.linkedin.com/',
+      mail: 'fsd.tetiana@gmail.com',
+    },
+    {
+      id: 'iryna',
+      name: 'Iryna Honchar',
+      position: 'developer',
+      imagefaint1xURL: iryna1x,
+      imagefaint2xURL: iryna2x,
+      imagefaint4xURL: iryna4x,
+      github: 'https://github.com/irinaog',
+      linkdIn: 'https://www.linkedin.com/in/irina-gonchar-170850241/',
+      mail: 'goncharirina08@gmail.com',
+    },
+    {
+      id: 'oleksandr',
+      name: 'Oleksandr Kaplunenko',
+      position: 'developer',
+      imagefaint1xURL: oleksandr1x,
+      imagefaint2xURL: oleksandr2x,
+      imagefaint4xURL: oleksandr4x,
+      github: 'https://github.com/Kaplynenko',
+      linkdIn: 'https://www.linkedin.com/',
+      mail: 's.kaplynenko@gmail.com',
+    },
+    {
+      id: 'taras',
+      name: 'Taras Bondar',
+      position: 'developer',
+      imagefaint1xURL: taras1x,
+      imagefaint2xURL: taras2x,
+      imagefaint4xURL: taras4x,
+      github: 'https://github.com/strelezzzz',
+      linkdIn: 'https://www.linkedin.com/in/taras-bondar-468131119',
+      mail: 'strelezzzz@gmai.com',
+    },
+  ],
+  teamlogo,
+};
 
-export function startListenModal(stopper) {
-  searchIdItem.forEach(item => item.addEventListener('mouseenter', onImageHover));
-  if (stopper) {
-    searchIdItem.forEach(item => item.removeEventListener('mouseenter', onImageHover));
+//Добавляем слушателя на кнопку открытия модального окна команды
+triggeredModalButton.addEventListener('click', e => {
+  // Создаем разметку для модального окна команды
+  modalCall(creatorsTpl(data), '#team-close-button');
+
+  // Находим элемент, при полной загрузке которого будет вешаться класс, разрешающий начало анимации
+  const startAnimatingElement = document.querySelector('.person-image');
+
+  // Навешиваем прослушку на событие полной загрузки элемента
+  startAnimatingElement.addEventListener('load', onLoad);
+
+  // Когда элемент загрузился, добавляем класс active для разрешения запуска анимации
+  function onLoad() {
+    const boxRequestedAnimationClass = document.querySelector('.thereisnospoon');
+    boxRequestedAnimationClass.classList.add('active');
+
+    // Снимаем слушателя с элемената, на который навешивали прослушку и выходим
+    startAnimatingElement.removeEventListener('load', onLoad);
+    return;
   }
 
+  // Начинаем прослушку элементов формы и им отрисовку при наведении
+  startListenEndRenderModalElements();
+});
+
+// Функция для прослушки элементов формы и им отрисовки при наведении
+function startListenEndRenderModalElements() {
+  // Находим массив элементов, на каждый из которых добавляем прослушку события наведения мышки
+  const searchIdItem = document.querySelectorAll('.team-list__image');
+  searchIdItem.forEach(item => item.addEventListener('mouseenter', onImageHover));
+
+  // Функция отрисовки контента при наведении мышки
   function onImageHover(e) {
+    // Находим дата атрибут name целевого элемента чтоб выполнить поиск по данным в объекте data
+    const creatorCardinModal = document.querySelector('.person-card');
     const name = e.target.dataset.name;
-    const markup = creatorCardTpl(data.find(item => item.id === name));
+
+    //Сопоставляем дата атрибут name с id объекта в data и на основе этих данным отрисовываем контент модального окна
+    const markup = creatorCardTpl(data.creators.find(item => item.id === name));
     creatorCardinModal.innerHTML = markup;
   }
 }

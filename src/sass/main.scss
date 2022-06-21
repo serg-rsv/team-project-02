@@ -21,4 +21,24 @@
 @import './buttons/buttons-modal';
 @import './buttons/arrow-up';
 @import './theme/theme';
-@import './overlay/overlay';
+
+.background-container {
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.stars {
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 300%;
+  transform: translate(-50% -50%);
+  display: block;
+  left: -100%;
+  z-index: 0;
+  transform-origin: center center;
+}
