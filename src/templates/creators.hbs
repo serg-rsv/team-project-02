@@ -1,0 +1,47 @@
+<div class='team-container'>
+  <div class='thereisnospoon'>
+    <div class='team-list__box'>
+      <ul class='team-list'>
+        {{#each creators}}
+          <li class='team-list__item'>
+            <div class='team-list__image-box'>
+              <img
+                data-name='{{id}}'
+                class='team-list__image'
+                srcset='{{imagefaint1xURL}} 1x, {{imagefaint2xURL}} 2x'
+                src='images/team/colorized-demo/dmytro1x.png'
+                alt='Dmytro Prokoptsov'
+              />
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class='team-list__box'>
+      <ul class='team-list'>
+        {{#each creators}}
+          <li class='team-list__item'>
+            <div class='team-list__image-box'>
+              <img
+                data-name='{{id}}'
+                class='team-list__image'
+                srcset='{{imagefaint1xURL}} 1x, {{imagefaint2xURL}} 2x'
+                src='images/team/colorized-demo/dmytro1x.png'
+                alt='{{name}}'
+              />
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  <div class='team-container__creators'>
+    <h2 class='team-container__background-title'>Directed by:</h2>
+    <article class='person-card'>
+      <div class='person-data'>
+        <img class='person-image' src='{{teamlogo}}' alt='Soul kitchen logo' />
+      </div>
+    </article>
+  </div>
+  <button id='team-close-button' type='button' class='.js-modal-close'>Close</button>
+</div>

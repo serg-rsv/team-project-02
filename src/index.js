@@ -1,7 +1,7 @@
 import './sass/main.scss';
 import './js/arrow-up/arrow-up';
 import './js/irina/theme';
-import './js/modal/creatorsModalCall';
+import './js/Fedorenko/team-modal';
 
 import _ from 'lodash';
 

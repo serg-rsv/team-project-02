@@ -56449,7 +56449,7 @@
 		c0.285,0.295,0.849,0.442,1.691,0.442h0.295v5.558h-1.516c-2.077,0-3.696-0.606-4.856-1.818s-1.74-2.893-1.74-5.045V20.092z"/>
 </g>
 <g id="Слой_2">
-				<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 23.616 29.664" to="360 23.616 29.664" dur="2s" repeatCount="indefinite"/>
+				<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 23.616 29.664" to="360 23.616 29.664" begin="3" dur="2.5s" repeatCount="indefinite"/>
 
 	<line class="st4235" x1="20.038" y1="27.321" x2="15.165" y2="24.159"/>
 	<line class="st4235" x1="32.04" y1="35.228" x2="27.175" y2="32.071"/>
