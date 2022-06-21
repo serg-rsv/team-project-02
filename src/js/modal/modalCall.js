@@ -11,7 +11,7 @@ import 'basiclightbox/src/styles/main.scss';
  * @returns
  */
 
-export async function modalCall(data, selector) {
+export function modalCall(data, selector) {
   const instance = basicLightbox.create(data, {
     onShow: () => document.body.classList.add('modal-open'),
     onClose: () => document.body.classList.remove('modal-open'),
