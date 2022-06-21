@@ -1,20 +1,21 @@
 import './sass/main.scss';
 import './js/arrow-up/arrow-up';
-import './js/irina/theme';
-import './js/Fedorenko/team-modal';
+import './js/theme/theme';
+import './js/team-modal/team-modal';
 
 import _ from 'lodash';
+import { Notify } from 'notiflix';
 
 import { tmdbApi } from './js/services/tmdb-api';
-import { openDetailsCard } from './js/kaplunenko/render';
-import { renderMainPage } from './js/kaplunenko/render';
+import { openDetailsCard } from './js/render-main-page/render';
+import { renderMainPage } from './js/render-main-page/render';
 import { autorisationFormCall } from './js/form/autorizaton-modal-call';
 import { autorizationFormUiValid } from './js/form/form-ui-valid';
 import { homeRender, libraryRender } from './js/header/change-header';
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
-import { Notify } from 'notiflix';
 import loader from './js/loader/loader';
+import renderEmptyList from './js/render-empty-list';
 
 Notify.init({ clickToClose: true, position: 'center-top' });
 
@@ -25,7 +26,6 @@ const refs = {
   searchInput: document.querySelector('#name-input'),
   watchedBtn: document.querySelector('[data-action="watched"]'),
   queueBtn: document.querySelector('[data-action="queue"]'),
-  teamLnk: document.querySelector('.js-team-link'),
   boxLoginBtns: document.querySelector('.header__logbuttons-list'),
   logInBtn: document.querySelector('[data-log="in"]'),
   logOutBtn: document.querySelector('[data-log="out"]'),
@@ -49,14 +49,12 @@ const ACTION_TYPE = {
 };
 
 async function launch() {
-  // {show loader}
   loader.show(refs.filmsList, 'beforebegin');
   // =============== Prokoptsov ===================//
   // визначаємо чи залогінений юзер у системі при завантаженні сторінки та виконуємо логіку у колбеках
   authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut);
   // =================================================
   await infinityScrollData();
-  // {hide loader}
   loader.hide();
 }
 
@@ -71,28 +69,6 @@ refs.filmsList.addEventListener('click', onMovieCard);
 refs.logInBtn.addEventListener('click', onLogInBtn);
 refs.logOutBtn.addEventListener('click', onLogOutBtn);
 
-// authApi.trackUserLoginState() ----> функція має викликатися найпершою
-// і обовєязково з колбеками, які запишуть до стору стан користувача
-// я перевірив - нічого повренути із ціє функції окрім самої функції неможна.
-//
-// попроную створити файл та назвати його HandleUserState
-// він буду містити два колбека:
-// const userIsSignedIn = (userId) => {
-//     одразу зберегти id юзера, який у коблек прийду з authApi.trackUserLoginState
-//     store.userId = userId;
-//
-//     також записати стан до store
-//     store.isSignedIn = true;
-//     тут ще можна вивести нотіфікашку ти "З поверненням, ${пошта юзера}"
-// }
-// const userIsSignedOut = () => {
-//     записати стан до store
-//     store.isSignedIn = false;
-// }
-// і тоді передавати їх наступним чином
-// authApi.trackUserLoginState(userIsSignedIn, userIsSignedOut)
-//  це важливо
-
 // =============== LOGIN ===============>
 function onLogInBtn() {
   // - отрисовать форму регистрации/авторизации
@@ -102,7 +78,6 @@ function onLogInBtn() {
   // пілся появи форми знаходимо її у DOM
   const formRef = document.querySelector('[data-js="auth-form"]');
   // вішаємо слухач, та додаємо обробник подіїї
-
   formRef.addEventListener('click', e => onAuthFormClick(e, modal));
 }
 
@@ -117,46 +92,37 @@ function onLogOutBtn() {
   }
   refs.boxLoginBtns.classList.remove('authorized');
 }
-// <============== LOGIN ===============
-// =============== Sveta ===============>
-// <============== Sveta ===============
+// <============== LOGOUT ===============
 
-function onHomeBtn() {
-  // todo
-  // {show loader}
+async function onHomeBtn() {
   loader.show(refs.filmsList, 'beforebegin');
-  // - отрисовать шапку главной страницы (вспомагательная функция для рендера - Таня)
   homeRender();
+
   storage.movies = [];
-  // - отрисовать галерею трендовых фильмов в мэйн (renderMainPage - Саша)
-  // {show loader}
   refs.searchInput.value = '';
   refs.filmsList.innerHTML = '';
+
   tmdbApi.resetTrendingPage();
-  infinityScrollData();
-  // {hide loader}
+  await infinityScrollData();
   loader.hide();
 }
 
-// =====================================================================================================
 async function onSearchInput(e) {
-  // todo
   const query = e.target.value.trim();
-  // - проверить что запрос не пустая строка
+
   if (query === '') {
     return;
   }
-  // {show loader}
+
   loader.show(refs.filmsList, 'beforebegin');
   await tmdbApi.fetchSearchMovie(query);
-  // - если ничего не найдено по запросу
-  // - вывести уведомление 'Search result not successful.'
+
   if (tmdbApi.searchMovieTotalPage === 0) {
     Notify.warning('Search result not successful. Enter the correct movie name and try again.');
     loader.hide();
     return;
   }
-  // відмальовуємо знайдені фільми
+
   refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
   await infinityScrollData(query);
@@ -164,76 +130,44 @@ async function onSearchInput(e) {
 }
 
 function onLibBtn() {
-  // todo
   if (!storage.isSingIn) {
     Notify.info('Please Log-in');
     return;
   }
-  // - отрисовать шапку библиотеки
+
   libraryRender();
-  // ===================================//
+
   refs.filmsList.innerHTML = '';
+
   switch (storage.currentTab) {
     case 'watched':
-      storage.watched.length
-        ? renderMainPage(storage.watched)
-        : refs.filmsList.insertAdjacentHTML(
-            'afterbegin',
-            '<h2>Nothing has been added to queue</h2>',
-          );
+      storage.watched.length ? renderMainPage(storage.watched) : renderEmptyList(refs.filmsList);
       break;
     case 'queue':
-      storage.queue.length
-        ? renderMainPage(storage.queue)
-        : refs.filmsList.insertAdjacentHTML(
-            'afterbegin',
-            '<h2>Nothing has been added to queue</h2>',
-          );
+      storage.queue.length ? renderMainPage(storage.queue) : renderEmptyList(refs.filmsList);
     default:
       break;
   }
-
-  // ========= Prokoptsov.
-  // ще тут треба робити запит до Firebase за фільмами Watched, якщо користувач у системі
-  // а потім відмальовувати іх. Це буду виглядати так
-  // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, onGetWatchedMovieRender)
-  //
-  // onGetWatchedMovieRender ---> колбек-функція, яка після відповіді від FireBase
-  // буду рендерети масив доданих фільмів.
-  // const onGetWatchedMovieRender = (watchedMovieArray) => renderMainPage(watchedMovieArray);
-  // або одразу передати цю функцію як колбек
-  // databaseApi.get(DB_ENDPOINTS.WATCHED, store.userId, renderMainPage)
-  // Бо знову ж таки, функція нічого не повертає, тому треба колбек
-  // ==============
 }
-// =======================================================//
 
+// =============== Taras ==============>
 function onNavigate(event) {
   const currentTab = event.target.dataset.action;
 
   if (storage.currentTab === currentTab) return;
-  // console.log(storage);
-  // console.log(storage.currentTab);
+
   storage.currentTab = currentTab;
+
   toggleButtons(currentTab);
 
   refs.filmsList.innerHTML = '';
+
   switch (storage.currentTab) {
     case 'watched':
-      storage.watched.length
-        ? renderMainPage(storage.watched)
-        : refs.filmsList.insertAdjacentHTML(
-            'afterbegin',
-            '<h2>Nothing has been added to queue</h2>',
-          );
+      storage.watched.length ? renderMainPage(storage.watched) : renderEmptyList(refs.filmsList);
       break;
     case 'queue':
-      storage.queue.length
-        ? renderMainPage(storage.queue)
-        : refs.filmsList.insertAdjacentHTML(
-            'afterbegin',
-            '<h2>Nothing has been added to queue</h2>',
-          );
+      storage.queue.length ? renderMainPage(storage.queue) : renderEmptyList(refs.filmsList);
     default:
       break;
   }
@@ -246,30 +180,26 @@ function toggleButtons(currentTab) {
   if (currentTab === 'watched') {
     refs.queueBtn.classList.remove('current-button');
     refs.watchedBtn.classList.add('current-button');
-    // refs.queueBtn.disabled = false; // потрібно вирішити, чи будемо дізаблити ці кнопки
-    // refs.watchedBtn.disabled = true; // бо натиснути їх можна лише раз. Можливо як додатково UI для юзера?
   }
+
   if (currentTab === 'queue') {
     refs.watchedBtn.classList.remove('current-button');
     refs.queueBtn.classList.add('current-button');
-    // refs.queueBtn.disabled = true;
-    // refs.watchedBtn.disabled = false;
   }
 }
 
 // <============== Taras ===============
 
 function onMovieCard(e) {
-  // todo
   // - проверить что клик именно по карточке фильма
   const cardFilm = e.target.closest('.products__cards-item');
   if (cardFilm === null) {
     return;
   }
   // - получить детальную информацию из памяти
-  const movieId = Number(cardFilm.dataset.movieId);
-  // ?замінити метод отримання фільму
+  const movieId = cardFilm.dataset.movieId;
   let movieData;
+
   if (!refs.headerEl.classList.contains('header-lib')) {
     movieData = storage.movies.find(movie => movie.id == movieId);
   } else {
@@ -283,16 +213,15 @@ function onMovieCard(e) {
         break;
     }
   }
-  console.log('Movie in Modal:', movieData);
   // - создать модальное окно
   openDetailsCard(movieData, '.form_close-button');
-  // - поиск кнопок watched queue------------------------------------------
+
   const watchedBtn = document.querySelector('#watched');
   const queueBtn = document.querySelector('#queue');
 
   watchedBtn.addEventListener('click', onModalWatchedBtn);
   queueBtn.addEventListener('click', onModalQueueBtn);
-  // *************************************************
+
   async function changeNameBtn() {
     // перевірка авторизації перед запитом до фб
     if (!storage.isSingIn) {
@@ -334,7 +263,7 @@ function onMovieCard(e) {
   }
 
   function handleError(error) {
-    console.log(error);
+    // console.log(error);
     Notify.info('Oops, somthing wrong');
   }
 
@@ -370,7 +299,7 @@ function onMovieCard(e) {
       return;
     }
   }
-  // ------------------------------------------------
+
   function onModalQueueBtn() {
     if (!storage.isSingIn) {
       Notify.info('Please Log-in');
@@ -402,18 +331,7 @@ function onMovieCard(e) {
       return;
     }
   }
-  // - databaseApi.check - проверить наличие этого фильма в фаербэйз в просмотренных и в очередеи
-  // - отрисовать модалку с детальной информацией по фильму
-  // - отрисовать кнопки соответсвенно добавить/удалить
-  // - получить ссылки на кнопки 'add/del to watched' и 'add/del to queue' и повесить слушатели
 }
-
-// ********************************
-// =============== Prokoptsov ==============
-// Ще раз повторюсь, треба не забувати ВИДАЛЯТИ СЛУХАЧІ!!!!!!!!!
-// І формою реєстрації я займаюсь, то я вже і напишу всі обробники і логіку, якщо ти не проти :=))
-// Тільки ЗА :D
-
 // =============== Niko ===============>
 /**
  *
@@ -422,10 +340,8 @@ function onMovieCard(e) {
  * @returns {Promise} - повертає проміс, в якому зберігаються дані з API за нашим запитом
  */
 async function infinityScrollData(query) {
-  if (refs.headerEl.classList.contains('header-lib')) {
-    console.log('exit at start infinity()');
-    return;
-  }
+  if (refs.headerEl.classList.contains('header-lib')) return;
+
   try {
     let movies;
     if (!query) {
@@ -434,25 +350,29 @@ async function infinityScrollData(query) {
     if (query) {
       movies = await tmdbApi.fetchSearchMovie(query);
     }
-    if (refs.headerEl.classList.contains('header-lib')) {
-      console.log('exit befor render infinity()');
-      return;
-    }
+    if (refs.headerEl.classList.contains('header-lib')) return;
+
     renderMainPage(movies);
     storage.movies.push(...movies);
-    if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) return;
+
+    if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) {
+      Notify.info(`That's all`);
+      return;
+    }
+
     const triggeredLoadMoreElement = document.querySelector(
       '.products__cards-item:nth-last-child(4) img',
     );
+
     if (triggeredLoadMoreElement) triggeredLoadMoreElement.addEventListener('load', onLoad);
+
     function onLoad() {
       if (triggeredLoadMoreElement) triggeredLoadMoreElement.removeEventListener('load', onLoad);
-      if (refs.headerEl.classList.contains('header-lib')) {
-        console.log('exit before loadMore()');
-        return;
-      }
+      if (refs.headerEl.classList.contains('header-lib')) return;
+
       loadMore(infinityScrollData, query);
     }
+
     return new Promise(resolve => resolve(movies));
   } catch (error) {
     Notify.failure(error.message);
@@ -471,7 +391,6 @@ function loadMore(callback, query, selector = '.products__cards-item:last-child'
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           observer.unobserve(entry.target);
-          console.log('load more ', query);
           callback(query);
         }
       });
@@ -552,7 +471,7 @@ function userIsSignedIn(user) {
 
 // колбек на вилогінювання юзера
 function userIsSignedOut() {
-  console.log('You are not signed in');
+  // console.log('You are not signed in');
 }
 
 // колбек для обробки помилки при запиті.
@@ -569,46 +488,37 @@ function onSiginInError(error) {
 // ===============================================//
 
 function addListenerOnWatchedFB() {
-  console.log('addListenerOnWatchedFB-->');
-  // databaseApi.get('watched', storage.userId, onChangeWatched);
   databaseApi.get('watched', storage.userId, onChangeWatched);
 }
+
 function addListenerOnQueueFB() {
-  console.log('addListenerOnQueueFB-->');
   databaseApi.get('queue', storage.userId, onChangeQueue);
 }
 // колбекs щоб відмалювати додані ФБ
 function onChangeWatched(movieList) {
   storage.watched = [...movieList];
-  console.log('onChangeWatched', storage.watched);
+
   if (
     refs.headerEl.classList.contains('header-lib') &&
     refs.watchedBtn.classList.contains('current-button')
   ) {
     refs.filmsList.innerHTML = '';
-    storage.watched.length
-      ? renderMainPage(storage.watched)
-      : refs.filmsList.insertAdjacentHTML(
-          'afterbegin',
-          '<h2>Nothing has been added to watched</h2>',
-        );
+    storage.watched.length ? renderMainPage(storage.watched) : renderEmptyList(refs.filmsList);
   }
-  console.log('Мы в хэдере || Lib.QUEUE');
+
   return;
 }
 
 function onChangeQueue(movieList) {
   storage.queue = [...movieList];
-  console.log('onChangeQueue', storage.queue);
+
   if (
     refs.headerEl.classList.contains('header-lib') &&
     refs.queueBtn.classList.contains('current-button')
   ) {
     refs.filmsList.innerHTML = '';
-    storage.queue.length
-      ? renderMainPage(storage.queue)
-      : refs.filmsList.insertAdjacentHTML('afterbegin', '<h2>Nothing has been added to queue</h2>');
+    storage.queue.length ? renderMainPage(storage.queue) : renderEmptyList(refs.filmsList);
   }
-  console.log('Мы в хэдере || Lib.WATCHED');
+
   return;
 }

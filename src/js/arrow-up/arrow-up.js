@@ -1,7 +1,6 @@
 const { throttle } = require('lodash');
 
 const arrowUp = document.querySelector('#button-up');
-console.log('arrowUp :>> ', arrowUp);
 // Коли користувач прокручує вниз на 20 пікселів від верхньої частини документа, показуємо кнопку
 window.onscroll = throttle(scrollFunction, 400);
 

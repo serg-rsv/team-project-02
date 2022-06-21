@@ -1,15 +1,4 @@
-import {
-  getDatabase,
-  set,
-  ref,
-  push,
-  onValue,
-  get,
-  child,
-  remove,
-  query,
-  limitToLast,
-} from 'firebase/database';
+import { getDatabase, set, ref, onValue, get, child, remove } from 'firebase/database';
 import { app } from './firebase-sdk';
 import { serialaize } from './serialize';
 

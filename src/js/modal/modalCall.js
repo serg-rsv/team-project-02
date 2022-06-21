@@ -17,8 +17,10 @@ export function modalCall(data, selector) {
     onClose: () => document.body.classList.remove('modal-open'),
   });
   instance.show();
+
   const markup =
     '<div class="background-container"><div class="stars"></div><div class="twinkling"></div></div>';
+
   document.querySelector('.basicLightbox').insertAdjacentHTML('beforeend', markup);
   document.body.addEventListener('keydown', onEscapeKeyDown);
 
@@ -37,6 +39,6 @@ export function modalCall(data, selector) {
   }
 
   // ========== Prokoptsov ================//
-  // роблю ретурн instance, щоб закрити потів модалку з авторизацією
+  // роблю ретурн instance, щоб закрити потім модалку з авторизацією
   return instance;
 }

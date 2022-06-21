@@ -95,7 +95,8 @@ export const tmdbApi = {
   },
   /**
    *
-   * @returns ініціалізує масив жанрів для фільмів
+   * @returns {Promis}
+   * ініціалізує масив жанрів для фільмів
    */
   fetchGenresMovies() {
     const endPointUrl = BASE_URL + END_POINTS.GENRE_MOVIE;
@@ -113,7 +114,8 @@ export const tmdbApi = {
   },
   /**
    *
-   * @returns повертає *проміс* в якому масив об'єктів популярних фільмів за день.
+   * @returns {Promise}
+   * повертає *проміс* в якому масив об'єктів популярних фільмів за тиждень.
    */
   async fetchTrendingMovies() {
     if (genres.length === 0) {
@@ -154,7 +156,7 @@ export const tmdbApi = {
               overview,
               vote_average,
               vote_count,
-              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
+              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`,
               genres: getListOfGenres(genre_ids),
               popularity,
             };
@@ -167,7 +169,8 @@ export const tmdbApi = {
   /**
    *
    * @param {string} query назва фільму для пошуку.
-   * @returns повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
+   * @returns {Promise}
+   * повертає *проміс* в якому масив фільмів в назві яких зустрічається query.
    */
   async fetchSearchMovie(query) {
     if (genres.length === 0) {
@@ -210,7 +213,7 @@ export const tmdbApi = {
               overview,
               vote_average,
               vote_count,
-              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`, // : 'place-holder.jpg',
+              posterUrl: poster_path && `${IMAGE_URL}w500${poster_path}`,
               genres: getListOfGenres(genre_ids),
               popularity,
             };
@@ -223,7 +226,8 @@ export const tmdbApi = {
   /**
    *
    * @param {number} movieId ідентифікатор фільма в базі данних TMBD
-   * @returns повертає *проміс* в якому об'єкт з детальним описом фільму.
+   * @returns {Promise}
+   * повертає *проміс* в якому об'єкт з детальним описом фільму.
    */
   fetchMovieDetails(movieId) {
     const endPointUrl = BASE_URL + END_POINTS.MOVIE_DETAILS + movieId;

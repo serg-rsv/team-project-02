@@ -1,9 +1,8 @@
-// import * as basicLightbox from 'basiclightbox';
-// import 'basiclightbox/src/styles/main.scss';
+import placeHolderUrl from '../../images/poster/poster.png';
 import cardTpl from '~/templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
-import { tmdbApi } from '../services/tmdb-api';
 import filmCardTpl from '../../templates/filmCard.hbs';
+
 const refFilmsList = document.querySelector('.films_list');
 
 function getShortGenresString(genres) {
@@ -16,7 +15,7 @@ function getShortGenresString(genres) {
 }
 
 function getValidPosterUrl(posterUrl) {
-  return posterUrl ? posterUrl : 'https://i.ibb.co/hMpzYvM/poster.png';
+  return posterUrl ? posterUrl : placeHolderUrl;
 }
 
 export function renderMainPage(movies) {
@@ -35,5 +34,6 @@ export function openDetailsCard(detailsCard, selectorCloseBtn) {
   const validPosterUrl = getValidPosterUrl(posterUrl);
   detailsCard.posterUrl = validPosterUrl;
   const markup = cardTpl(detailsCard);
+
   modalCall(markup, selectorCloseBtn);
 }
