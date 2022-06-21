@@ -1,5 +1,5 @@
 import placeHolderUrl from '../../images/poster/poster.jpg';
-import cardTpl from '~/templates/modal.hbs';
+import cardTpl from '../../templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
 import filmCardTpl from '../../templates/filmCard.hbs';
 
