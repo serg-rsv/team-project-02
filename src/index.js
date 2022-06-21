@@ -62,7 +62,7 @@ launch();
 
 refs.homeBtns.forEach(btn => btn.addEventListener('click', onHomeBtn));
 refs.libraryBtn.addEventListener('click', onLibBtn);
-refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 500));
+refs.searchInput.addEventListener('input', _.debounce(onSearchInput, 1250));
 refs.watchedBtn.addEventListener('click', onNavigate);
 refs.queueBtn.addEventListener('click', onNavigate);
 refs.filmsList.addEventListener('click', onMovieCard);
