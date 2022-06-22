@@ -248,7 +248,7 @@ function onMovieCard(e) {
         queueBtn.classList.add('delete-button');
       } else {
         queueBtn.setAttribute('data-action', 'add-queue');
-        queueBtn.textContent = 'AD QUEUE';
+        queueBtn.textContent = 'ADD QUEUE';
         queueBtn.classList.remove('delete-button');
       }
     } catch (error) {
@@ -323,7 +323,7 @@ function onMovieCard(e) {
         .then(() => {
           // - видалити об'єкт фільму по movieId з ФБ
           queueBtn.setAttribute('data-action', 'add-queue'); // - поміняти кнопці текст контент і дата сет атрибут
-          queueBtn.textContent = 'AD QUEUE';
+          queueBtn.textContent = 'ADD QUEUE';
           queueBtn.classList.remove('delete-button'); // - зняти клас актив
         })
         .catch(handleError);
