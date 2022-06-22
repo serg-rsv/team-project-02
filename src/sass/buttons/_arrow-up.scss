@@ -1,7 +1,7 @@
 .button-up {
   @extend .theme;
   z-index: 99;
-  transform: translateY(200%) scale(0) !important;
+  transform: translateY(200%) translateX(50%) scale(0) !important;
   outline: none;
   background-image: url(../../src/images/svg/arrowup.svg);
   background-position: center;
@@ -12,11 +12,11 @@
 }
 
 .button-up.button-up-active {
-  transform: translateY(-100%) scale(1) !important;
+  transform: translateY(-100%) translateX(50%) scale(1) !important;
 }
 
 .button-up:hover {
   opacity: 1;
-  transform: scale(1.1) translateY(-112%) !important;
+  transform: scale(1.1) translateY(-112%) translateX(50%) !important;
   transition: 0.5s;
 }
