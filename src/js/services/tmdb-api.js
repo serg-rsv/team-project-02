@@ -45,7 +45,7 @@ function getListOfGenres(genresIds) {
   const genreList = [];
 
   if (genresIds.length === 0) {
-    return ['Other'];
+    return ['No info'];
   }
 
   genresIds.forEach(id => {
