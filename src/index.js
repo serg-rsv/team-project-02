@@ -15,7 +15,7 @@ import { homeRender, libraryRender } from './js/header/change-header';
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import loader from './js/loader/loader';
-import renderEmptyList from './js/render-empty-list';
+import { renderEmptyList, renderEmptySearch } from './js/render-empty-list';
 
 Notify.init({ clickToClose: true, position: 'center-top' });
 
@@ -38,6 +38,7 @@ const storage = {
   watched: [], // тут будуть зберігатись данні з ФБ ,
   queue: [], //тут будуть зберігатись данні з ФБ ,
   movies: [], // сюди записуємо об'єкти фільмів які відрендерили на екрані
+  searchMovie: [], // список знайдених фільмів
   currentTab: 'watched', // для перемикання між кнопками watched & queue
 };
 
@@ -115,13 +116,13 @@ async function onSearchInput(e) {
   }
 
   loader.show(refs.filmsList, 'beforebegin');
-  await tmdbApi.fetchSearchMovie(query);
+  // await tmdbApi.fetchSearchMovie(query);
 
-  if (tmdbApi.searchMovieTotalPage === 0) {
-    Notify.warning('Search result not successful. Enter the correct movie name and try again.');
-    loader.hide();
-    return;
-  }
+  // if (tmdbApi.searchMovieTotalPage === 0) {
+  //   Notify.warning('Search result not successful. Enter the correct movie name and try again.');
+  //   loader.hide();
+  //   return;
+  // }
 
   refs.filmsList.innerHTML = '';
   tmdbApi.resetSearchMoviePage();
@@ -348,8 +349,18 @@ async function infinityScrollData(query) {
       movies = await tmdbApi.fetchTrendingMovies();
     }
     if (query) {
-      movies = await tmdbApi.fetchSearchMovie(query);
+      storage.searchMovie = await tmdbApi.fetchSearchMovie(query);
+
+      if (storage.searchMovie.length === 0) {
+        // Notify.warning('Search result not successful. Enter the correct movie name and try again.');
+        loader.hide();
+        renderEmptySearch(refs.filmsList);
+        return;
+      }
+
+      movies = storage.searchMovie;
     }
+
     if (refs.headerEl.classList.contains('header-lib')) return;
 
     renderMainPage(movies);
