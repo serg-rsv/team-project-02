@@ -23,7 +23,7 @@ export function renderMainPage(movies) {
     .map(({ id, title, genres, posterUrl, releaseYear, vote_average }) => {
       const genresString = getShortGenresString(genres);
       const validPosterUrl = getValidPosterUrl(posterUrl);
-      return filmCardTpl({ id, title, genresString, validPosterUrl, releaseYear, vote_average });
+      return filmCardTpl({ id, title, genresString, validPosterUrl, releaseYear });
     })
     .join('');
 
