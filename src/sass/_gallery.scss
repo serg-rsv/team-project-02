@@ -60,7 +60,8 @@ main {
 .film-card__wrapper {
   overflow: hidden;
   @media screen and (min-width: $tablet) {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     width: 100%;
     height: 455px;
   }
@@ -70,7 +71,7 @@ main {
   }
 }
 .imgCard {
-  max-width: max-content;
+  // max-width: max-content;
   object-fit: cover;
   transform-origin: bottom center;
 
