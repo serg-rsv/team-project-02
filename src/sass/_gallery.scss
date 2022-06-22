@@ -1,3 +1,112 @@
+main {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  @media screen and(min-width: $tablet) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  @media screen and(min-width: $desktop) {
+    padding-top: 32px;
+  }
+}
+
+.films_list {
+  display: block;
+  text-align: start;
+  margin-bottom: 60px;
+  margin-left: auto;
+
+  @media screen and(min-width:$tablet) {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 32px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 16px;
+  }
+}
+
+.products__cards-item {
+  height: 100%;
+  margin-bottom: 21px;
+  transition: $animationDuration;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  @media screen and (min-width: $tablet) and(max-width:991px) {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: $desktop) {
+    // width: calc((100% - 2 * 24px) / 3);
+    // margin-left: 8px;
+    // margin-right: 8px;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.film-card__wrapper {
+  overflow: hidden;
+  @media screen and (min-width: $tablet) {
+    display: inline-block;
+    width: 100%;
+    height: 455px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    height: 449px;
+  }
+}
+.imgCard {
+  max-width: max-content;
+  object-fit: cover;
+  transform-origin: bottom center;
+
+  .products__cards-item:hover & {
+    transform: scale(1.05);
+    transition: 0.75s ease-in-out;
+  }
+}
+
+.film-card__info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.film-card {
+  // max-height: 100%;
+  @media screen and (min-width: $tablet) {
+    display: grid;
+    grid-template-rows: max-content;
+  }
+}
+
+#empty-wraper {
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-top: 100px;
+}
+
+.film_title.emptylist {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .film_title {
   color: black;
   font-family: $font-main;
@@ -5,6 +114,7 @@
   font-size: $font-size-major;
   line-height: $font-height-major;
   text-transform: uppercase;
+  display: block;
 }
 .film_genre {
   color: $color-accent;
@@ -29,111 +139,6 @@
   color: $color-accent;
   align-items: center;
 }
-
-.imgCard {
-  transform-origin: bottom center;
-  background-image: url('../images/poster/poster.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  // box-shadow: inset 0 0 20px 10px rgba(0, 0, 0, 0.5);
-  object-fit: cover;
-  .products__cards-item:hover & {
-    transform: scale(1.05);
-    transition: 0.75s ease-in-out;
-  }
-
-  @media screen and (min-width: $tablet) {
-    width: $mobile;
-    padding: 0px;
-    height: 455px;
-  }
-
-  @media screen and (min-width: $desktop) {
-    width: 309px;
-    padding: 0px;
-    height: 449px;
-  }
-}
-
-.films_list {
-  display: flex;
-  flex-wrap: wrap;
-  text-align: start;
-  margin-bottom: 60px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-
-  // @media screen and(max-width:767px) {
-  //   margin: auto;
-  //   padding: auto;
-  // }
-
-  @media screen and(min-width:$tablet) {
-    margin-left: -16px;
-    margin-right: -16px;
-    padding: 0;
-    display: flex;
-    flex-basis: content;
-    justify-content: center;
-  }
-
-  @media screen and (min-width: $desktop) {
-    margin-left: 8px;
-    margin-right: 8px;
-    justify-content: start;
-  }
-}
-
-.products__cards-item {
-  flex-wrap: wrap;
-  min-height: 300px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 32px;
-  transition: $animationDuration;
-  border-radius: 5px;
-  overflow: hidden;
-
-  &:hover {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  }
-
-  @media screen and (min-width: $tablet) and(max-width:991px) {
-    width: calc((100% - 2 * 32px) / 2);
-    text-align: start;
-    margin-right: 16px;
-    margin-left: 16px;
-    flex-basis: content;
-  }
-
-  @media screen and (min-width: $desktop) {
-    width: calc((100% - 2 * 24px) / 3);
-    margin-left: 8px;
-    margin-right: 8px;
-  }
-}
-
-.film-card__info-box {
-  padding: 8px;
-}
-.film-card {
-  cursor: pointer;
-}
-
-#empty-wraper {
-  margin-left: auto;
-  margin-right: auto;
-
-  padding-top: 100px;
-}
-
-.film_title.emptylist {
-  text-align: center;
-  font-size: 1.5rem;
-}
-
 .film_average {
   margin-left: 8px;
   color: $color-main;
