@@ -28,53 +28,53 @@ var e,t=arguments[3];!function(t,r){"object"==typeof exports&&"object"==typeof m
 },{"handlebars/dist/handlebars.runtime":"pAws"}],"h6aJ":[function(require,module,exports) {
 "use strict";var e=t(require("~/templates/btn-theme.hbs"));function t(e){return e&&e.__esModule?e:{default:e}}const r={body:document.querySelector("body"),footer:document.querySelector(".footer"),filmTitle:document.querySelector(".films_list"),main:document.querySelector("main")};r.main.insertAdjacentHTML("beforeend",(0,e.default)());const l={changeThemeBtns:document.querySelectorAll(".change-theme"),light:document.querySelector('[data-theme="light"]'),dark:document.querySelector('[data-theme="dark"]')};function o(){if(l.light.hasAttribute("style"))return localStorage.setItem("theme","dark"),l.light.removeAttribute("style"),l.dark.setAttribute("style","display:none;"),r.body.classList.add("theme-dark"),r.footer.classList.add("theme-dark"),void r.filmTitle.classList.add("theme-dark");localStorage.removeItem("theme"),l.dark.removeAttribute("style"),l.light.setAttribute("style","display:none;"),r.body.classList.remove("theme-dark"),r.footer.classList.remove("theme-dark"),r.filmTitle.classList.remove("theme-dark")}l.light.setAttribute("style","display:none;"),"dark"===localStorage.getItem("theme")&&o(),l.changeThemeBtns.forEach(e=>{e.addEventListener("click",o)});
 },{"~/templates/btn-theme.hbs":"qYSF"}],"GSkP":[function(require,module,exports) {
-module.exports="/team-project-02/dmytro@1x.51f26ed1.png";
+module.exports="/team-project-02/dmytro@1x.ec02bdd4.png";
 },{}],"Qkw8":[function(require,module,exports) {
-module.exports="/team-project-02/dmytro@2x.a395fc2a.png";
+module.exports="/team-project-02/dmytro@2x.28746dea.png";
 },{}],"XrON":[function(require,module,exports) {
-module.exports="/team-project-02/dmytro@4x.1dd67d77.png";
+module.exports="/team-project-02/dmytro@4x.9c805ee3.png";
 },{}],"KVDa":[function(require,module,exports) {
-module.exports="/team-project-02/iryna@1x.40431985.png";
+module.exports="/team-project-02/iryna@1x.4eae9a2b.png";
 },{}],"Acbv":[function(require,module,exports) {
-module.exports="/team-project-02/iryna@2x.560ecc38.png";
+module.exports="/team-project-02/iryna@2x.6f9ab192.png";
 },{}],"V3Gv":[function(require,module,exports) {
-module.exports="/team-project-02/iryna@4x.0dac1806.png";
+module.exports="/team-project-02/iryna@4x.3690b017.png";
 },{}],"VkCY":[function(require,module,exports) {
-module.exports="/team-project-02/mykola@1x.d943e891.png";
+module.exports="/team-project-02/mykola@1x.c894df8f.png";
 },{}],"RCAQ":[function(require,module,exports) {
-module.exports="/team-project-02/mykola@2x.9add7d8b.png";
+module.exports="/team-project-02/mykola@2x.5aff03b6.png";
 },{}],"ZgGS":[function(require,module,exports) {
-module.exports="/team-project-02/mykola@4x.51d392af.png";
+module.exports="/team-project-02/mykola@4x.e25704cf.png";
 },{}],"ELRC":[function(require,module,exports) {
-module.exports="/team-project-02/oleksandr@1x.3b42a875.png";
+module.exports="/team-project-02/oleksandr@1x.051cf62a.png";
 },{}],"qTDs":[function(require,module,exports) {
-module.exports="/team-project-02/oleksandr@2x.4dd290c4.png";
+module.exports="/team-project-02/oleksandr@2x.9a44443a.png";
 },{}],"xgXM":[function(require,module,exports) {
-module.exports="/team-project-02/oleksandr@4x.02cb4736.png";
+module.exports="/team-project-02/oleksandr@4x.6d700b55.png";
 },{}],"zQIg":[function(require,module,exports) {
-module.exports="/team-project-02/serhii@1x.77cb76e4.png";
+module.exports="/team-project-02/serhii@1x.c9ef1df1.png";
 },{}],"Oh4p":[function(require,module,exports) {
-module.exports="/team-project-02/serhii@2x.6bddd46c.png";
+module.exports="/team-project-02/serhii@2x.4b445dcd.png";
 },{}],"UlnN":[function(require,module,exports) {
-module.exports="/team-project-02/serhii@4x.96433c0b.png";
+module.exports="/team-project-02/serhii@4x.2244e7c5.png";
 },{}],"D9u4":[function(require,module,exports) {
-module.exports="/team-project-02/svitlana@1x.2ea57c95.png";
+module.exports="/team-project-02/svitlana@1x.abfdd3bc.png";
 },{}],"jVSe":[function(require,module,exports) {
-module.exports="/team-project-02/svitlana@2x.5214e360.png";
+module.exports="/team-project-02/svitlana@2x.7b81a74c.png";
 },{}],"P09i":[function(require,module,exports) {
-module.exports="/team-project-02/svitlana@4x.040e8da5.png";
+module.exports="/team-project-02/svitlana@4x.99565afd.png";
 },{}],"CpfH":[function(require,module,exports) {
-module.exports="/team-project-02/taras@1x.86cec9d9.png";
+module.exports="/team-project-02/taras@1x.e85e39f0.png";
 },{}],"Xzon":[function(require,module,exports) {
-module.exports="/team-project-02/taras@2x.d13916af.png";
+module.exports="/team-project-02/taras@2x.58e9d0f6.png";
 },{}],"d79L":[function(require,module,exports) {
 module.exports="/team-project-02/taras@4x.180afbe4.png";
 },{}],"UBgM":[function(require,module,exports) {
-module.exports="/team-project-02/tetiana@1x.c285cfdc.png";
+module.exports="/team-project-02/tetiana@1x.b96a2f4e.png";
 },{}],"bm7B":[function(require,module,exports) {
-module.exports="/team-project-02/tetiana@2x.d6858b60.png";
+module.exports="/team-project-02/tetiana@2x.fb5c4114.png";
 },{}],"CL3l":[function(require,module,exports) {
-module.exports="/team-project-02/tetiana@4x.85897362.png";
+module.exports="/team-project-02/tetiana@4x.07d59919.png";
 },{}],"RKAH":[function(require,module,exports) {
 module.exports="/team-project-02/teamlogo.b5c5e34b.svg";
 },{}],"XHGK":[function(require,module,exports) {
@@ -225,4 +225,4 @@ var e=require("process");Object.defineProperty(exports,"__esModule",{value:!0}),
 },{}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/arrow-up/arrow-up"),require("./js/theme/theme"),require("./js/team-modal/team-modal");var e=l(require("lodash")),t=require("notiflix"),i=require("./js/services/tmdb-api"),a=require("./js/render-main-page/render"),n=require("./js/form/autorizaton-modal-call"),r=require("./js/form/form-ui-valid"),s=require("./js/header/change-header"),d=require("./js/services/auth"),c=require("./js/services/db"),o=l(require("./js/loader/loader")),u=l(require("./js/render-empty-list"));function l(e){return e&&e.__esModule?e:{default:e}}t.Notify.init({clickToClose:!0,position:"center-top"});const h={homeBtns:document.querySelectorAll('[data-load="home"]'),libraryBtn:document.querySelector('[data-load="library"]'),filmsList:document.querySelector(".films_list"),searchInput:document.querySelector("#name-input"),watchedBtn:document.querySelector('[data-action="watched"]'),queueBtn:document.querySelector('[data-action="queue"]'),boxLoginBtns:document.querySelector(".header__logbuttons-list"),logInBtn:document.querySelector('[data-log="in"]'),logOutBtn:document.querySelector('[data-log="out"]'),headerEl:document.querySelector("header")},f={userId:null,isSingIn:!1,watched:[],queue:[],movies:[],currentTab:"watched"},m={SIGN_IN_WITH_EMAIL_AND_PASSWORD:"sign-in-with-email-password",SIGN_UP_WiTH_EMAIL_AND_PASSWORD:"sign-up-with-email-password",SIGN_IN_WITH_GOOGLE:"sign-in-with-google-account"};async function g(){o.default.show(h.filmsList,"beforebegin"),d.authApi.trackUserLoginState(T,D),await I(),o.default.hide()}function b(){const e=(0,n.autorisationFormCall)();(0,r.autorizationFormUiValid)(),document.querySelector('[data-js="auth-form"]').addEventListener("click",t=>y(t,e))}function L(){d.authApi.signOut(),f.isSingIn=!1,h.headerEl.classList.contains("header-lib")&&((0,s.homeRender)(),i.tmdbApi.resetTrendingPage(),h.filmsList.innerHTML="",I()),h.boxLoginBtns.classList.remove("authorized")}async function w(){o.default.show(h.filmsList,"beforebegin"),(0,s.homeRender)(),f.movies=[],h.searchInput.value="",h.filmsList.innerHTML="",i.tmdbApi.resetTrendingPage(),await I(),o.default.hide()}async function q(e){const a=e.target.value.trim();if(""!==a){if(o.default.show(h.filmsList,"beforebegin"),await i.tmdbApi.fetchSearchMovie(a),0===i.tmdbApi.searchMovieTotalPage)return t.Notify.warning("Search result not successful. Enter the correct movie name and try again."),void o.default.hide();h.filmsList.innerHTML="",i.tmdbApi.resetSearchMoviePage(),await I(a),o.default.hide()}}function E(){if(f.isSingIn)switch((0,s.libraryRender)(),h.filmsList.innerHTML="",f.currentTab){case"watched":f.watched.length?(0,a.renderMainPage)(f.watched):(0,u.default)(h.filmsList);break;case"queue":f.queue.length?(0,a.renderMainPage)(f.queue):(0,u.default)(h.filmsList)}else t.Notify.info("Please Log-in")}function v(e){const t=e.target.dataset.action;if(f.currentTab!==t)switch(f.currentTab=t,A(t),h.filmsList.innerHTML="",f.currentTab){case"watched":f.watched.length?(0,a.renderMainPage)(f.watched):(0,u.default)(h.filmsList);break;case"queue":f.queue.length?(0,a.renderMainPage)(f.queue):(0,u.default)(h.filmsList)}}function A(e){"watched"===e&&(h.queueBtn.classList.remove("current-button"),h.watchedBtn.classList.add("current-button")),"queue"===e&&(h.watchedBtn.classList.remove("current-button"),h.queueBtn.classList.add("current-button"))}function p(e){const i=e.target.closest(".products__cards-item");if(null===i)return;const n=i.dataset.movieId;let r;if(h.headerEl.classList.contains("header-lib"))switch(f.currentTab){case"watched":r=f.watched.find(e=>e.id==n);break;case"queue":r=f.queue.find(e=>e.id==n)}else r=f.movies.find(e=>e.id==n);(0,a.openDetailsCard)(r,".form_close-button");const s=document.querySelector("#watched"),d=document.querySelector("#queue");function o(e){t.Notify.info("Oops, somthing wrong")}s.addEventListener("click",function(){if(!f.isSingIn)return void t.Notify.info("Please Log-in");if("add-watched"===s.dataset.action)return void c.databaseApi.add("watched",f.userId,r).then(()=>{s.setAttribute("data-action","del-watched"),s.textContent="DELETE WATCHED",s.classList.add("delete-button")}).catch(o);if("del-watched"===s.dataset.action)return void c.databaseApi.delete("watched",f.userId,n).then(()=>{s.setAttribute("data-action","add-watched"),s.textContent="ADD WATCHED",s.classList.remove("delete-button")}).catch(o)}),d.addEventListener("click",function(){if(!f.isSingIn)return void t.Notify.info("Please Log-in");if("add-queue"===d.dataset.action)return void c.databaseApi.add("queue",f.userId,r).then(()=>{d.setAttribute("data-action","del-queue"),d.textContent="DELETE QUEUE",d.classList.add("delete-button")}).catch(o);if("del-queue"===d.dataset.action)return void c.databaseApi.delete("queue",f.userId,n).then(()=>{d.setAttribute("data-action","add-queue"),d.textContent="ADD QUEUE",d.classList.remove("delete-button")}).catch(o)}),i?async function(){if(!f.isSingIn)return;const{isInWatched:e,isInQueue:t}=await c.databaseApi.check(f.userId,n);try{e?(s.setAttribute("data-action","del-watched"),s.textContent="DELETE WATCHED",s.classList.add("delete-button")):(s.setAttribute("data-action","add-watched"),s.textContent="ADD WATCHED",s.classList.remove("delete-button")),t?(d.setAttribute("data-action","del-queue"),d.textContent="DELETE QUEUE",d.classList.add("delete-button")):(d.setAttribute("data-action","add-queue"),d.textContent="ADD QUEUE",d.classList.remove("delete-button"))}catch(i){o(i)}}():t.Notify.warning("Download, please wait a bit ")}async function I(e){if(!h.headerEl.classList.contains("header-lib"))try{let r;if(e||(r=await i.tmdbApi.fetchTrendingMovies()),e&&(r=await i.tmdbApi.fetchSearchMovie(e)),h.headerEl.classList.contains("header-lib"))return;if((0,a.renderMainPage)(r),f.movies.push(...r),r.length<20||i.tmdbApi.trendingPage>i.tmdbApi.trendingTotalPage)return void t.Notify.info("That's all");const s=document.querySelector(".products__cards-item:nth-last-child(4) img");return s&&s.addEventListener("load",function t(){s&&s.removeEventListener("load",t);if(h.headerEl.classList.contains("header-lib"))return;S(I,e)}),new Promise(e=>e(r))}catch(n){t.Notify.failure(n.message)}}function S(e,t){let i=arguments.length>2&&void 0!==arguments[2]?arguments[2]:".products__cards-item:last-child";const a=new IntersectionObserver((i,a)=>{i.forEach(i=>{i.isIntersecting&&(a.unobserve(i.target),e(t))})},{threshold:.5});document.querySelector(i)&&a.observe(document.querySelector(i))}function y(e,t){e.preventDefault();const i=e.target.parentElement.name,a=e.currentTarget.elements.email.value,n=e.currentTarget.elements.password.value;switch(i){case m.SIGN_IN_WITH_EMAIL_AND_PASSWORD:d.authApi.signInWithEmailAndPassword(a,n,e=>{_(e),t.close()},N);break;case m.SIGN_UP_WiTH_EMAIL_AND_PASSWORD:d.authApi.createUserWithEmailAndPassword(a,n,e=>{_(e),t.close()},N);break;case m.SIGN_IN_WITH_GOOGLE:d.authApi.signInWithGoogle(e=>{_(e),t.close()},N);break;default:return}e.currentTarget.reset()}function _(e){f.userId=e.uid,f.isSingIn=!0}function T(e){f.userId=e.uid,f.isSingIn=!0,h.boxLoginBtns.classList.add("authorized"),t.Notify.info(`Welcome, ${e.email}`),P(),M()}function D(){}function N(e){const i=e.code.indexOf("/"),a=e.code.slice(i+1)[0].toUpperCase()+e.code.slice(i+2).replaceAll("-"," ");t.Notify.failure(`Ups... ${a}`)}function P(){c.databaseApi.get("watched",f.userId,B)}function M(){c.databaseApi.get("queue",f.userId,k)}function B(e){f.watched=[...e],h.headerEl.classList.contains("header-lib")&&h.watchedBtn.classList.contains("current-button")&&(h.filmsList.innerHTML="",f.watched.length?(0,a.renderMainPage)(f.watched):(0,u.default)(h.filmsList))}function k(e){f.queue=[...e],h.headerEl.classList.contains("header-lib")&&h.queueBtn.classList.contains("current-button")&&(h.filmsList.innerHTML="",f.queue.length?(0,a.renderMainPage)(f.queue):(0,u.default)(h.filmsList))}g(),h.homeBtns.forEach(e=>e.addEventListener("click",w)),h.libraryBtn.addEventListener("click",E),h.searchInput.addEventListener("input",e.default.debounce(q,1250)),h.watchedBtn.addEventListener("click",v),h.queueBtn.addEventListener("click",v),h.filmsList.addEventListener("click",p),h.logInBtn.addEventListener("click",b),h.logOutBtn.addEventListener("click",L);
 },{"./sass/main.scss":"clu1","./js/arrow-up/arrow-up":"nBtl","./js/theme/theme":"h6aJ","./js/team-modal/team-modal":"SNkP","lodash":"B1iE","notiflix":"cwzQ","./js/services/tmdb-api":"pbZ7","./js/render-main-page/render":"o1y2","./js/form/autorizaton-modal-call":"nVmn","./js/form/form-ui-valid":"k7Z0","./js/header/change-header":"IBgQ","./js/services/auth":"vbjx","./js/services/db":"rXLK","./js/loader/loader":"nM07","./js/render-empty-list":"tZVj"}]},{},["Focm"], null)
-//# sourceMappingURL=/team-project-02/src.bd4369fc.js.map
+//# sourceMappingURL=/team-project-02/src.687786e8.js.map
