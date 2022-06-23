@@ -80,8 +80,8 @@
   }
 
   @media screen and (min-width: $desktop) {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: -8px;
+    margin-right: -8px;
     justify-content: start;
   }
 }
