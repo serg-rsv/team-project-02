@@ -20,3 +20,10 @@ export function renderEmptySearch(domEl) {
     </li>`;
   domEl.insertAdjacentHTML('afterbegin', markup);
 }
+
+export function renderNoMoreContent(domEl) {
+  const markup = `<li id="empty-wraper">
+        <p class="film_title nomore-content">No more content</p>
+    </li>`;
+  domEl.insertAdjacentHTML('beforeend', markup);
+}

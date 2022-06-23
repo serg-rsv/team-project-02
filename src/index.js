@@ -15,7 +15,7 @@ import { homeRender, libraryRender } from './js/header/change-header';
 import { authApi } from './js/services/auth';
 import { databaseApi } from './js/services/db';
 import loader from './js/loader/loader';
-import { renderEmptyList, renderEmptySearch } from './js/render-empty-list';
+import { renderEmptyList, renderEmptySearch, renderNoMoreContent } from './js/render-empty-list';
 
 Notify.init({ clickToClose: true, position: 'center-top' });
 
@@ -368,6 +368,7 @@ async function infinityScrollData(query) {
 
     if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) {
       Notify.info(`That's all`);
+      renderNoMoreContent(refs.filmsList);
       return;
     }
 
