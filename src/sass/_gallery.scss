@@ -1,3 +1,105 @@
+main {
+  padding: 20px 0 40px;
+
+  @media screen and (min-width: $tablet) {
+    padding: 60px 0;
+  }
+
+  @media screen and (min-width: $desktop) {
+    padding: 32px 0 60px;
+  }
+}
+
+.films_list {
+  text-align: start;
+  @media screen and(min-width: $tablet) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+.products__cards-item {
+  min-height: 300px;
+  margin-top: 32px;
+  transition: $animationDuration;
+  border-radius: 5px;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+  &:nth-child(2) {
+    @media screen and (min-width: $tablet) {
+      margin-top: 0;
+    }
+  }
+  &:nth-child(3) {
+    @media screen and (min-width: $desktop) {
+      margin-top: 0;
+    }
+  }
+  @media screen and (min-width: $tablet) {
+    margin-top: 0;
+    width: calc((100% - 32px) / 2);
+    margin-top: 32px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: calc((100% - 32px) / 3);
+  }
+}
+
+.imgCard {
+  transform-origin: bottom center;
+  background-image: url('../images/poster/poster.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  object-fit: cover;
+  .products__cards-item:hover & {
+    transform: scale(1.05);
+    transition: 0.75s ease-in-out;
+  }
+
+  @media screen and (min-width: $tablet) {
+    width: 100%;
+    height: 455px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    height: 449px;
+  }
+}
+.film-card__info-box {
+  padding: 8px;
+}
+.film-card {
+  width: 100%;
+  cursor: pointer;
+}
+
+#empty-wraper {
+  margin-bottom: 50px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.film_title.emptylist {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.film_title.nomore-content {
+  text-align: center;
+  font-size: 0.7rem;
+}
+
 .film_title {
   color: black;
   font-family: $font-main;
@@ -16,9 +118,7 @@
 .film_genre:not(:first-child) {
   padding-left: 5px;
 }
-.film_average {
-  margin-left: 8px;
-}
+
 .film_genre:first-child {
   border-right: 2px solid $color-accent;
   padding-right: 5px;
@@ -30,122 +130,14 @@
   align-items: center;
 }
 
-.imgCard {
-  transform-origin: bottom center;
-  background-image: url('../images/poster/poster.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  // box-shadow: inset 0 0 20px 10px rgba(0, 0, 0, 0.5);
-  object-fit: cover;
-  .products__cards-item:hover & {
-    transform: scale(1.05);
-    transition: 0.75s ease-in-out;
-  }
-
-  @media screen and (min-width: $tablet) {
-    width: $mobile;
-    padding: 0px;
-    height: 455px;
-  }
-
-  @media screen and (min-width: $desktop) {
-    width: 309px;
-    padding: 0px;
-    height: 449px;
-  }
-}
-
-.films_list {
-  display: flex;
-  flex-wrap: wrap;
-  text-align: start;
-  margin-bottom: 60px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-
-  // @media screen and(max-width:767px) {
-  //   margin: auto;
-  //   padding: auto;
-  // }
-
-  @media screen and(min-width:$tablet) {
-    margin-left: -16px;
-    margin-right: -16px;
-    padding: 0;
-    display: flex;
-    flex-basis: content;
-    justify-content: center;
-  }
-
-  @media screen and (min-width: $desktop) {
-    margin-left: -8px;
-    margin-right: -8px;
+.header-lib + main > .films_list {
+  @media screen and(min-width: $desktop) {
     justify-content: start;
   }
-}
 
-.products__cards-item {
-  flex-wrap: wrap;
-  min-height: 300px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 32px;
-  transition: $animationDuration;
-  border-radius: 5px;
-  overflow: hidden;
-
-  &:hover {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  & > .products__cards-item:not(:nth-child(3n + 1)) {
+    @media screen and(min-width: $desktop) {
+      margin-left: 16px;
+    }
   }
-
-  @media screen and (min-width: $tablet) and(max-width:991px) {
-    width: calc((100% - 2 * 32px) / 2);
-    text-align: start;
-    margin-right: 16px;
-    margin-left: 16px;
-    flex-basis: content;
-  }
-
-  @media screen and (min-width: $desktop) {
-    width: calc((100% - 2 * 24px) / 3);
-    margin-left: 8px;
-    margin-right: 8px;
-  }
-}
-
-.film-card__info-box {
-  padding: 8px;
-}
-.film-card {
-  cursor: pointer;
-}
-
-#empty-wraper {
-  margin-left: auto;
-  margin-right: auto;
-
-  padding-top: 50px;
-}
-
-.film_title.emptylist {
-  text-align: center;
-  font-size: 1.5rem;
-}
-
-.film_title.nomore-content {
-  text-align: center;
-  font-size: 0.7rem;
-}
-
-.film_average {
-  margin-left: 8px;
-  color: $color-main;
-  background-color: $color-accent;
-  display: inline-block;
-  text-align: center;
-  padding-top: 1px;
-  width: 36px;
-  border-radius: 5px;
 }
