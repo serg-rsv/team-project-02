@@ -9,7 +9,7 @@ main {
   position: absolute;
   top: 0px;
   right: 0%;
-  transform: translateY(-150%);
+  transform: translateY(-150%) translateX(-50%);
 
   background-color: transparent;
   border: 1px solid $color-accent;
