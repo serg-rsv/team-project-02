@@ -84,7 +84,7 @@ const data = {
       imagefaint2xURL: tetiana2x,
       imagefaint4xURL: tetiana4x,
       github: 'https://github.com/Tata-git ',
-      linkdIn: 'https://www.linkedin.com/',
+      linkdIn: 'https://www.linkedin.com/in/tetiana-mykhailenko-goit',
       mail: 'fsd.tetiana@gmail.com',
     },
     {
