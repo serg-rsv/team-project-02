@@ -22,7 +22,7 @@ Notify.init({ clickToClose: true, position: 'center-top' });
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
   libraryBtn: document.querySelector('[data-load="library"]'),
-  filmsList: document.querySelector('.films_list'),
+  filmsList: document.querySelector('.films-list'),
   searchInput: document.querySelector('#name-input'),
   watchedBtn: document.querySelector('[data-action="watched"]'),
   queueBtn: document.querySelector('[data-action="queue"]'),
@@ -193,7 +193,7 @@ function toggleButtons(currentTab) {
 
 function onMovieCard(e) {
   // - проверить что клик именно по карточке фильма
-  const cardFilm = e.target.closest('.products__cards-item');
+  const cardFilm = e.target.closest('.films-list__item');
   if (cardFilm === null) {
     return;
   }
@@ -373,7 +373,7 @@ async function infinityScrollData(query) {
     }
 
     const triggeredLoadMoreElement = document.querySelector(
-      '.products__cards-item:nth-last-child(4) img',
+      '.films-list__item:nth-last-child(4) img',
     );
 
     if (triggeredLoadMoreElement) triggeredLoadMoreElement.addEventListener('load', onLoad);
@@ -395,9 +395,9 @@ async function infinityScrollData(query) {
  *
  * @param {function} callback - Функція, яка буде викликана після того, як третій параметр (селектор) з'явиться на екрані.
  * @param {string} query - запит. Необов'язковий параметр, потрібен в якості атрибуту функциї callback.
- * @param {string} selector - Селектор елементу, після якого буде додано нові дані. Обсервер чекає, доки цей елемент з'явиться на сторінці. По замовчанню '.products__cards-item:last-child'.
+ * @param {string} selector - Селектор елементу, після якого буде додано нові дані. Обсервер чекає, доки цей елемент з'явиться на сторінці. По замовчанню '.films-list__item:last-child'.
  */
-function loadMore(callback, query, selector = '.products__cards-item:last-child') {
+function loadMore(callback, query, selector = '.films-list__item:last-child') {
   const observer = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach(entry => {

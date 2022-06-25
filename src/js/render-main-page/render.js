@@ -3,7 +3,7 @@ import cardTpl from '../../templates/modal.hbs';
 import { modalCall } from '../modal/modalCall';
 import filmCardTpl from '../../templates/filmCard.hbs';
 
-const refFilmsList = document.querySelector('.films_list');
+const refFilmsList = document.querySelector('.films-list');
 
 function getShortGenresString(genres) {
   if (genres.length >= 3) {
