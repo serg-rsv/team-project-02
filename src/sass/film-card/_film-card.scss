@@ -1,5 +1,4 @@
 .film-card {
-  //   width: 100%;
   cursor: pointer;
 }
 
@@ -48,18 +47,6 @@
     padding-right: 5px;
   }
 }
-
-// .header-lib + main > .film-list {
-//   @media screen and(min-width: $desktop) {
-//     justify-content: start;
-//   }
-
-//   & > .films-list__item:not(:nth-child(3n + 1)) {
-//     @media screen and(min-width: $desktop) {
-//       margin-left: 16px;
-//     }
-//   }
-// }
 
 #empty-wraper {
   position: absolute;

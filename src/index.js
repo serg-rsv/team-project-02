@@ -22,7 +22,7 @@ Notify.init({ clickToClose: true, position: 'center-top' });
 const refs = {
   homeBtns: document.querySelectorAll('[data-load="home"]'),
   libraryBtn: document.querySelector('[data-load="library"]'),
-  filmsList: document.querySelector('.film-list'),
+  filmsList: document.querySelector('.films-list'),
   searchInput: document.querySelector('#name-input'),
   watchedBtn: document.querySelector('[data-action="watched"]'),
   queueBtn: document.querySelector('[data-action="queue"]'),
