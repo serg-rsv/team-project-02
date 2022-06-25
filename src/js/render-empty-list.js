@@ -6,7 +6,7 @@ export function renderEmptyList(domEl) {
           <div class="imagewrapper">
           <img src="${nofilm}" alt="film babina"/>
         </div>
-        <p class="film_title emptylist">Nothing has been added</p>
+        <p class="film-card__title emptylist">Nothing has been added</p>
     </li>`;
   domEl.insertAdjacentHTML('afterbegin', markup);
 }
@@ -16,14 +16,14 @@ export function renderEmptySearch(domEl) {
         <div class="imagewrapper">
           <img src="${noresult}" alt="sad smile"/>
         </div>
-        <p class="film_title emptylist">Nothing found</p>
+        <p class="film-card__title emptylist">Nothing found</p>
     </li>`;
   domEl.insertAdjacentHTML('afterbegin', markup);
 }
 
 export function renderNoMoreContent(domEl) {
-  const markup = `<li id="empty-wraper">
-        <p class="film_title nomore-content">No more content</p>
+  const markup = `<li id="no-content">
+        <p class="film-card__title nomore-content">No more content</p>
     </li>`;
   domEl.insertAdjacentHTML('beforeend', markup);
 }

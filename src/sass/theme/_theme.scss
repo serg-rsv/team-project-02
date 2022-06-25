@@ -1,7 +1,5 @@
 // стилизация кнопки смены темы (иконки)
-main {
-  position: relative;
-}
+
 .theme {
   width: 24px;
   height: 24px;
@@ -19,17 +17,10 @@ main {
     width: 32px;
     height: 32px;
     padding: 5px 5px;
-
-    // bottom: 48px;
-    // left: calc(50vw - 370px);
-  }
-  @media screen and (min-width: $desktop) {
-    // left: calc(50vw - 498px);
   }
 }
 
 .change-theme {
-  // margin: auto;
   width: 18px;
   height: 18px;
   @media screen and (min-width: $tablet) {
@@ -40,17 +31,17 @@ main {
 
 // стилизация фона и модалки фильма темной темы
 body.theme-dark {
-  background-color: #333333;
+  background-color: rgb(2, 5, 14);
   .theme {
     border: 1px solid $color-main;
   }
   .modal {
-    background-color: #3d3d3d;
+    background-color: rgb(19, 26, 46);
     .button-action {
       border-color: $color-main;
       color: $font-color-main;
       &:hover {
-        background-color: #3d3d3d;
+        background-color: rgb(19, 26, 46);
         border-color: $color-accent;
         color: $color-accent;
       }
@@ -71,8 +62,8 @@ body.theme-dark {
 }
 
 // стилизация карточек фильма
-.films_list.theme-dark {
-  .film_title {
+.film-list.theme-dark {
+  .film-card__title {
     color: #e6e6e6;
   }
 }
@@ -81,11 +72,11 @@ body.theme-dark {
 .footer.theme-dark {
   background-image: linear-gradient(
     180deg,
-    rgba(57, 57, 57, 0) 0%,
-    rgba(50, 50, 50, 0.5) 12%,
-    rgba(50, 50, 50, 0.9) 25%,
-    rgb(50, 50, 50) 37%,
-    rgb(50, 50, 50) 100%
+    rgba(2, 5, 14, 0) 0%,
+    rgba(2, 5, 14, 0.5) 12%,
+    rgba(2, 5, 14, 0.9) 25%,
+    rgb(2, 5, 14) 37%,
+    rgb(2, 5, 14) 100%
   );
   .footer-text {
     color: #e6e6e6;

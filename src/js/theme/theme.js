@@ -4,7 +4,7 @@ import btnChangeTheme from '~/templates/btn-theme.hbs';
 const changedElements = {
   body: document.querySelector('body'),
   footer: document.querySelector('.footer'),
-  filmTitle: document.querySelector('.films_list'),
+  filmTitle: document.querySelector('.film-list'),
   main: document.querySelector('main'),
 };
 
