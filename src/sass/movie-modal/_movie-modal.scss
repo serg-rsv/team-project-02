@@ -18,32 +18,21 @@ body.modal-open {
 
     padding: 40px 36px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 264px auto;
+    column-gap: 36px;
   }
   @media screen and (min-width: $desktop) {
     max-width: 814px;
+    grid-template-columns: 342px auto;
     padding: 40px 16px;
-    grid-gap: 0 16px;
   }
 }
 
 .film-poster {
-  width: 240px;
-  // height: 357px;
   min-height: max-content;
 
   border-radius: 5px;
   overflow: hidden;
-
-  @media screen and (min-width: $tablet) {
-    width: 264px;
-    // height: 373px;
-  }
-
-  @media screen and (min-width: $desktop) {
-    width: 375px;
-    // height: 478px;
-  }
 }
 
 .film__title {
@@ -152,9 +141,6 @@ body.modal-open {
   @media screen and (min-width: $tablet) {
     column-gap: 15px;
   }
-  @media screen and (min-width: $desktop) {
-    grid-template-columns: 136px 136px;
-  }
 }
 
 .modal_close-button {
@@ -204,26 +190,9 @@ body.modal-open {
   }
 }
 
-// .btn{
-//     height: 44px;
-
-//     font-family: $font-main;
-//     font-weight: $font-weight-major;
-//     font-size: $font-size-major;
-//     line-height: $font-height-major;
-
-//     border-radius: 5px;
-//     &.watched{
-//         // padding: 6px 27px;
-//         border: none;
-
-//         color: $color-main;
-//         background-color: $color-accent;
-//     }
-//     &.queue{
-//         // padding: 13px 14px;
-//         border: 1px solid #000000;
-
-//         color: #000000;
-//     }
-// }
+// Отступ для блока с информацией о фильме для десктопной версии
+.film-details {
+  @media screen and(min-width: $desktop) {
+    padding-right: 30px;
+  }
+}
