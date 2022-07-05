@@ -345,11 +345,14 @@ async function infinityScrollData(query) {
 
   try {
     let movies;
+    let isEnd;
     if (!query) {
       movies = await tmdbApi.fetchTrendingMovies();
+      isEnd = tmdbApi.trendingPage === tmdbApi.trendingTotalPage;
     }
     if (query) {
       storage.searchMovie = await tmdbApi.fetchSearchMovie(query);
+      isEnd = tmdbApi.searchMoviePage === tmdbApi.searchMovieTotalPage;
 
       if (storage.searchMovie.length === 0) {
         // Notify.warning('Search result not successful. Enter the correct movie name and try again.');
@@ -366,7 +369,7 @@ async function infinityScrollData(query) {
     renderMainPage(movies);
     storage.movies.push(...movies);
 
-    if (movies.length < 20 || tmdbApi.trendingPage > tmdbApi.trendingTotalPage) {
+    if (isEnd) {
       Notify.info(`That's all`);
       renderNoMoreContent(refs.filmsList);
       return;
