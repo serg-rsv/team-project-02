@@ -51,7 +51,7 @@ const data = {
       imagefaint2xURL: mykola2x,
       imagefaint4xURL: mykola4x,
       github: 'https://github.com/Nikolay-Tymoshchuk',
-      linkdIn: 'https://www.linkedin.com/in/nikolay-timoshchuk-153384240/',
+      linkdIn: 'https://www.linkedin.com/in/nikolay-tymoshchuk-153384240/',
       mail: 'nikolaytymoshchuk@gmail.com',
     },
     {
