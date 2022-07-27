@@ -40,7 +40,7 @@ const data = {
       imagefaint2xURL: serhii2x,
       imagefaint4xURL: serhii4x,
       github: 'https://github.com/serg-rsv',
-      linkdIn: 'https://www.linkedin.com/in/serhii-rybak-aaa300231/',
+      linkdIn: 'https://www.linkedin.com/in/serhii-rybak/',
       mail: 'rybaksw@gmail.com',
     },
     {
@@ -51,7 +51,7 @@ const data = {
       imagefaint2xURL: mykola2x,
       imagefaint4xURL: mykola4x,
       github: 'https://github.com/Nikolay-Tymoshchuk',
-      linkdIn: 'https://www.linkedin.com/in/nikolay-tymoshchuk-153384240/',
+      linkdIn: 'https://www.linkedin.com/in/nikolay-tymoshchuk/',
       mail: 'nikolaytymoshchuk@gmail.com',
     },
     {
